@@ -135,7 +135,7 @@ public class Singleton5 {
 
 ## 枚举类
 ### 6、枚举类单例
-````java
+```java
 public enum Singleton6 {
 
     INSTANCE;
@@ -143,12 +143,12 @@ public enum Singleton6 {
     // 业务方法
     public void serviceMethod() { }
 }
-````
+```
 - 属于饿汉式
 - 优点：简单，枚举实例默认线程安全，单例，反序列化不会生成新的对象
 - 缺点：少用，可读性不高
 ### 验证单例模式的反序列化
-````java
+```java
 public class SingletonSerializableCheck {
 
  /**
@@ -190,11 +190,11 @@ public class SingletonSerializableCheck {
      System.out.println("是否是同一个对象：" + checkedSingletonObj == afterSerializableObj);
  }
 }
-````
+```
 - 其他的单例模式写法会出现反序列化生成两个单例对象的情况，将上面验证代码声明单例对象改成`Object checkedSingletonObj = Singleton1.getInstance();`，输出false，说明反序列化生成了新对象。
 ### 如何避免反序列化生成新对象？
 - 单例类应提供`readResolve()`方法以控制对象的反序列化
-````$xslt
+```java
     /**
      * 控制反序列化，防止反序列化生成新对象
      * @return singleton.Singleton1
@@ -203,13 +203,12 @@ public class SingletonSerializableCheck {
     private Object readResolve() throws ObjectStreamException {
         return instance;
     }
-````
+```
 
 ## 基于容器实现
 > 如HashMap，因为HashMap中的key是不可重复的
-
 ### 7、基于容器实现单例
-````java
+```java
 public class Singleton7 {
 
     private static Map<String, Object> objMap = new HashMap<>();
@@ -224,6 +223,6 @@ public class Singleton7 {
         return objMap.get(key);
     }
 }
-````
+```
 
 源代码地址 [GitHub](https://github.com/Planeswalker23/java-day-day-up/tree/master/design_patterns/singleton)
