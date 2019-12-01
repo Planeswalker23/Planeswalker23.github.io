@@ -4,7 +4,7 @@
 baseurl:
 url: https://planeswalker23.github.io
 date_format: "ordinal"
-title: Java Birck-Mover's Blog
+title: Planeswalker23's Blog
 subtitle: "Hail Hydra!"
 description: "Planeswalker23的个人博客"
 keywords: Java Birck-Mover
@@ -34,9 +34,9 @@ navs:
     href: /categories/
     label: 分类
 
-  -
-    href: /archives/
-    label: 归档
+  # -
+  #   href: /archives/
+  #   label: 归档
 
   -
     href: /wiki/
