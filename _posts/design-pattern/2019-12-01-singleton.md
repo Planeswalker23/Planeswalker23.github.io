@@ -181,7 +181,8 @@ public class SingletonSerializableCheck {
 - 其他的单例模式写法会出现反序列化生成两个单例对象的情况，将上面验证代码声明单例对象改成`Object checkedSingletonObj = Singleton1.getInstance();`，输出false，说明反序列化生成了新对象。
 
 ### 如何避免反序列化生成新对象？
-- 单例类应提供`readResolve()`方法以控制对象的反序列化
+> 单例类应提供`readResolve()`方法以控制对象的反序列化
+
 ```text
     /**
      * 控制反序列化，防止反序列化生成新对象
