@@ -6,7 +6,7 @@ description: 修改IDEA内存设置
 keywords: IDEA
 ---
 
-> 修改IDEA内存可以有效提升软件性能，防止启动多个程序导致软件未响应。之前在csdn上看到过一篇修改IDEA内存的方法——[IntelliJ IDEA 修改内存大小，使得idea运行更流畅](https://blog.csdn.net/qq_27093465/article/details/81947933)，虽然能改，但是不知道为什么，我在配置文件中设置的是1024，但是最终只有990。
+> 修改IDEA内存可以有效提升软件性能，防止启动多个程序导致软件未响应。之前在csdn上看到过一篇修改IDEA内存的方法——[IntelliJ IDEA 修改内存大小，使得idea运行更流畅](https://blog.csdn.net/qq_27093465/article/details/81947933)，虽然能改，但是不知道为什么，我在配置文件中设置的是2048，但是最终只有990，并且再如何修改也没发增加。
 
 基于上述的原因，这里介绍一种直接打开IDEA就可以修改内存的方法
 
