@@ -24,6 +24,26 @@ keywords: git
 
 -----
 
-## 代码回退，已`commit`但未`push`
+## 代码回退
+> 已`commit`但未`push`
 1. 查询`commit`历史，拿到`commitId`: `git log`
 2. 代码回退到此次提交: `git reset --hard commitId`
+
+-----
+## `git pull`报错
+执行`git pull`命令，控制台出现如下错误（当前分支名为`dev.2.5.5-bugfix`）：
+```
+Fetching origin
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=origin/<branch> dev.2.5.5-bugfix
+```
+出现该问题的原因是本地分支和远程分支没有建立联系，可以使用最后一段`git branch --set-upstream-to=origin/<branch>`来解决这个问题。
+
+查询本地分支与远程分支关联关系: `git branch -vv`
