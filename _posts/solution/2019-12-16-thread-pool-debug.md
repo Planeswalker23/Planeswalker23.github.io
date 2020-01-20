@@ -50,6 +50,52 @@ statsThreadPool.submit(new StatsJob(centerId));
 
 如果子线程抛出了异常，线程池会如何进行处理呢？
 
+> 我提交任务到线程池的方式是: ```threadPoolExecutor.submit(Runnbale task);``` ，后面了解到使用 execute() 方式提交任务会把异常日志给打出来，这里研究一下为什么使用 submit 提交任务，在任务中的异常会被“吞掉”。
+
+对于 submit() 形式提交的任务，我们直接看源码：
+```
+public Future<?> submit(Runnable task) {
+    if (task == null) throw new NullPointerException();
+    // 被包装成 RunnableFuture 对象，然后准备添加到工作队列
+    RunnableFuture<Void> ftask = newTaskFor(task, null);
+    execute(ftask);
+    return ftask;
+}
+```
+它会被线程池包装成 RunnableFuture 对象，而最终它其实是一个 FutureTask 对象，在被添加到线程池的工作队列，然后调用 start() 方法后， FutureTask 对象的 run() 方法开始运行，即本任务开始执行。
+```
+public void run() {
+    if (state != NEW || !UNSAFE.compareAndSwapObject(this,runnerOffset,null, Thread.currentThread()))
+        return;
+    try {
+        Callable<V> c = callable;
+        if (c != null && state == NEW) {
+            V result;
+            boolean ran;
+            try {
+                result = c.call();
+                ran = true;
+            } catch (Throwable ex) {
+                // 捕获子任务中的异常
+                result = null;
+                ran = false;
+                setException(ex);
+            }
+            if (ran)
+                set(result);
+        }
+    } finally {
+        runner = null;
+        int s = state;
+        if (s >= INTERRUPTING)
+            handlePossibleCancellationInterrupt(s);
+    }
+}
+```
+在 FutureTask 对象的 run() 方法中，该任务抛出的异常被捕获，然后在setException(ex); 方法中，抛出的异常会被放到 outcome 对象中，这个对象就是 submit() 方法会返回的 FutureTask 对象执行 get() 方法得到的结果。但是在线程池中，并没有获取执行子线程的结果，所以异常也就没有被抛出来，即被“吞掉”了。
+
+这就是线程池的 submit() 方法提交任务没有异常抛出的原因。
+
 ## 后续
 在修复了单个线程任务的异常之后，我继续使用线程池进行重新统计业务，终于跑完了。感叹于统计业务的低效之外，我对一年前写这个业务的`coder`十分恼火，打开`Git`提交记录一看，是我自己...
 
