@@ -65,6 +65,7 @@ mysql> show global variables like 'port';
 | port          | 3306  |
 +---------------+-------+
 1 row in set (0.00 sec)
+```
 
 ## Mac 导出 SQL 文件
 首先`cd`到你所想要将`sql`文件导出的位置，例如：
