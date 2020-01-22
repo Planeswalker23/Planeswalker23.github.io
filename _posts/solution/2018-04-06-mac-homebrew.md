@@ -76,6 +76,9 @@ ssh-keygen -t rsa -C "your_email@youremail.com"
 
 # 参考
 [安装卸载homebrew](http://www.cnblogs.com/chenjunbiao/archive/2011/07/11/2102899.html%20%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BDhomebrew)
+
 [Homebrew简介和基本使用](https://blog.csdn.net/andanlan/article/details/51589800#fn:xcode)
+
 [添加远程库 - 廖雪峰的官方网站](https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/0013752340242354807e192f02a44359908df8a5643103a000)
+
 [Homebrew macOS 缺失的软件包管理器](https://brew.sh/index_zh-cn.html)
