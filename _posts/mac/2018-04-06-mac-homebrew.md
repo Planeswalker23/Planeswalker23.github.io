@@ -1,7 +1,7 @@
 ---
 layout: post
 title: MacOS 安装 homebrew 搭建 Git 环境
-categories: [解决方案]
+categories: [Mac]
 description: MacOS 安装 homebrew 搭建 Git 环境
 keywords: MacOS, homebrew, Git
 ---

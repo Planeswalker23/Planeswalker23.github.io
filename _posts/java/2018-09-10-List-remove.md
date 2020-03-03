@@ -1,9 +1,9 @@
 ---
 layout: post
 title: List 接口 remove 方法失效？
-categories: [解决方案]
+categories: [Java]
 description: List 接口 remove 方法失效，没有按照自己想要的方法执行
-keywords: List, keywremoveord2
+keywords: List, Java
 ---
 
 # 背景

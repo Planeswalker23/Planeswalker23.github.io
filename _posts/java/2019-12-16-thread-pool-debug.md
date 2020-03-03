@@ -1,9 +1,9 @@
 ---
 layout: post
 title: 记一次使用线程池出现的问题
-categories: [解决方案]
+categories: [Java]
 description: 记一次使用线程池出现的问题
-keywords: ThreadPool
+keywords: ThreadPool, Java
 ---
 
 ## 背景
