@@ -11,6 +11,7 @@ keywords: MySQL, count
 
 # 表结构
 > user 表有两个字段，主键id和name，name可为空。在该表中共有1000000条数据，前100000条数据行的name字段为空，其余数据行name=id。
+
 ````
 -- 建表语句
 CREATE TABLE `user` (
