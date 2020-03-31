@@ -154,4 +154,4 @@ public class Test {
 2. 从一个整体中能够独立出部分模块或功能的场景
 
 ## 源代码
-[GitHub地址](https://github.com/Planeswalker23/all-in-one/tree/master/design-patterns/src/main/java/org/planeswalker/composite)
+[GitHub地址](https://github.com/Planeswalker23/all-in-one/tree/master/source-code/design-patterns/src/main/java/org/planeswalker/composite)
