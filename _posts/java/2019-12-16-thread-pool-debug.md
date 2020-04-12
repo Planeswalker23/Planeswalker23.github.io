@@ -96,6 +96,19 @@ public void run() {
 
 这就是线程池的 submit() 方法提交任务没有异常抛出的原因。
 
+## 线程池自定义异常处理方法
+在定义`ThreadFactory`的时候调用`setUncaughtExceptionHandler`方法，自定义异常处理方法。
+例如：
+
+````java
+ThreadFactory namedThreadFactory = new ThreadFactoryBuilder()
+                .setNameFormat("judge-pool-%d")
+                .setUncaughtExceptionHandler((thread, throwable)-> logger.error("ThreadPool {} got exception", thread,throwable))
+                .build();
+````
+
+这样，对于线程池中每条线程抛出的异常都会打下 error 日志，就不会看不到了。
+
 ## 后续
 在修复了单个线程任务的异常之后，我继续使用线程池进行重新统计业务，终于跑完了。感叹于统计业务的低效之外，我对一年前写这个业务的`coder`十分恼火，打开`Git`提交记录一看，是我自己...
 
