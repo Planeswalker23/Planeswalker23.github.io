@@ -1,8 +1,8 @@
 ---
 layout: post
-title: try-catch-finally 代码块中 finally 不会执行的特殊情况
+title: Try-catch-finally 代码块中 finally 不会执行的特殊情况
 categories: [Java]
-description: try-catch-finally 代码块中 finally 不会执行的特殊情况
+description: Try-catch-finally 代码块中 finally 不会执行的特殊情况
 keywords: finally, Java
 ---
 
