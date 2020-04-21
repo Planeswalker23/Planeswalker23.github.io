@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Java虚拟机的类加载机制
+title: JVM 类加载机制
 categories: [JVM]
-description: Java虚拟机的类加载机制
+description: JVM 类加载机制
 keywords: JVM, 类加载机制
 ---
 
@@ -128,14 +128,14 @@ interface ChildInterface extends ParentInterface {
 API发现这个名字的类，发现该类已被加载，并不会重新加载网络传递的过来的java.lang.Integer，而直接返回已加载过的Integer.class，这样便可以防止核心API库被随意篡改。
 
 ## 类加载器分类
-### 启动类加载器`Bootstrap ClassLoader`
-负责将存放在<JAVA_HOME>\lib目录中的，或者被-Xbootclasspath参数所指定的路径中的，并且是虚拟机识别的(仅按照文件名识别,如rt.jar、tools.jar,名字不符合的类库即使放在lib目录中也不会被加载)类库加载到虚拟机中。
+1. 启动类加载器`Bootstrap ClassLoader`
+    - 负责将存放在<JAVA_HOME>\lib目录中的，或者被-Xbootclasspath参数所指定的路径中的，并且是虚拟机识别的(仅按照文件名识别,如rt.jar、tools.jar,名字不符合的类库即使放在lib目录中也不会被加载)类库加载到虚拟机中。
 
-### 拓展类加载器`Extension ClassLoader`
-负责加载<JAVA_HOME>\lib\ext目录中的，或者被java.ext.dirs系统变量所指定的路径的所有类。
+2. 拓展类加载器`Extension ClassLoader`
+    - 负责加载<JAVA_HOME>\lib\ext目录中的，或者被java.ext.dirs系统变量所指定的路径的所有类。
 
-### 应用程序加载器`Application ClassLoader`
-负责加载用户类路径(ClassPath)上所指定的类库。如果应用程序中没有自定义自己的类加载器，一般情况下这个就是程序中默认的类加载器。
+3. 应用程序加载器`Application ClassLoader`
+    - 负责加载用户类路径(ClassPath)上所指定的类库。如果应用程序中没有自定义自己的类加载器，一般情况下这个就是程序中默认的类加载器。
 
-### 用户自定义类加载器`CustomClassLoader`
-用户自定义的类加载器,可加载指定路径的class文件
+4. 用户自定义类加载器`CustomClassLoader`
+    - 用户自定义的类加载器,可加载指定路径的class文件
