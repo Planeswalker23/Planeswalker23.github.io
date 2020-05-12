@@ -1,15 +1,19 @@
-- name: Software Engineer Keywords
+- name: Basic/Core Skills
   keywords:
       - Java
       - Python
-      - MySQL
-      - MQ
+      - Linux
       - Git
-      - Netty
-      - Redis
-      - Dubbo
-      - MyBatis
-      - Spring Framework
+      - MySQL
+      - JVM
+- name: Framworks
+      - Spring
       - Spring Boot
-      - Spring Cloud
+      - MyBatis
+      - MQ
+      - Redis
+      - Netty
+      - Dubbo
+      
+      
     
