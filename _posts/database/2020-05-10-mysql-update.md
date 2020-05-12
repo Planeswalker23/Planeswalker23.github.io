@@ -50,9 +50,22 @@ id  name    age
 神奇的事情发生了，age 全部被更新成0，而 name 字段竟然没有任何修改！
 
 # 错误原因及修正
-错误原因其实很简单，update 语句写错了。MySQL 中 update 语句的语法应该是`update user set age=10, name='user';`，如果更新多个字段，相邻字段间应该以逗号分隔而不是 and。
+错误原因其实很简单，update 语句写错了。MySQL 中 update 语句的语法应该是
+````mysql
+update user set age=10, name='user';
+````
 
-如果 update 语句使用 and 作为多个字段之间的分隔符，就像最开始那样——`update user set age=10 and name='user';`，这个更新语句将会变成`update user set age=(10 and name='user');`。
+如果更新多个字段，相邻字段间应该以逗号分隔而不是 and。
+
+如果 update 语句使用 and 作为多个字段之间的分隔符，就像最开始那样
+````mysql
+update user set age=10 and name='user';
+````
+
+这个更新语句将会变成
+````mysql
+update user set age=(10 and name='user');
+````
 
 而`(10 and name='user')`作为一个返回值为 boolean 类型的判断语句，返回会被映射成 1 或 0，有 99% 的可能会让第一个更新变量更新为错误的数据。
 
