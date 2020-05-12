@@ -8,7 +8,7 @@ menu: 关于
 permalink: /about/
 ---
 
-一个默默无闻的 Java Brick-Mover
+Java 工程师，混过网文圈，爱打羽毛球，爱学习，爱看书，爱民谣，爱生活。
 
 ## 联系方式
 
