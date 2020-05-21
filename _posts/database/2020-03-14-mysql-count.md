@@ -1,16 +1,20 @@
 ---
 layout: post
-title: MySQL 中 count() 函数的正确使用方法
+title: MySQL 中 count 函数的正确使用方法
 categories: [数据库]
-description: MySQL 中 count() 函数的正确使用方法
+description: MySQL 中 count 函数的正确使用方法
 keywords: MySQL, count
 ---
 
-# 背景
-在 MySQL 中，当我们需要获取表中的行数时，一般会选择使用`select count(*) from table;`语句，其实 count() 函数中除了 * 还可以放其他参数，比如1、主键id、字段，那么它们有什么区别呢？效率如何呢？我们应该使用哪种方式来获取表的行数呢？当搞清楚 count() 函数的运行原理后，相信上面两个问题就会有了答案。
+# 导言
+在 MySQL 中，当我们需要获取表中的行数时，一般会选择使用下面的语句
+````
+select count(*) from table;
+````
+其实 count 函数中除了 * 还可以放其他参数，比如常数、主键id、字段，那么它们有什么区别呢？效率如何呢？我们应该使用哪种方式来获取表的行数呢？当搞清楚 count 函数的运行原理后，相信上面几个问题答案就会了然于胸。
 
 # 表结构
-> user 表有两个字段，主键id和name，name可为空。在该表中共有1000000条数据，前100000条数据行的name字段为空，其余数据行name=id。
+为了解决上述的问题，创建一张 user 表，它有两个字段：主键id和name。在该表中共有1000000条数据，前100000条数据行的name字段为空，其余数据行name=id。
 
 ````
 -- 建表语句
@@ -39,7 +43,7 @@ update user set name=null where id<100000;
 ````
 
 # 测试 SQL 语句
-为了区分 count() 函数不同参数的区别，主要从执行时间和扫描行数这两方面来描述 sql 的执行效率，同时从返回结果来描述 count() 函数的特性。
+为了区分 count 函数不同参数的区别，主要从执行时间和扫描行数这两方面来描述 sql 的执行效率，同时从返回结果来描述 count 函数的特性。
 
 - count(*)—— `select count(*) from user;`
 - count(1)—— `select count(1) from user;`
@@ -74,7 +78,7 @@ update user set name=null where id<100000;
 从执行时间上来看的话，效率大致是 count(字段) < count(主键 id) < count(1) < count(*)，当然由于本次测试表结构简单且数据集只有100w条，所以这个执行时间并不能成为执行效率的有力证据，但从中还是能看出一些端倪的，即大差不差。
 
 # 总结
-count() 是一个聚合函数，对于返回的结果集，一行行地判断，如果 count 函数的参数不是 NULL，累计值就加 1，否则不加。最后返回累计值。
+count 是一个聚合函数，对于返回的结果集，一行行地判断，如果 count 函数的参数不是 NULL，累计值就加 1，否则不加。最后返回累计值。
 
 - count(*) 速度最快的原因是它不会在计数的时候去取每行数据值
 - count(1）比 count(*) 稍慢的原因是它会取每个数据行并赋值为1

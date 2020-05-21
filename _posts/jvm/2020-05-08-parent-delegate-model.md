@@ -1,8 +1,8 @@
 ---
 layout: post
-title: JVM 双亲委派模型及打破分析
+title: JVM 双亲委派模型及 SPI 实现分析
 categories: [JVM]
-description: JVM 双亲委派模型及打破分析
+description: JVM 双亲委派模型及 SPI 实现分析
 keywords: JVM, 双亲委派模型
 ---
 
