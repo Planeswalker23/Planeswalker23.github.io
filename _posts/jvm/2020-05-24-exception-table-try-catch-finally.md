@@ -31,7 +31,7 @@ keywords: JVM, 异常表, try-catch-finally
 
 我选择了第二个方法，主方法的字节码如下图：
 
-![1.png](../../images/posts/2020-05-26-1.jpeg)
+![1.png](/images/posts/2020-05-26-1.jpeg)
 
 可以看到0~3行是 try 代码块中的输出语句，12~17行是 catch 代码块中的输出语句。然后重点来了。
 
@@ -44,7 +44,7 @@ keywords: JVM, 异常表, try-catch-finally
 ### 异常表
 在一个类被编译成字节码之后，它的每个方法中都会有一张异常表。异常表中包含了“监控”的范围，“监控”何种异常以及抛出异常后去哪里处理。比如上述的示例代码，在 jclasslib 中它的异常表如下图。
 
-![2.png](../../images/posts/2020-05-26-2.jpeg)
+![2.png](/images/posts/2020-05-26-2.jpeg)
 
 或者在`javap -c`命令下异常表是这样的：
 
