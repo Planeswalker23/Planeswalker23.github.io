@@ -13,7 +13,7 @@ homebrew是一款Mac平台的软件包管理工具，官方对于它能做什么
 # 二、Homebrew安装
  在终端中输入以下命令
 ```python
-usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/source-code/install)"
+usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
 ![终端返回的结果1](https://img-blog.csdn.net/20180405231233265?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI5NDAxNDkx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)

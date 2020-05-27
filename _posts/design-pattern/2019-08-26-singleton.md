@@ -215,4 +215,4 @@ public class Singleton7 {
 }
 ```
 
-源代码地址 [GitHub](https://github.com/Planeswalker23/java-day-day-up/tree/master/source-code/design_patterns/singleton)
+源代码地址 [GitHub](https://github.com/Planeswalker23/all-in-one/tree/master/design-patterns/src/main/java/org/planeswalker/singleton)

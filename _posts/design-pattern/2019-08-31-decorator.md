@@ -155,4 +155,4 @@ public class Test {
 3. 需要为一批的兄弟类进行改装或加装功能,当然是首选装饰模式。
 
 ## 源代码
-[GitHub地址](https://github.com/Planeswalker23/all-in-one/tree/master/source-code/design-patterns/src/main/java/org/planeswalker/decorator)
+[GitHub地址](https://github.com/Planeswalker23/all-in-one/tree/master/design-patterns/src/main/java/org/planeswalker/decorator)
