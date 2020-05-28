@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 「SpringBoot」别再问我 Starter 该怎么写了
-categories: [Python]
+categories: [Spring]
 description: 「SpringBoot」别再问我 Starter 该怎么写了
 keywords: spring, springboot, starter
 ---
