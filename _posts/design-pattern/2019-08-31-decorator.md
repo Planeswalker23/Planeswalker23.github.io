@@ -27,6 +27,7 @@ keywords: 设计模式
 > 现在很多人都喜欢喝奶茶，每天一杯有益身心健康(主要是心和嘴)。当我们在喝奶茶的时候，服务员总会问"要加什么?"，这跟每天的终极难题--吃什么--是一样，今天暂且不谈。而供选择的材料可能有波霸椰果布丁等，加了椰果的奶茶最后就被标为椰果奶茶售卖。今天就用买奶茶作为装饰者模式的例子。
 
 1. 首先创建一个制作奶茶的原料抽象类`Material`。
+
 ````java
 public abstract class Material {
     /**
@@ -56,6 +57,7 @@ public abstract class Material {
 ````
 
 2. 然后创建配料抽象类`Burden`，继承于原谅抽象类。
+
 ````java
 public abstract class Burden extends Material {
 
@@ -81,6 +83,7 @@ public abstract class Burden extends Material {
 ````
 
 3. 分别创建具体的原料和配料
+
 ````java
 public class MilkTea extends Material {
 
@@ -113,6 +116,7 @@ public class Pudding extends Burden {
 ````
 
 4. 创建测试类
+
 ````java
 public class Test {
 
@@ -133,7 +137,9 @@ public class Test {
     }
 }
 ````
+
 - 测试结果为
+
 ````$xslt
 奶茶费用 = 5.0
 椰果奶茶费用 = 6.0

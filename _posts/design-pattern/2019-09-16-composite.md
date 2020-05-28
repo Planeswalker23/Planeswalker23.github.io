@@ -28,6 +28,7 @@ keywords: 设计模式
 > 就拿学生会来举个例子吧，最大的头头叫主席，下面有各个部门，最底层的是部门的干事。
 
 1. 创建学生的抽象类，它有两本基本属性，一个构造方法，还有一个展示的方法。
+
 ````java
 public abstract class Student {
     /**
@@ -59,6 +60,7 @@ public abstract class Student {
 ````
 
 2. 创建部长类，继承学生类，他表示拥有下级的部长及以上等级的学生，他还有增减干事的方法以及展示下级的方法。
+
 ````java
 public class Minister extends Student {
 
@@ -116,6 +118,7 @@ public class NormalStudent extends Student {
 ````
 
 4. 创建测试类
+
 ````java
 public class Test {
     public static void main(String[] args) {
@@ -133,7 +136,9 @@ public class Test {
     }
 }
 ````
+
 - 测试结果为
+
 ````$xslt
 小王的职责是宣传部部长
 一一的职责是宣传部干事1

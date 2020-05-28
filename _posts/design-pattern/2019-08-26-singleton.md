@@ -14,6 +14,7 @@ keywords: 设计模式, singleton
 > 单例模式-懒汉式，顾名思义就是懒人的创建对象方式，只有当用到这个类的时候才去实例化对象，如果不用到，只声明对象，并不会实例化对象。
 
 ### 1、懒汉式：线程不安全，适用于单线程
+
 ```java
 public class Singleton1 {
 
@@ -33,6 +34,7 @@ public class Singleton1 {
     }
 }
 ```
+
 - 缺点：线程不安全，当两个线程同时运行到`if (null == instance)`时，可能出现两个线程同时判断为true的情况，可能获取到两个不同的Singleton1实例，不满足单例条件。
 
 ### 2、懒汉式，使用synchronized同步锁：线程安全，适用于多线程，但效率低
@@ -57,6 +59,7 @@ public class Singleton2 {
     }
 }
 ```
+
 - 总结：适用于多线程，但加锁后开销加大，获取实例的方法效率低
 
 ### 3、懒汉式-双重检验锁：线程安全，适用于多线程，且效率高
@@ -87,12 +90,14 @@ public class Singleton3 {
     }
 }
 ```
+
 - 总结：资源利用率高，第一次加载时才创建实例，效率高，但第一次获取实例稍慢，且会可能出现DCL失效
 
 ## 饿汉式
 > 饿汉式的意思是，类加载器加载类的时候就初始化对象创建实例，不论后面是否用到这个类。
 
 ### 4、饿汉式
+
 ````java
 public class Singleton4 {
 
@@ -106,6 +111,7 @@ public class Singleton4 {
     }
 }
 ````
+
 - 优点：基于类加载机制避免了多线程的同步问题，获取对象速度快（直接返回对象）
 - 缺点：在类加载时就创建实例导致类加载慢，没有达到懒加载的效果，同时不能确定是否有其他方法导致二次类加载
 
@@ -114,6 +120,7 @@ public class Singleton4 {
 > 属于懒汉式。
 
 ### 5、静态内部类：推荐的写法
+
 ````java
 public class Singleton5 {
 
@@ -131,10 +138,12 @@ public class Singleton5 {
     }
 }
 ````
+
 - 总结：第一次加载类时并不会初始化instance，只有第一次调用获取实例方法时虚拟机加载静态内部类并初始化instance,这样不仅能确保线程安全也能保证类的唯一性，所以推荐使用静态内部类单例模式。
 
 ## 枚举类
 ### 6、枚举类单例
+
 ```java
 public enum Singleton6 {
 
@@ -144,11 +153,13 @@ public enum Singleton6 {
     public void serviceMethod() { }
 }
 ```
+
 - 属于饿汉式
 - 优点：简单，枚举实例默认线程安全，单例，反序列化不会生成新的对象
 - 缺点：少用，可读性不高
 
 ### 验证单例模式的反序列化
+
 ```java
 public class SingletonSerializableCheck {
 
@@ -178,6 +189,7 @@ public class SingletonSerializableCheck {
     }
 }
 ```
+
 - 其他的单例模式写法会出现反序列化生成两个单例对象的情况，将上面验证代码声明单例对象改成`Object checkedSingletonObj = Singleton1.getInstance();`，输出false，说明反序列化生成了新对象。
 
 ### 如何避免反序列化生成新对象？
@@ -198,6 +210,7 @@ public class SingletonSerializableCheck {
 > 如HashMap，因为HashMap中的key是不可重复的
 
 ### 7、基于容器实现单例
+
 ```java
 public class Singleton7 {
 
