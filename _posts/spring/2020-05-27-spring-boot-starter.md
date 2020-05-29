@@ -1,8 +1,8 @@
 ---
 layout: post
-title: 「SpringBoot」别再问我 Starter 该怎么写了
+title: 如何自定义一个 SpringBoot Starter
 categories: [Spring]
-description: 「SpringBoot」别再问我 Starter 该怎么写了
+description: 如何自定义一个 SpringBoot Starter
 keywords: spring, springboot, starter
 ---
 
@@ -11,7 +11,7 @@ keywords: spring, springboot, starter
 
 我想说这东西不是很简单吗，如果要自己写一个出来也是分分钟的事情。至于就因为我没有写过 starter 就觉得我一点都不会 SpringBoot 吗？
 
-当然我当时确实水平不足，连 Java 的 SPI 都忘了是啥，后来又捡了起来，原来我在大学的时候就用过 Java 的 SPI，悔之晚矣！如果你也不知道什么是 SPI，可以去看看的我另一篇文章[「JVM」别再问我什么是双亲委派和 SPI](/a/1190000022722256)。
+当然我当时确实水平不足，连 Java 的 SPI 都忘了是啥，后来又捡了起来，原来我在大学的时候就用过 Java 的 SPI，悔之晚矣！如果你也不知道什么是 SPI，可以去看看的我另一篇文章[JVM 双亲委派模型及 SPI 实现原理分析]。
 
 ## 2 什么是 SpringBoot starter
 starter 是 SpringBoot 的一个重要的组成部分，它相当于一个集成的模块，比如你想用 Mybatis 和 lombok，但是在 pom 文件中需要写两个依赖，如果你将他们集成为一个 starter（或者将更多你需要的依赖集成进去），那么你只需要在 pom 文件中写一个 starter 依赖就可以了，这对于一个可复用模块的开发和维护都极为有利。
@@ -28,7 +28,7 @@ starter 是 SpringBoot 的一个重要的组成部分，它相当于一个集成
 ### 3.1 创建项目
 在 IDEA 中新建一个 maven 工程，如下图所示。
 
-![1.png](/images/posts/2020-05-27-1.png)
+![1.png](https://planeswalker23.github.io/images/posts/2020-05-27-1.png)
 
 > Spring 官方建议自定义的 starter 使用 `xxx-spring-boot-starter` 命名规则，以区分 SpringBoot 生态提供的 starter。
 
