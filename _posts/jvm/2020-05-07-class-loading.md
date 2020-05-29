@@ -1,8 +1,8 @@
 ---
 layout: post
-title: 「JVM」类加载机制及初始化时机分析
+title: JVM 类加载机制及初始化时机分析
 categories: [JVM]
-description: 「JVM」类加载机制及初始化时机分析
+description: JVM 类加载机制及初始化时机分析
 keywords: JVM, 类加载机制
 ---
 
@@ -26,7 +26,7 @@ public class HelloWorld {
 ## 2. 类的生命周期
 类的生命周期分为加载、验证、准备、解析、初始化、使用、卸载七个阶段。其中验证、准备、解析三个阶段被统称为连接。
 
-![c86216ea9c74f47b3cff44127fb062d8bcc.jpg.png](/images/posts/2020-05-26-7.png)
+![2020-05-26-7.png](https://planeswalker23.github.io/images/posts/2020-05-26-7.png)
 
 下面，就针对各个阶段做一个简单的介绍。
 

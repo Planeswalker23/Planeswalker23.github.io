@@ -1,8 +1,8 @@
 ---
 layout: post
-title: 「MySQL」MyBatis 查询结果与 MySQL 执行结果不一致？
+title: MyBatis 查询结果与 MySQL 执行结果不一致？
 categories: [数据库]
-description: 「MySQL」MyBatis 查询结果与 MySQL 执行结果不一致？
+description: MyBatis 查询结果与 MySQL 执行结果不一致？
 keywords: MySQL, MyBatis, 事务
 ---
 
@@ -13,7 +13,7 @@ keywords: MySQL, MyBatis, 事务
 
 难道是因为 MyBatis 和数据库执行的结果不一样？
 
-![image.png](/images/posts/2020-05-28-1.png)
+![image.png](https://planeswalker23.github.io/images/posts/2020-05-28-1.png)
 
 后来我才明白不一致的原因。
 
@@ -147,7 +147,7 @@ java.lang.RuntimeException: 插入失败，user_name 重复
 
 不信邪的我又在第二个校验方法上打了端点，当程序执行到此处时，它的执行结果是：
 
-![image2.png](/images/posts/2020-05-28-2.png)
+![image2.png](https://planeswalker23.github.io/images/posts/2020-05-28-2.png)
 
 也就是说确实这时候存在这样的数据！
 

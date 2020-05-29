@@ -1,8 +1,8 @@
 ---
 layout: post
-title: 「Java」Finally 代码块不会执行的情况
+title: 什么情况下 finally 代码块不会执行
 categories: [Java]
-description: 「Java」Finally 代码块不会执行的情况
+description: 什么情况下 finally 代码块不会执行
 keywords: Java, finally
 ---
 

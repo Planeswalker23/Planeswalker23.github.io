@@ -1,8 +1,8 @@
 ---
 layout: post
-title: 「MySQL」更新语句 update 踩坑日记
+title: MySQL 更新语句 update 踩坑日记
 categories: [数据库]
-description: 「MySQL」更新语句 update 踩坑日记
+description: MySQL 更新语句 update 踩坑日记
 keywords: MySQL, update
 ---
 

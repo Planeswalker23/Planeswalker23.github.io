@@ -1,8 +1,8 @@
 ---
 layout: post
-title: 「Java」记一次使用线程池出现的问题
+title: 记一次使用线程池出现的问题（线程池异常）
 categories: [Java]
-description: 「Java」记一次使用线程池出现的问题
+description: 记一次使用线程池出现的问题（线程池异常）
 keywords: ThreadPool, Java
 ---
 
@@ -30,7 +30,7 @@ statsThreadPool.submit(new StatsJob(centerId));
 ## 问题
 在跑了很久之后，当我查看统计进度时，我发现了一个十分诡异的问题（如下图）。蓝框标出的这条线程是 WAIT 状态，表明这条线程是空闲状态，但是从日志中我看到这条线程并没有完成它的任务，因为这个中心的数据有10万条，但是日志显示它只跑到了一半，之后就再无关于此中心的日志了。
 
-![2019-12-16-1.JPG](/img/bVbHxyW)
+![2019-12-16-1.png](https://planeswalker23.github.io/images/posts/2020-05-28-1.png)
 
 这是什么原因？
 

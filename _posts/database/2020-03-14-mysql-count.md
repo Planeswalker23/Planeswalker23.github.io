@@ -1,8 +1,8 @@
 ---
 layout: post
-title: 「MySQL」Count 函数的正确使用方法
+title: MySQL 中 count 函数的正确使用方法
 categories: [数据库]
-description: 「MySQL」Count 函数的正确使用方法
+description: MySQL 中 count 函数的正确使用方法
 keywords: MySQL, count
 ---
 

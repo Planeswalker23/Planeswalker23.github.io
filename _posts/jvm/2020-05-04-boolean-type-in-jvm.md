@@ -1,8 +1,8 @@
 ---
 layout: post
-title: 「JVM」原始类型 boolean 在 JVM 中的讨论
+title: 原始类型 boolean 在 JVM 中的讨论
 categories: [JVM]
-description: 「JVM」原始类型 boolean 在 JVM 中的讨论
+description: 原始类型 boolean 在 JVM 中的讨论
 keywords: JVM, 字节码，boolean
 ---
 
@@ -64,7 +64,7 @@ public class geektime.part1.Foo {
 ### if (flag) 分析
 然后继续看字节码文件，接下来的字节码就是代表第一个判断语句`if (flag)` 语句，从3~11行都属于第一个`if`代码块，首先是`ifeq`。
 
-![7A29389B-DD73-4675-9DF2-B36FB06BD56E.png](/images/posts/2020-05-26-3.png)
+![2020-05-26-3.png](https://planeswalker23.github.io/images/posts/2020-05-26-3.png)
 
 >`ifeq`助记符的作用是：当栈顶 int 型数值等于0时跳转。这里跳转的意思就是不执行语句块中的代码。
 
@@ -73,7 +73,7 @@ public class geektime.part1.Foo {
 ### if (flag == true) 分析
 接下来继续看第二个判断语句`if (flag == true)`语句，是在字节码的14~24行。前面两行是将一个`int`类型的数值1和`flag`变量推送到栈顶，可以理解为把接下来将要进行比较的`true`放入将要进行比较的一个“容器”，然后是`if_icmpne`助记符。
 
-![7A29389B-DD73-4675-9DF2-B36FB06BD56E.png](/images/posts/2020-05-26-4.png)
+![2020-05-26-4.png](https://planeswalker23.github.io/images/posts/2020-05-26-4.png)
 
 >`if_icmpne`助记符的作用是：比较栈顶两int型数值大小，当结果不相等时跳转。
 
@@ -82,11 +82,11 @@ public class geektime.part1.Foo {
 ## 为什么编译器提示可以简化
 关于上述的示例代码，编译器或许会在第二个`if`语句提醒你可以`Simplify`，当你执行简化以后你会发现它将`if (flag == true)`变成了`if (flag)`，如下图所示。
 
-![559A0D7D-7954-4A7E-8D64-EC6A352F7AD1.png](/images/posts/2020-05-26-5.png)
+![2020-05-26-5.png](https://planeswalker23.github.io/images/posts/2020-05-26-5.png)
 
 在没有`Simplify`之前，这两个 if 语句如果要执行，第一个的条件是 flag 不等0，第二个的条件是 flag 等于1。这是两个完全不同的比较嘛！但是为什么在编译器中可以画上等号呢？
 
-![timg.jpeg](/images/posts/2020-05-26-6.jpeg)
+![2020-05-26-6.jpeg](https://planeswalker23.github.io/images/posts/2020-05-26-6.jpeg)
 
 当我们已经了解过`boolean`类型的变量在虚拟机中的表现形式之后，答案显而易见。首先这里的`flag`是一个`boolean`类型的变量，它只有`true`和`false`两种值，即在虚拟机中只有0和1两种值。所以对于一个`boolean`类型的变量，不等0就代表了它一定等1，所以编译器才会发出可以简化的提示。
 
