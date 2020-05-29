@@ -22,7 +22,7 @@ keywords: MySQL, MyBatis, 事务
 ## 2. 复现问题
 ### 2.1. 表结构
 MySQL 数据库中创建了一张用户表，只有4个字段。
-```
+```sql
 CREATE TABLE `user`  (
   `user_id` varchar(36) NOT NULL COMMENT '用户主键id',
   `user_name` varchar(55) NULL DEFAULT NULL COMMENT '账号',
@@ -34,7 +34,8 @@ CREATE TABLE `user`  (
 
 ### 2.2. 项目依赖
 示例项目是一个 SpringBoot 工程，pom 文件中除了 web 依赖还有 mysql 的驱动、MyBatis 和 lombok。
-```
+
+```java
 <dependencies>
     <dependency>
         <groupId>org.springframework.boot</groupId>
@@ -61,7 +62,8 @@ CREATE TABLE `user`  (
 
 ### 2.2. 业务
 业务流程是这样：新建一个用户，在新建用户之前首先校验邮箱是否已在数据库中存在，然后执行一些其他的业务，然后执行 insert 方法插入数据库，然后执行一些其他的业务，最后再校验 user_name 是否已存在。
-```
+
+```java
 @Slf4j
 @RestController
 public class TestController {
@@ -97,7 +99,8 @@ public class TestController {
 ```
 
 userMapper 接口类的代码如下:
-```
+
+```java
 @Repository
 public interface UserMapper {
 
@@ -125,7 +128,8 @@ public interface UserMapper {
 
 ### 2.3. 测试
 当我在浏览器上访问这个接口`http://127.0.0.1:8080/test`后，控制台输出了如下的内容：
-```
+
+```java
 2020-05-27 14:07:09.183 DEBUG 18375 --- [nio-8080-exec-6] c.b.d.m.i.a.m.UserMapper.countByEmail    : ==>  Preparing: select count(*) from user where email=? 
 2020-05-27 14:07:09.208 DEBUG 18375 --- [nio-8080-exec-6] c.b.d.m.i.a.m.UserMapper.countByEmail    : ==> Parameters: 123@gmail.com(String)
 2020-05-27 14:07:09.218 DEBUG 18375 --- [nio-8080-exec-6] c.b.d.m.i.a.m.UserMapper.countByEmail    : <==      Total: 1
@@ -166,7 +170,8 @@ MySQL 默认的事务隔离级别是读已提交，即一个事务提交之后�
 
 ### 2.5. 修复
 这个问题从业务上来说原本就是不合理的，我在查询重复数据时本就应该排除与将要插入数据相同 id 的数据，即 SQL 应该是：
-```
+
+```sql
 select count(*) from user where user_name='planeswalker' and user_id!='userId'
 ```
 

@@ -14,7 +14,7 @@ keywords: ThreadPool, Java
 基于上述的原因，以及最重要的一点：统计业务是根据订单所属的中心进行的，各个中心同时统计不会导致脏数据。所以，我计划使用线程池，为每一个中心分配一条线程去执行统计业务。
 
 ## 业务实现
-```
+```java
 // 线程工厂，用于为线程池中的每条线程命名
 ThreadFactory namedThreadFactory = new ThreadFactoryBuilder(）.setNameFormat("stats-pool-%d").build();
 
@@ -56,7 +56,7 @@ statsThreadPool.submit(new StatsJob(centerId));
 
 对于 submit() 形式提交的任务，我们直接看源码：
 
-```
+```java
 public Future<?> submit(Runnable task) {
     if (task == null) throw new NullPointerException();
     // 被包装成 RunnableFuture 对象，然后准备添加到工作队列
@@ -68,7 +68,7 @@ public Future<?> submit(Runnable task) {
 
 它会被线程池包装成 RunnableFuture 对象，而最终它其实是一个 FutureTask 对象，在被添加到线程池的工作队列，然后调用 start() 方法后， FutureTask 对象的 run() 方法开始运行，即本任务开始执行。
 
-```
+```java
 public void run() {
     if (state != NEW || !UNSAFE.compareAndSwapObject(this,runnerOffset,null, Thread.currentThread()))
         return;
@@ -106,7 +106,7 @@ public void run() {
 在定义 ThreadFactory 的时候调用`setUncaughtExceptionHandler`方法，自定义异常处理方法。
 例如：
 
-```
+```java
 ThreadFactory namedThreadFactory = new ThreadFactoryBuilder()
                 .setNameFormat("judge-pool-%d")
                 .setUncaughtExceptionHandler((thread, throwable)-> logger.error("ThreadPool {} got exception", thread,throwable))

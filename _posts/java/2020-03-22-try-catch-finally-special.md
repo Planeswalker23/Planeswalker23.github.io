@@ -16,7 +16,8 @@ finally 是 Java 异常处理机制的组成部分，它保证了代码块中的
 
 ### 1. 虚拟机被终止 `System.exit()；`
 `System.exit(0)`的作用是中止当前正在运行的 Java 虚拟机。如果虚拟机被中止，程序也会被终止，所以在它后面的代码都不会被执行，即便是 finally 代码块也同样不会执行。
-````
+
+```java
 private static void demo1() {
     try {
         System.out.println("执行 try 代码块");
@@ -31,11 +32,12 @@ private static void demo1() {
 执行 try 代码块
 
 **/
-````
+```
 
 ### 2. try 代码块无限循环
 这是由于业务逻辑的原因，一直在执行 try 代码块的业务并且永远无法终止，try 代码块都没执行完，自然无法执行 finally 代码块。
-````
+
+```java
 private static void demo2() {
     try {
         while (true) {
@@ -54,7 +56,7 @@ private static void demo2() {
 ...（一直输出）
 
 **/
-````
+```
 
 ### 3. 在被中止的守护线程内
 Java 中的线程可以分为守护线程和用户线程。当程序中所有的用户线程都终止时，虚拟机会 kill 所有的守护线程来终止程序。
@@ -62,7 +64,8 @@ Java 中的线程可以分为守护线程和用户线程。当程序中所有的
 当 try-finally 代码块存在于守护线程，而此守护线程因用户线程被销毁而终止时，该守护线程不会继续执行。
 
 假设用户线程（main线程）执行完毕后，作为守护线程的 thread 对象中的 try 代码块还没有执行结束，当用户线程执行结束后，此时已不存在用户线程，虚拟机会强制中止守护线程 thread，导致 finally 代码块不会被执行。
-````
+
+```java
 private static void demo3() {
     Thread thread = new Thread(() -> {
             try {
@@ -83,7 +86,7 @@ private static void demo3() {
 执行 try 代码块，等待2s，等待主线程执行结束...
 
 **/
-````
+```
 
 ## 参考博客
 [finally块不被执行的情况总结](https://www.cnblogs.com/yadiel-cc/p/11296567.html)

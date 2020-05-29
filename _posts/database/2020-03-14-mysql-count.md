@@ -11,9 +11,9 @@ keywords: MySQL, count
 
 在`MySQL`中，当我们需要获取某张表中的总行数时，一般会选择使用下面的语句
 
-````
+```sql
 select count(*) from table;
-````
+```
 
 其实`count`函数中除了`*`还可以放其他参数，比如常数、主键`id`、字段，那么它们有什么区别？各自效率如何？我们应该使用哪种方式来获取表的行数呢？
 
@@ -22,17 +22,17 @@ select count(*) from table;
 ## 2. 表结构
 为了解决上述的问题，我创建了一张 `user` 表，它有两个字段：主键`id`和`name`，后者可以为`null`，建表语句如下。
 
-````
+```sql
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `name` varchar(255) DEFAULT NULL COMMENT '姓名',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-````
+```
 
 在该表中共有6000000条数据，前1000000条数据行的name字段为空，其余数据行`name=id`，使用存储过程造测试数据的代码如下
 
-````
+```sql
 -- 使用存储过程造测试数据
 delimiter;;
 create procedure idata()
@@ -46,10 +46,9 @@ begin
 end;;
 delimiter;
 call idata();
-
 -- 将前1000000条数据的name字段置为null
 update user set name=null where id<1000000;
-````
+```
 
 ## 3. 执行 SQL 语句及结果
 为了区分`count`函数不同参数的区别，主要从执行时间和扫描行数这两方面来描述`SQL`的执行效率，同时还会从返回结果来描述`count函数的特性。
@@ -61,7 +60,7 @@ update user set name=null where id<1000000;
 
 ### 3.1 `*`符号
 
-````
+```sql
 mysql> select count(*) from user;
 +----------+
 | count(*) |
@@ -69,13 +68,13 @@ mysql> select count(*) from user;
 |  6000000 |
 +----------+
 1 row in set (0.76 sec)
-````
+```
 
 遍历全表，不取值（优化后，必定不是null，不取值），累加计数，最终返回结果。
 
 ### 3.2 常数
 
-````
+```sql
 mysql> select count(1) from user;
 +----------+
 | count(1) |
@@ -83,13 +82,13 @@ mysql> select count(1) from user;
 |  6000000 |
 +----------+
 1 row in set (0.76 sec)
-````
+```
 
 遍历全表，一行行取数据，将每一行赋值为1，判断到该字段不可为空，累加计数，最终返回结果。
 
 ### 3.3 非空字段
 
-````
+```sql
 mysql> select count(id) from user;
 +-----------+
 | count(id) |
@@ -97,13 +96,13 @@ mysql> select count(id) from user;
 |   6000000 |
 +-----------+
 1 row in set (0.85 sec)
-````
+```
 
 遍历全表，一行行取数据（会选择最小的索引树来遍历，所以比相同情况下的`count`字段效率更高），取每行的主键`id`，判断到该字段不可为空，累加计数，最终返回结果。
 
 ### 3.4 可为空的字段
 
-````
+```sql
 mysql> select count(name) from user;
 +-------------+
 | count(name) |
@@ -111,7 +110,7 @@ mysql> select count(name) from user;
 |     5900001 |
 +-------------+
 1 row in set (0.93 sec)
-````
+```
 
 - 若字段定义不为空：遍历全表，一行行取数据，取每行的该字段，判断到该字段不可为空，累加计数，最终返回结果。
 - 若字段定义可为空：遍历全表，一行行取数据，取每行的该字段，判断到该字段可能是`null`，然后再判断该字段的值是否为`null`，不为`null`才累加计数，最终返回结果。

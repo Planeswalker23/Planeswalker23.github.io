@@ -8,7 +8,7 @@ keywords: JVM, 字节码，boolean
 
 ## 导言
 在开始学习`JVM`字节码之后，遇到了一个有意思的问题，下面这段代码，会输出什么：
-````
+```java
 public class Foo {
     public static void main(String[] args) {
         boolean flag = true;
@@ -20,7 +20,8 @@ public class Foo {
         }
     }
 }
-````
+```
+
 这个问题的答案很显然——会输出`AB`。
 
 接下来重点来了，如果将 2 赋值给`flag`变量，会输出什么呢？如果将`flag`赋值为 3 呢？
@@ -30,7 +31,7 @@ public class Foo {
 ## boolean 类型在 JVM 中是如何表示的
 在命令行中输入`javap -c Foo`，得到反编译的字节码如下:
 
-````
+```java
 Compiled from "Foo.java"
 public class geektime.part1.Foo {
   public geektime.part1.Foo();
@@ -56,7 +57,7 @@ public class geektime.part1.Foo {
       24: invokevirtual #4                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
       27: return
 }
-````
+```
 
 在字节码文件的`main`方法中，第0~2行完成了将一个`int`类型的常量赋值给了第一个变量`flag`的操作。于是我们得到了结论：
 - **在`JVM`中`boolean`类型的变量是用数字 0 和 1 来表示的。`false`用 0 表示，`true`用 1 表示**。

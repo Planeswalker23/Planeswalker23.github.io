@@ -15,13 +15,13 @@ Java虚拟机把描述类的数据从Class文件加载到内存，并对数据�
 
 当我们在编译器中选择运行下面这个`Hello World`程序，从点击运行到程序停止运行会经过一系列复杂的过程，这些关于该类的过程就是类的生命周期。
 
-````
+```java
 public class HelloWorld {
     public static void main(String[] args){
         System.out.println("Hello World"); 
     }
 }
-````
+```
 
 ## 2. 类的生命周期
 类的生命周期分为加载、验证、准备、解析、初始化、使用、卸载七个阶段。其中验证、准备、解析三个阶段被统称为连接。
@@ -46,12 +46,13 @@ public class HelloWorld {
 如果类字段的字段属性表中存在`ConstantValue`属性的基本类型或字符串（即被final修饰），那在准备阶段变量值就会被初始化为初始值而非默认值。
 
 假设上文的`HelloWorld`类中有两个类变量定义如下，那么在准备阶段这两个变量的值分别是 a=0，b=2。
-    ````java
-    public class HelloWorld {
-        private static int a = 1;
-        private static final int b = 2;
-    }
-        ````
+
+```java
+public class HelloWorld {
+    private static int a = 1;
+    private static final int b = 2;
+}
+```
       
 ### 2.4 解析
 在解析阶段，虚拟机会将常量池内的符号引用替换为直接引用。如果符号引用指向一个未被加载的类，那么解析阶段将触发此类的加载。
@@ -80,7 +81,7 @@ public class HelloWorld {
 通过数组定义来引用类，不会触发此类的初始化。因为数组由 Java 虚拟机直接生成的，通过下面的例子来说明这一情况。
 
 在`HelloWorld`类中定义一个主方法，并在主方法中定义两个数组变量如下：
-````
+```JAVA
 public class HelloWorld {
     public static void main(String[] args){
         int[] a = new int[10];
@@ -93,10 +94,11 @@ class MyObject {
         System.out.println("MyObject 类初始化...");
     }
 }
-````
+```
     
 然后对字节码文件进行反编译，在命令行中输入`javap -c HelloWorld`，得到反编译的字节码指令如下：
-````
+
+```java
 ➜  classes git:(master) ✗ javap -c HelloWorld 
 Compiled from "HelloWorld.java"
 public class HelloWorld {
@@ -116,7 +118,7 @@ public static void main(java.lang.String[]);
     10: astore_2
     11: return
 }
-````
+```
 
 可以看到，对于原始类型的数组变量，在字节码中通过指令`newarray`完成创建；对于引用类型的数组变量，在字节码中通过指令`anewarray`完成创建。
 
@@ -133,7 +135,8 @@ public static void main(java.lang.String[]);
 在初始化阶段，虚拟机会为类的静态变量赋予正确的初始值，当然接口类也会遵从这条规定。所以我们可以通过初始化阶段对静态字段的赋值来观察接口类是否进行了初始化，下面是验证的过程。
 
 在父类接口中定义一个`int parentA = 1/0;`，然后通过子类访问父类的`parentRand`常量，根据上述第三条的结论，编译期无法确定的常量`parentRand`不会被放入调用类`InterfaceDemo`的常量池，那么必然会触发子接口或父接口其中至少一个接口类的初始化（假设我们不知道结论），如果触发父接口的初始化，那么会将1/0的值赋值给`parentA`，当虚拟机计算1/0时，会抛出`java.lang.ArithmeticException: / by zero`异常；如果只触发子接口的初始化，则不会抛出异常。
-````
+
+```java
 public class InterfaceDemo {
 
     public static void main(String[] args) {
@@ -149,16 +152,17 @@ interface ParentInterface {
 interface ChildInterface extends ParentInterface {
     String childRand = UUID.randomUUID().toString();
 }   
-````
+```
     
 运行`InterfaceDemo`类，输出如下，其中`InterfaceDemo.java:15`第15行正是`parentA`定义的位置，从而可以得出结论：在子接口使用到父接口时会触发父接口的初始化。
-````
+
+```java
 Exception in thread "main" java.lang.ExceptionInInitializerError
     at InterfaceDemo.main(InterfaceDemo.java:10)
 Caused by: java.lang.ArithmeticException: / by zero
     at ParentInterface.<clinit>(InterfaceDemo.java:15)
     ... 1 more
-````
+```
     
 然后将`main`函数中的输出改为`ChildInterface.childRand`，运行的结果时输出了一个`UUID`，没有抛出除零异常，从而得出结论：若子接口不使用父接口，不会触发父接口的初始化。
 综上所述，验证了第4条结论——一个接口在初始化时，并不要求其父接口全部都完成了初始化，只有在真正使用到父接口的时候（如引用接口中运行期才确定的常量）才会初始化。

@@ -17,7 +17,7 @@ keywords: JVM, 异常表, try-catch-finally
 
 ### 反编译后的字节码
 首先我编写了第一段测试代码，这里有一个 try-catch 代码块，每个代码块中都有一行输出，在 catch 代码块中捕获的是 Exception 异常。
-```
+```java
  public static void main(String[] args) {
         try {
             System.out.println("enter try block");
@@ -48,7 +48,7 @@ keywords: JVM, 异常表, try-catch-finally
 
 或者在`javap -c`命令下异常表是这样的：
 
-```
+```java
 Exception table:
    from    to  target type
        0     8    11   Class java/lang/Exception
@@ -67,7 +67,8 @@ Exception table:
 
 ## 字节码中的 finally
 接下来在上述的代码中再加入一个 finally 代码块，然后再次执行反编译的命令看看有什么不一样。
-```
+
+```java
 // 源代码
 public static void main(String[] args) {
         try {
@@ -81,7 +82,7 @@ public static void main(String[] args) {
     }
 ```
 
-```
+```java
 // 字节码
  0 getstatic #2     <java/lang/System.out>
  3 ldc #3           <enter try block>
@@ -106,6 +107,7 @@ public static void main(String[] args) {
 49 athrow
 50 return
 ```
+
 finally 代码块在当前版本（jdk 1.8）的 JVM 中的处理机制是比较特殊的。从上面的字节码中也可以明显看到，只是加了一个 finally 代码块而已，字节码指令增加了很多行。
 
 如果再仔细观察一下，我们可以发现，在字节码指令中，有三块重复的字节码指令，分别是8~13行、28~33行和40~45行，如果对字节码有些了解的同学或许已经知道了，这三块重复的字节码就是 finally 代码块对应的代码。
@@ -116,7 +118,7 @@ finally 代码块在当前版本（jdk 1.8）的 JVM 中的处理机制是比较
 
 上述示例代码的异常表如下
 
-```
+```java
 Exception table:
    from    to  target type
        0     8    19   Class java/lang/Exception
@@ -137,7 +139,8 @@ Exception table:
 
 ## 如果代码块中有 return
 讲完了异常在各个代码块中的情况，接下来再来考虑一下 return 关键字吧，如果 try 或者 catch 中有 return，finally 还会执行吗？如果 finally 中也有 return，那么最终返回的值是什么？为了说明这个问题，我编写了一段测试代码，然后找到它的字节码指令。
-```
+
+```java
 public static int get() {
     try {
         return 1;

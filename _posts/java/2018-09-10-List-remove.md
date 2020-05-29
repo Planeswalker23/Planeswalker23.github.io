@@ -12,7 +12,7 @@ keywords: List, Java
 
 ## 实体类
 
-```
+```java
 public class User {
     private String name;
     private Integer age;
@@ -23,7 +23,7 @@ public class User {
 
 ## 测试代码
 
-```
+```java
 public static void main(String[] args) {
         List<User> userList = new ArrayList<>();
         userList.add(new User("小王", 18));
@@ -62,7 +62,7 @@ public static void main(String[] args) {
 
  - List接口的remove方法有两个重载，一个参数是Object，一个参数是int。
 
-```
+```java
 public interface List<E> extends Collection<E> {
 
 	......
@@ -85,7 +85,8 @@ public interface List<E> extends Collection<E> {
 
 ## 方案一
  - 在`get`方法后加上`intValue()`方法将`Integer`类型转化为`int`
-```
+
+```java
 userList.remove(matchList.get(i).intValue());//遍历matchList对userList执行remove方法
 ```
 
@@ -93,7 +94,7 @@ userList.remove(matchList.get(i).intValue());//遍历matchList对userList执行r
 
 - 不需要将匹配到需要删除的元素索引存在`ArrayList`中，直接删除，然后将索引值-1就可以
 
-```
+```java
 for (int i = 0; i < userList.size(); i++)
     if (ageList.contains(userList.get(i).getAge()))
         userList.remove(i--);//先删除匹配的元素，然后将索引值i减1
