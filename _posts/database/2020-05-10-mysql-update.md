@@ -83,7 +83,7 @@ update user set age=10, name='user';
 1. 在提交`DML`语句前先在测试环境试一下
 2. 基础的`SQL`语法不要记错
 
-![1](https://user-gold-cdn.xitu.io/2020/5/28/1725b962399b5a54?imageView2/0/w/1280/h/960/ignore-error/1)
+![2020051001](https://planeswalker23.github.io/images/posts/2020051001.png)
 
 ## 小结
 1. `MySQL`中`update`语句的语法是
