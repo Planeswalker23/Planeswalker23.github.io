@@ -7,7 +7,7 @@ date_format: "ordinal"
 title: 旅法师营地 | No.23
 subtitle: "Hail Hydra!"
 description: "旅法师营地 | No.23"
-keywords: Java Birck-Mover
+keywords: planeswalker23
 timezone: Asia/Hangzhou
 encoding: "utf-8"
 side_bar_repo_limit: 5
@@ -34,9 +34,9 @@ navs:
     href: /categories/
     label: 分类
 
-  # -
-  #   href: /archives/
-  #   label: 归档
+  -
+    href: /archives/
+    label: 归档
 
   -
     href: /wiki/
