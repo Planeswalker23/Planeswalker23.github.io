@@ -33,7 +33,8 @@ starter 是 SpringBoot 的一个重要的组成部分，它相当于一个集成
 > Spring 官方建议自定义的 starter 使用 `xxx-spring-boot-starter` 命名规则，以区分 SpringBoot 生态提供的 starter。
 
 然后需要在 pom 文件中加入实现 starter 所需要的依赖。
-```
+
+```java
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -60,7 +61,8 @@ starter 是 SpringBoot 的一个重要的组成部分，它相当于一个集成
 我们在 `application.properties` 配置文件中新增两个配置项，第一个是用来控制该 starter 的启动或关闭，第二个是需要指定的格式化信息。
 
 然后创建一个配置文件映射类，它的私有成员变量 pattern 就是需要在配置文件中指定的属性，如果没有指定默认值为 `yyyy-MM-dd HH:mm:ss`。
-```
+
+```java
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -84,7 +86,8 @@ public class DateFormatProperties {
 
 ### 3.3 创建配置类
 然后我们需要创建一个配置类，这个配置类能够将核心功能类注入到 Ioc 容器，使得在其他引用此 starter 的项目中能够使用自动配置的功能。
-```
+
+```java
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -122,7 +125,8 @@ public class DateFormatConfiguration {
 至此开发的业务代码就结束了，但是还有一个最重要的步骤就是指定 DateFormatConfiguration 类作为自动装配类。
 
 这需要在 resource 目录下创建 MATE-INF 文件夹，并创建一个名为 spring.factories 的文件，然后在文件中写下
-```
+
+```java
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=org.walker.planes.DateFormatConfiguration
 ```
 
@@ -130,7 +134,8 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=org.walker.planes
 
 ### 3.5 发布&测试
 然后在命令行中敲下 `mvn clean install` 命令，当看到下面的输出后，自定义的 starter 就可以作为一个依赖被引用了。
-```
+
+```java
 [INFO] -----------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] -----------------------------------------------------------
@@ -140,7 +145,8 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=org.walker.planes
 ```
 
 新建一个测试工程，在 pom 文件中加入如下的依赖。
-```
+
+```java
 <dependency>
     <groupId>org.walker.planes</groupId>
     <artifactId>date-format-spring-boot-starter</artifactId>
@@ -149,13 +155,15 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=org.walker.planes
 ```
 
 然后在 application.properties 文件中开启自定义 starter 的配置。
-```
+
+```java
 formatter.enabled=true
 formatter.pattern=yyyy-MM-dd
 ```
 
 然后在启动类中创建一个 Runner 任务，简单的输出一个日期类，就像下面这样。
-```
+
+```java
 @SpringBootApplication
 public class FirstStarterApplication implements ApplicationRunner {
 
@@ -174,7 +182,8 @@ public class FirstStarterApplication implements ApplicationRunner {
 ```
 
 启动项目，我们可以看到自动配置生效了，程序将配置文件中指定的格式化样式覆盖了默认的 pattern。
-```
+
+```java
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
