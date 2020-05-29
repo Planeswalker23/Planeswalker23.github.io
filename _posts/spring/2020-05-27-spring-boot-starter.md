@@ -1,8 +1,8 @@
 ---
 layout: post
-title: 如何自定义一个 SpringBoot Starter
+title: 如何实现一个自定义的 SpringBoot Starter
 categories: [Spring]
-description: 如何自定义一个 SpringBoot Starter
+description: 如何实现一个自定义的 SpringBoot Starter
 keywords: spring, springboot, starter
 ---
 
@@ -28,7 +28,7 @@ starter 是 SpringBoot 的一个重要的组成部分，它相当于一个集成
 ### 3.1 创建项目
 在 IDEA 中新建一个 maven 工程，如下图所示。
 
-![1.png](https://planeswalker23.github.io/images/posts/2020-05-27-1.png)
+![1.png](https://user-gold-cdn.xitu.io/2020/5/29/1725e31b5b01fc08?w=800&h=468&f=png&s=57910)
 
 > Spring 官方建议自定义的 starter 使用 `xxx-spring-boot-starter` 命名规则，以区分 SpringBoot 生态提供的 starter。
 

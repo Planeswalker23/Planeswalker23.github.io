@@ -13,7 +13,7 @@ keywords: MySQL, MyBatis, 事务
 
 难道是因为 MyBatis 和数据库执行的结果不一样？
 
-![image.png](https://planeswalker23.github.io/images/posts/2020-05-28-1.png)
+![image.png](https://user-gold-cdn.xitu.io/2020/5/29/1725e3349c48aa8d?w=275&h=248&f=png&s=21397)
 
 后来我才明白不一致的原因。
 
@@ -151,7 +151,7 @@ java.lang.RuntimeException: 插入失败，user_name 重复
 
 不信邪的我又在第二个校验方法上打了端点，当程序执行到此处时，它的执行结果是：
 
-![image2.png](https://planeswalker23.github.io/images/posts/2020-05-28-2.png)
+![image2.png](https://user-gold-cdn.xitu.io/2020/5/29/1725e334a3f4a8ae?imageView2/0/w/1280/h/960/ignore-error/1)
 
 也就是说确实这时候存在这样的数据！
 

@@ -8,6 +8,11 @@ keywords: JVM, 异常表, try-catch-finally
 
 作为一个“有经验”的 Java 工程师，你一定知道什么是`try-catch-finally`代码块。但是你知道 JVM 是如何处理异常的吗？今天我们就来讲讲异常在 JVM 中的处理机制，以及字节码中异常表。
 
+希望在这之后，不会有人再将下面这张表情包发给你……
+
+![1.png](https://user-gold-cdn.xitu.io/2020/5/28/1725bb00aa97ba2e?imageView2/0/w/1280/h/960/ignore-error/1)
+
+
 ## 环境介绍
 - jdk 1.8.0_151
 - IntelliJ IDEA 及 jclasslib 插件
@@ -31,9 +36,11 @@ keywords: JVM, 异常表, try-catch-finally
 
 我选择了第二个方法，主方法的字节码如下图：
 
-![1.png](/images/posts/2020-05-26-1.jpeg)
+![1.png](https://user-gold-cdn.xitu.io/2020/5/28/1725bb017638e7d5?imageView2/0/w/1280/h/960/ignore-error/1)
 
 可以看到0~3行是 try 代码块中的输出语句，12~17行是 catch 代码块中的输出语句。然后重点来了。
+
+![2](https://user-gold-cdn.xitu.io/2020/5/28/1725bb0235486fbd?imageView2/0/w/1280/h/960/ignore-error/1)
 
 第8行的字节码是`8 goto 20`，这是什么意思呢？没错，盲猜就能猜到，这个字节码指令就是跳转到第20行的意思。这一行是说，如果 try 代码块中没有出现异常，那么就跳转到第20行，也就是整个方法行完成后 return 了。
 
@@ -44,7 +51,7 @@ keywords: JVM, 异常表, try-catch-finally
 ### 异常表
 在一个类被编译成字节码之后，它的每个方法中都会有一张异常表。异常表中包含了“监控”的范围，“监控”何种异常以及抛出异常后去哪里处理。比如上述的示例代码，在 jclasslib 中它的异常表如下图。
 
-![2.png](/images/posts/2020-05-26-2.jpeg)
+![2.png](https://user-gold-cdn.xitu.io/2020/5/28/1725bb03115c65aa?imageView2/0/w/1280/h/960/ignore-error/1)
 
 或者在`javap -c`命令下异常表是这样的：
 

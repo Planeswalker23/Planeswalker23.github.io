@@ -26,7 +26,7 @@ public class HelloWorld {
 ## 2. 类的生命周期
 类的生命周期分为加载、验证、准备、解析、初始化、使用、卸载七个阶段。其中验证、准备、解析三个阶段被统称为连接。
 
-![2020-05-26-7.png](https://planeswalker23.github.io/images/posts/2020-05-26-7.png)
+![2020-05-26-7.png](https://user-gold-cdn.xitu.io/2020/5/28/1725ba67cc8d08df?imageView2/0/w/1280/h/960/ignore-error/1)
 
 下面，就针对各个阶段做一个简单的介绍。
 

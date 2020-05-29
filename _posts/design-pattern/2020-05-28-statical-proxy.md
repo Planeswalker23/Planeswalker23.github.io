@@ -1,9 +1,9 @@
 ---
 layout: post
-title: 代理模式之静态代理小记
-categories: [Java]
-description: 代理模式之静态代理小记
-keywords: Java, 重载
+title: 代理模式之静态代理
+categories: [设计模式]
+description: 代理模式之静态代理
+keywords: 静态代理
 ---
 
 从前从前，有个面试官问我动态代理和静态代理的区别，我当时支支吾吾没说清楚，只提到了动态代理需要实现`InvocationHandler`接口，然后使用`Proxy`类反射创建实例云云。至于静态代理……这玩意不就是一种设计思想？
@@ -25,7 +25,7 @@ keywords: Java, 重载
 
 相信在一个陌生的城市打拼的程序员们在初期都会遇到这样一个问题：租房。我们通常有三种方式，第一可以自己在闲鱼、豆瓣、自如等信息网站去找房源，第二直接去心仪的小区公告栏看看有没有招租信息（当然可能被中介的广告霸占），第三就是联系房产中介，中介会帮你挑选你想要租的房子，只不过需要付一笔服务费。
 
-![租房图片来源于百度.png](https://planeswalker23.github.io/images/posts/2020-05-28-3.png)
+![租房图片来源于百度.png](https://user-gold-cdn.xitu.io/2020/5/29/1725e3567c98a892?w=400&h=253&f=jpeg&s=14987)
 
 假设我选择**委托**中介来租房，在这个过程中就可以把房子抽象为一个类，把帮我租房的中介抽象为一个类，这两个类都持有同样的方法。而”我“作为客户，**委托**中介帮我找到房子。
 
@@ -52,7 +52,7 @@ keywords: Java, 重载
 ### 3.5 类图
 > 图片来源于[Proxy模式——静态代理](https://www.jianshu.com/p/5004b0b48511)
 
-![11247007-677518be6c8bf05c.png](https://planeswalker23.github.io/images/posts/2020-05-28-4.png)
+![2](https://user-gold-cdn.xitu.io/2020/5/29/1725e356841797fe?w=758&h=399&f=png&s=6560)
 
 ## 4 代码示例
 基于上面租房的例子使用代码实现。

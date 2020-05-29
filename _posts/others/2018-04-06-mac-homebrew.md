@@ -16,12 +16,12 @@ homebrew是一款Mac平台的软件包管理工具，官方对于它能做什么
 usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
-![终端返回的结果1](https://planeswalker23.github.io/images/posts/2018-04-06-1-1.png)
+![终端返回的结果1](https://img-blog.csdn.net/20180405231233265?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI5NDAxNDkx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
 
 按照他的要求按下RETURN(即回车)然后等待它自己安装完成就可以了。
 事实上我装了好多次，都没有成功，有时候是没有连接到某地址，有时候是直接返回false、error，多试几次然后就行了。当终端出现以下信息时，就是说安装完成了。
 
-![终端返回的结果2](https://planeswalker23.github.io/images/posts/2018-04-06-2.png)
+![终端返回的结果2](https://img-blog.csdn.net/20180405231332191?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI5NDAxNDkx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
 
 然后就可以用下面的代码测试Homebrew是否安装成功。
 ```
@@ -29,7 +29,7 @@ brew
 ```
 如果安装成功，会返回下面的命令。
 
-![终端返回的结果3](https://planeswalker23.github.io/images/posts/2018-04-06-3.png)
+![终端返回的结果3](https://img-blog.csdn.net/20180405231427862?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI5NDAxNDkx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
 
 Ps：Homebrew的卸载请看参考中第一条。
 
@@ -40,7 +40,7 @@ brew install git
 ```
 接下来就是漫长的等待，好像要很久，把我给等困了，安装完成会返回下面的界面。
 
-![终端返回的结果4](https://planeswalker23.github.io/images/posts/2018-04-06-4.png)
+![终端返回的结果4](https://img-blog.csdn.net/20180405231617333?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI5NDAxNDkx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
 
 # 四、配置用户名和用户邮箱
 该信息以后与Git交互时需要用到。
@@ -64,11 +64,11 @@ ssh-keygen -t rsa -C "your_email@youremail.com"
 > 在终端中输入`cd /Users/当前电脑用户/.ssh`进入该目录
 > 输入`cat id_rsa.pub`指令，查看`id_rsa.pub`文件中的内容
 
-![这里写图片描述](https://planeswalker23.github.io/images/posts/2018-04-06-5.png)
+![这里写图片描述](https://img-blog.csdn.net/20180405233940825?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI5NDAxNDkx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
 
 然后打开自己的Github，鼠标移动到右上角自己的头像，点击`Settings`->`SSH and GPG keys`。
 
-![这里写图片描述](https://planeswalker23.github.io/images/posts/2018-04-06-6.png)
+![这里写图片描述](https://img-blog.csdn.net/2018040523430540?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI5NDAxNDkx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
 
 然后点击`New SSH Key`，`Title`中的内容可任意编辑，`Key`中填写刚刚获取的`id_rsa.pub`文件中的内容，全部复制粘贴进去，然后点击`Add SSH Key`就添加公钥完成了。
 
