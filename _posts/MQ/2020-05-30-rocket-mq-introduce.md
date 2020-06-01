@@ -1,8 +1,8 @@
 ---
 layout: post
-title: 「RocketMQ」0.预备知识
+title: RocketMQ 0.预备知识
 categories: [MQ]
-description: 「RocketMQ」0.预备知识
+description: RocketMQ 0.预备知识
 keywords: MQ, RocketMQ, 消息队列
 ---
 
