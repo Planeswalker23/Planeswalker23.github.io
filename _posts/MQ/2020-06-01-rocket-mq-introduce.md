@@ -5,7 +5,6 @@ categories: [MQ]
 description: RocketMQ（零）术语、消费模式、应用场景
 keywords: MQ, RocketMQ, 消息队列
 ---
-![2020060103](https://planeswalker23.github.io/images/posts/2020060103.png)
 
 ## 1. 什么是 RocketMQ
 `RocketMQ`是一个低延迟、高并发、高可用、高可靠的分布式消息中间件。
