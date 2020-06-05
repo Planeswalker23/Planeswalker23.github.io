@@ -290,3 +290,5 @@ private ServiceLoader(Class<S> svc, ClassLoader cl) {
 3. 双亲委派模型的好处。
 4. 打破双亲委派模型的三种场景。
 5. 线程上下文类加载器在是如何实现 SPI 的。
+
+> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢

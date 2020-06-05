@@ -82,3 +82,5 @@ ssh-keygen -t rsa -C "your_email@youremail.com"
 [添加远程库 - 廖雪峰的官方网站](https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/0013752340242354807e192f02a44359908df8a5643103a000)
 
 [Homebrew macOS 缺失的软件包管理器](https://brew.sh/index_zh-cn.html)
+
+> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢

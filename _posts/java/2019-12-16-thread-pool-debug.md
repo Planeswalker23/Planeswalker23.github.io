@@ -119,3 +119,5 @@ ThreadFactory namedThreadFactory = new ThreadFactoryBuilder()
 在修复了单个线程任务的异常之后，我继续使用线程池进行重新统计业务，终于跑完了，也终于完成了这个任务。
 
 小结：使用线程池时需要注意，子线程的异常，如果没有被捕获就会丢失，可能会导致后期根据日志调试时无法找到原因。
+
+> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢

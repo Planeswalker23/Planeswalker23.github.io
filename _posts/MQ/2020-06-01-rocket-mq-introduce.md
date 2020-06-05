@@ -142,3 +142,5 @@ private void checkHoldRequest() {
 本文记录了我在学习`RocketMQ`前不明白、不清楚的一些点，比如各个角色和术语的概念，消费消息的两种消费模式以及消息队列的应用场景。
 
 不过在多写几个`demo`之后，对于这些概念的理解也就越来越深刻，这里只是做个记录，权当课前预习了。
+
+> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢

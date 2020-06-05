@@ -15,3 +15,4 @@ keywords: MQ, RocketMQ, 消息队列
 假设在一个分布式系统中有两个子服务，分别用于下单和支付。
 
 
+> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢

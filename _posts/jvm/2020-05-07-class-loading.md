@@ -172,3 +172,5 @@ Caused by: java.lang.ArithmeticException: / by zero
 2. 类加载过程分为加载、验证、准备、解析、初始化，其中验证、准备、解析三个阶段被统称为连接。以及各个阶段虚拟机做的工作。
 3. 六种主动引用的情况。
 4. 四种主动引用中被动引用的情况及示例。
+
+> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢

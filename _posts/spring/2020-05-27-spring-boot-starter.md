@@ -207,3 +207,5 @@ start to initialize SimpleDateFormat with pattern: yyyy-MM-dd
 4. 在 MATE-INF 文件夹下创建 `spring.factories` 文件夹，激活自动配置。
 5. 在 maven 仓库发布 starter
 
+
+> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢

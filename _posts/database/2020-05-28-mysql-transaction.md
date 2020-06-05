@@ -183,3 +183,5 @@ select count(*) from user where user_name='planeswalker' and user_id!='userId'
 本文记录了一个关于 SpringBoot+MyBatis 框架查询数据库的小问题，这其实是数据库事务与隔离级别的问题，同时这也是一个业务上的问题，应该在插入之前进行验重。
 
 关于数据库隔离级别，这里只是小小提了一下，以后有空再总结吧。
+
+> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢

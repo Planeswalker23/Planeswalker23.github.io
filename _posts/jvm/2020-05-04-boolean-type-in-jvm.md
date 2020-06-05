@@ -110,3 +110,5 @@ public class geektime.part1.Foo {
 3. 当虚拟机执行`if(boolean==true)`的条件判断时，实际进行的判断时该布尔值是否等于1，当该布尔值等于1时执行`if`语句中的内容。
 4. 编译器提示`if(boolean==true)`可以简化为`if(boolean)`的原因是在虚拟机中布尔值只有两种值，执行不等于0的判断与执行等于1的判断是等价的。
 5. 若在虚拟机中将其他`int`值赋值给一个布尔类型的变量，虚拟机会取此整数值二进制的最后一位。
+
+> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢

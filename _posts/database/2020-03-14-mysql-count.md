@@ -133,3 +133,5 @@ mysql> select count(name) from user;
 - `count(可为空的字段)`最慢的原因是它可能需要判断每个数据行中的改字段是否为 null
 
 所以，最好还是用`count(*)`。
+
+> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢
