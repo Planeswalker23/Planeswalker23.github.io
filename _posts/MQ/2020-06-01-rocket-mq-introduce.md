@@ -40,8 +40,8 @@ Message msg = new Message("TopicTest" /* Topic */,
 
 而在发送消息之前，创建生产者时需要指定`group name`。
 ```java
- // Instantiate with specified consumer group name.
-DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("please_rename_unique_group_name");
+ //Instantiate with a producer group name.
+DefaultMQProducer producer = new DefaultMQProducer("please_rename_unique_group_name");
          
 ```
 
