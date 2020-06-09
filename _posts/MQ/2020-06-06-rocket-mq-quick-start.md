@@ -158,4 +158,4 @@ ConsumeMessageThread_5 Receive New Messages: [MessageExt [brokerName=daxiongMac.
 > 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢。<br>
 > 本文已上传个人公众号，欢迎扫码关注。
 
-![wechat](https://planeswalker23.github.io/images/wechat.png)
+![wechat](https://planeswalker23.github.io/images/wechat.png)。

@@ -140,4 +140,7 @@ public class EncryptInterceptor implements Interceptor {
 
 mybatis拦截器除了拦截设置参数和拦截返回查询结果实现加密、解密或者公共字段的自动填充之外，还有许多用处，比如说可以用它实现分页、慢sql熔断等等。拦截器是一个强大的工具，但是要注意如果在拦截器中添加太多逻辑，可能会影响业务效率，拦截器的效率问题也是一个要注意的点。
 
-> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢
+> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢。<br>
+> 本文已上传个人公众号，欢迎扫码关注。
+
+![wechat](https://planeswalker23.github.io/images/wechat.png)

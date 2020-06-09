@@ -83,4 +83,7 @@ ssh-keygen -t rsa -C "your_email@youremail.com"
 
 [Homebrew macOS 缺失的软件包管理器](https://brew.sh/index_zh-cn.html)
 
-> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢
+> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢。<br>
+> 本文已上传个人公众号，欢迎扫码关注。
+
+![wechat](https://planeswalker23.github.io/images/wechat.png)

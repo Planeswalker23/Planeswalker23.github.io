@@ -111,4 +111,7 @@ public class geektime.part1.Foo {
 4. 编译器提示`if(boolean==true)`可以简化为`if(boolean)`的原因是在虚拟机中布尔值只有两种值，执行不等于0的判断与执行等于1的判断是等价的。
 5. 若在虚拟机中将其他`int`值赋值给一个布尔类型的变量，虚拟机会取此整数值二进制的最后一位。
 
-> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢
+> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢。<br>
+> 本文已上传个人公众号，欢迎扫码关注。
+
+![wechat](https://planeswalker23.github.io/images/wechat.png)

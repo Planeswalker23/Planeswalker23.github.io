@@ -91,4 +91,7 @@ private static void demo3() {
 ## 参考博客
 [finally块不被执行的情况总结](https://www.cnblogs.com/yadiel-cc/p/11296567.html)
 
-> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢
+> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢。<br>
+> 本文已上传个人公众号，欢迎扫码关注。
+
+![wechat](https://planeswalker23.github.io/images/wechat.png)

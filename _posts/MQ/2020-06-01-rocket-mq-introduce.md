@@ -143,4 +143,7 @@ private void checkHoldRequest() {
 
 不过在多写几个`demo`之后，对于这些概念的理解也就越来越深刻，这里只是做个记录，权当课前预习了。
 
-> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢
+> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢。<br>
+> 本文已上传个人公众号，欢迎扫码关注。
+
+![wechat](https://planeswalker23.github.io/images/wechat.png)

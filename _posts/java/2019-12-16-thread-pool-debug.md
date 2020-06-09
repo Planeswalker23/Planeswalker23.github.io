@@ -120,4 +120,7 @@ ThreadFactory namedThreadFactory = new ThreadFactoryBuilder()
 
 小结：使用线程池时需要注意，子线程的异常，如果没有被捕获就会丢失，可能会导致后期根据日志调试时无法找到原因。
 
-> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢
+> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢。<br>
+> 本文已上传个人公众号，欢迎扫码关注。
+
+![wechat](https://planeswalker23.github.io/images/wechat.png)
