@@ -20,7 +20,7 @@ keywords: JVM, 异常表, try-catch-finally
 ## 字节码中的 try-catch
 `Talk is cheap, show you my code!`
 
-### 反编译后的字节码
+### 编译后的字节码
 首先我编写了第一段测试代码，这里有一个 try-catch 代码块，每个代码块中都有一行输出，在 catch 代码块中捕获的是 Exception 异常。
 ```java
  public static void main(String[] args) {
@@ -32,7 +32,7 @@ keywords: JVM, 异常表, try-catch-finally
     }
 ```
 
-然后在命令行中先定位到这个类的字节码文件目录中，执行主方法后敲下`javap -c 类名`进行反编译，或者直接在编译器中选择`Build Project`，然后打开 jclasslib 工具就可以看到这个类的字节码。
+然后在命令行中先定位到这个类的字节码文件目录中，执行主方法后敲下`javap -c 类名`进行编译，或者直接在编译器中选择`Build Project`，然后打开 jclasslib 工具就可以看到这个类的字节码。
 
 我选择了第二个方法，主方法的字节码如下图：
 
@@ -73,7 +73,7 @@ Exception table:
 如果程序没有触发异常，那么虚拟机会使用 goto 指令跳过 catch 代码块，执行 finally 语句或者方法返回。
 
 ## 字节码中的 finally
-接下来在上述的代码中再加入一个 finally 代码块，然后再次执行反编译的命令看看有什么不一样。
+接下来在上述的代码中再加入一个 finally 代码块，然后再次执行编译的命令看看有什么不一样。
 
 ```java
 // 源代码
