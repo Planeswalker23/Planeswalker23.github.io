@@ -9,7 +9,7 @@ keywords: MQ, RocketMQ, 消息队列
 ## 1. 什么是 RocketMQ
 `RocketMQ`是一个低延迟、高并发、高可用、高可靠的分布式消息中间件。
 
-![2020060101](https://mmbiz.qpic.cn/mmbiz_png/JGJic1BGy59UdehZUFWLibtlhKSsxA5v2nh5ZdFb6YbNQNYibx8r603vc6BTVxVNmRdVlfrxIK0K3N4Qnu1q9b21g/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+![2020060101](https://planeswalker23.github.io/images/posts/2020060101.png)
 
 从`RocketMQ`的架构图可以看到，它是由`NameServer, Broker, Producer, Consumer`四种角色组成的，每一种角色都可以进行水平扩展而不会出现单点故障，所以它天然的支持分布式。
 
@@ -50,7 +50,7 @@ DefaultMQProducer producer = new DefaultMQProducer("please_rename_unique_group_n
 
 首先来想象一个电商网站的页面，它的主页一定有各种类别的商品，比如衣服、裤子、鞋子等等。而每种类别的商品下面还有子类别，假设是品牌的分类。在这个画面中，各种类别的商品就代表`Topic`，而商品的子类别品牌就代表`Tag`。
 
-![2020060102](https://mmbiz.qpic.cn/mmbiz_png/JGJic1BGy59UdehZUFWLibtlhKSsxA5v2n63leh5ibuHAvyDHxMWF6hwPoQv15UMpSmyKy7nSl1uA6CKyzBgZLEwQ/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+![2020060102](https://planeswalker23.github.io/images/posts/2020060102.png)
 
 - `Topic`: 主题，代表消息的类别，可以理解为消息类型的第一级划分。
 - `Tag`: 子主题，也属于消息的类别，但是它是`Topic`下的类别，可以理解为消息类型的第二级划分。

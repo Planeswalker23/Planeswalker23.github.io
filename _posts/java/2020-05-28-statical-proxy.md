@@ -25,7 +25,7 @@ keywords: 代理, 静态代理, 动态代理, Proxy
 
 相信在一个陌生的城市打拼的程序员们在初期都会遇到这样一个问题：租房。我们通常有三种方式，第一可以自己在闲鱼、豆瓣、自如等信息网站去找房源，第二直接去心仪的小区公告栏看看有没有招租信息（当然可能被中介的广告霸占），第三就是联系房产中介，中介会帮你挑选你想要租的房子，只不过需要付一笔服务费。
 
-![2020052803](https://mmbiz.qpic.cn/mmbiz_png/JGJic1BGy59WjiabOL80DzR1Y6mmqwDrGdPLJnS22SKKkGg0qdaNzlfzrbccricLyVUn9WKU7BVVUOpGo6Wdtb6xQ/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+![2020052803](https://planeswalker23.github.io/images/posts/2020052803.png)
 
 假设我选择**委托**中介来租房，在这个过程中就可以把房子抽象为一个类，这是我最终想要得到的东西。然后把帮我租房的中介抽象为一个类，通过**委托**中介，我可以得到自己想要的房子。同时，这两个类实现了相同的接口，可以这么去理解这里相同接口的作用：房子通过**接口**注册在数据库中，中介通过接口找到了注册在数据库中的房子。
 
@@ -47,7 +47,7 @@ keywords: 代理, 静态代理, 动态代理, Proxy
 有人可能会问了，那“我”呢？简单点说，其实“我”就是测试方法中的 main 方法，负责调用代理角色的方法。
 
 ### 2.5 类图
-![2020052804](https://mmbiz.qpic.cn/mmbiz_png/JGJic1BGy59WjiabOL80DzR1Y6mmqwDrGdocA3SatlXYP49IEbAA5hAAtJahT4YPjEyssBCcoicAQicU3KuK1bJ5Ng/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+![2020052804](https://planeswalker23.github.io/images/posts/2020052804.png)
 > 图片来源于[Proxy模式——静态代理](https://www.jianshu.com/p/5004b0b48511)
 
 ## 3. 静态代理

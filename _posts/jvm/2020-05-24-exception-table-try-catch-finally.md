@@ -10,7 +10,7 @@ keywords: JVM, 异常表, try-catch-finally
 
 希望在这之后，不会有人再将下面这张表情包发给你……
 
-![2020052401](https://mmbiz.qpic.cn/mmbiz_png/JGJic1BGy59X2x87NAq5vx5HJdWcGZWJl9Tas9UMmUHPfMPpWOKQ5aiby7epbrD0Hw9RMFwz9liboA9VH5bviawuHQ/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+![2020052401](https://planeswalker23.github.io/images/posts/2020052401.png)
 
 
 ## 环境介绍
@@ -36,11 +36,11 @@ keywords: JVM, 异常表, try-catch-finally
 
 我选择了第二个方法，主方法的字节码如下图：
 
-![2020052402](https://mmbiz.qpic.cn/mmbiz_png/JGJic1BGy59X2x87NAq5vx5HJdWcGZWJl5TWY8VMylITormL1JsCgibpMdlVD9ERTxDF8xz2Lz1Nicd7POVytDkaw/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+![2020052402](https://planeswalker23.github.io/images/posts/2020052402.png)
 
 可以看到0~3行是 try 代码块中的输出语句，12~17行是 catch 代码块中的输出语句。然后重点来了。
 
-![2020052403](https://mmbiz.qpic.cn/mmbiz_png/JGJic1BGy59X2x87NAq5vx5HJdWcGZWJlA48WiaUcTBWwbekr3z4mVEj4Fp3f9csuIW5RzdeJibs5gPMIHN8XgLgw/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+![2020052403](https://planeswalker23.github.io/images/posts/2020052403.png)
 
 第8行的字节码是`8 goto 20`，这是什么意思呢？没错，盲猜就能猜到，这个字节码指令就是跳转到第20行的意思。这一行是说，如果 try 代码块中没有出现异常，那么就跳转到第20行，也就是整个方法行完成后 return 了。
 
@@ -51,7 +51,7 @@ keywords: JVM, 异常表, try-catch-finally
 ### 异常表
 在一个类被编译成字节码之后，它的每个方法中都会有一张异常表。异常表中包含了“监控”的范围，“监控”何种异常以及抛出异常后去哪里处理。比如上述的示例代码，在 jclasslib 中它的异常表如下图。
 
-![2020052404](https://mmbiz.qpic.cn/mmbiz_png/JGJic1BGy59X2x87NAq5vx5HJdWcGZWJlSXQuImRqqS1FEFLoIico7o6vPmzxTZyibn2c5utUoaRqpCD4TUgaVfBA/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+![2020052404](https://planeswalker23.github.io/images/posts/2020052404.png)
 
 或者在`javap -c`命令下异常表是这样的：
 

@@ -45,7 +45,7 @@ if (null == namesrvConfig.getRocketmqHome()) {
 
 `ROCKETMQ_HOME`环境变量主要用于设置`nameserver`的配置，只需要将包含`conf`配置目录的这个路径赋值给环境变量`ROCKETMQ_HOME`即可，如下图。
 
-![2020060601](https://mmbiz.qpic.cn/mmbiz_png/JGJic1BGy59WpXPC9G0wTJlATYB3N0I7v0QbLEEjxXcVLEuibGVhkd1ZuruVg35aic9WbRZr08MSSaj1nMe3WUhRQ/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+![2020060601](https://planeswalker23.github.io/images/posts/2020060601.png)
 
 再次运行`main`函数，就会发现启动成功。
 
@@ -58,7 +58,7 @@ The Name Server boot success. serializeType=JSON
 
 同样在`RocketMQ`工程的`broker`包中找到入口类`org.apache.rocketmq.broker.BrokerStartup`，但是与启动`nameserver`不同的是，启动`broker`时需要指定注册的`nameserver`地址，在启动命令中输入`-n 127.0.0.1:9876`即可。
 
-![2020060602](https://mmbiz.qpic.cn/mmbiz_png/JGJic1BGy59WpXPC9G0wTJlATYB3N0I7vTcNXyr4631RUptruWQvC4YyAZLfa245heLca81Lgb9pAWXYeIfuUhQ/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+![2020060602](https://planeswalker23.github.io/images/posts/2020060602.png)
 
 运行`main`函数，如果发现与之前一样的报错，重新设置该`Application`环境变量即可，运行成功的输出如下。
 
