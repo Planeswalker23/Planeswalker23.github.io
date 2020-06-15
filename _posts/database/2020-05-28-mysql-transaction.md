@@ -184,7 +184,4 @@ select count(*) from user where user_name='planeswalker' and user_id!='userId'
 
 关于数据库隔离级别，这里只是小小提了一下，以后有空再总结吧。
 
-> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢。<br>
-> 本文已上传个人公众号，欢迎扫码关注。
-
-![wechat](https://planeswalker23.github.io/images/wechat.png)
+> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢。

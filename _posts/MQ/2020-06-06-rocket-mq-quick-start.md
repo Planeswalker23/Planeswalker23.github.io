@@ -155,7 +155,4 @@ ConsumeMessageThread_5 Receive New Messages: [MessageExt [brokerName=daxiongMac.
 
 至此，我们就完成了`RocketMQ`的快速入门，启动`nameserver`和`broker`，创建生产者发送消息，创建消费者接收消息。
 
-> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢。<br>
-> 本文已上传个人公众号，欢迎扫码关注。
-
-![wechat](https://planeswalker23.github.io/images/wechat.png)。
+> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢。。

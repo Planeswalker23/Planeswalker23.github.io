@@ -188,7 +188,4 @@ public static int get() {
 4. 关于 return 关键字在 try-catch-finally 中的说明
 5. finally不执行的几种情况
 
-> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢。<br>
-> 本文已上传个人公众号，欢迎扫码关注。
-
-![wechat](https://planeswalker23.github.io/images/wechat.png)
+> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢。

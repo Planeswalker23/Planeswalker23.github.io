@@ -208,7 +208,4 @@ start to initialize SimpleDateFormat with pattern: yyyy-MM-dd
 5. 在 maven 仓库发布 starter
 
 
-> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢。<br>
-> 本文已上传个人公众号，欢迎扫码关注。
-
-![wechat](https://planeswalker23.github.io/images/wechat.png)
+> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢。
