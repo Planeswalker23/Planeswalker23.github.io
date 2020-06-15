@@ -1,7 +1,10 @@
     <footer class="container">
+
+      {% include footer-ad.html %}
+
         <div class="site-footer" role="contentinfo">
             <div class="copyright left mobile-block">
-                    © 2020
+                    © 2015
                     <span title="{{ site.author}}">{{ site.author }}</span>
                     <a href="javascript:window.scrollTo(0,0)" class="right mobile-visible">TOP</a>
             </div>
@@ -23,23 +26,24 @@
                 <li><a href="{{ site.url }}{{ site.subscribe_rss }}"><span class="octicon octicon-rss" style="color:orange;"></span></a></li>
             </ul>
 
+          {% include visit-stat.html %}
+
         </div>
     </footer>
     <div class="tools-wrapper">
       <a class="gotop" href="#" title="回到顶部"><span class="octicon octicon-arrow-up"></span></a>
     </div>
     <!-- / footer -->
+    {% if site.components.share.enabled %}
     <script src="{{ assets_base_url }}/assets/vendor/share.js/dist/js/share.min.js"></script>
+    {% endif %}
     <script src="{{ assets_base_url }}/assets/js/geopattern.js"></script>
-    <script src="{{ assets_base_url }}/assets/js/prism.js"></script>
-    <link rel="stylesheet" href="{{ assets_base_url }}/assets/css/globals/prism.css">
     <script>
       jQuery(document).ready(function($) {
-        // geopattern
         $('.geopattern').each(function(){
           $(this).geopattern($(this).data('pattern-id'));
         });
-       // hljs.initHighlightingOnLoad();
+       /* hljs.initHighlightingOnLoad(); */
       });
     </script>
 
@@ -53,7 +57,7 @@
     <script src="{{ assets_base_url }}/assets/js/snap.svg-min.js"></script>
     <script src="{{ assets_base_url }}/assets/js/underscore-min.js"></script>
     <script src="{{ assets_base_url }}/assets/vendor/js-sequence-diagrams/dist/sequence-diagram-min.js"></script>
-    <link rel="stylesheet" href="{{ assets_base_url }}/assets/vendor/js-sequence-diagrams/dist/sequence-diagram-min.css">
+    <link rel="stylesheet" href="{{ site.url }}/assets/vendor/js-sequence-diagrams/dist/sequence-diagram-min.css">
     <script>
       $(".language-sequence").sequenceDiagram({theme: 'simple'});
     </script>
@@ -66,7 +70,7 @@
     {% endif %}
 
     {% if page.mathjax %}
-    <script type="text/javascript" src="https://basis-learning.github.io/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/mathjax/MathJax@2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     {% endif %}
 
     {% if site.google.analytics_id %}
