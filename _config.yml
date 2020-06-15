@@ -1,7 +1,7 @@
 # ---------------- #
 #   Main Configs   #
 # ---------------- #
-baseurl:
+baseurl: https://github.com/Planeswalker23
 url: https://planeswalker23.github.io
 date_format: "ordinal"
 title: 旅法师营地 | No.23
