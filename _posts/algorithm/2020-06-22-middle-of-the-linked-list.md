@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 如何找到链表的中间节点？
-categories: [数据库]
+categories: [数据结构与算法]
 description: 如何找到链表的中间节点？
 keywords: algorithm
 ---
