@@ -10,7 +10,7 @@ description: "旅法师营地 | No.23"
 keywords: planeswalker23
 timezone: Asia/Hangzhou
 encoding: "utf-8"
-side_bar_repo_limit: 5
+side_bar_repo_limit: 6
 repository: Planeswalker23/planeswalker23.github.io
 # 对 css 和 js 资源的 cdn 加速配置
 cdn:
