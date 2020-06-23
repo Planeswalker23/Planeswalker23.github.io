@@ -6,92 +6,61 @@ description: 如何找到链表的中间节点？
 keywords: algorithm
 ---
 
-## 1. 碎碎念
-遥想后端君当年，曾经也是学校ACM队的一员，但参加过级别最高的比赛，同时也是ACM方面获得的最大成就，不过是天梯赛三等奖（当时天梯赛在浙江还只是省B级别的，现在已经算国赛了），犹记得当时的分数是120多分，满分是200还是160来着我忘记了，反正成绩比平均分高了大概20分。
-
-现在回想起来，总体还是感觉自己是个打酱油的，普通的算法题做做还行，难的比如动态规划、贪心、搜索、图论啥的，就不太会了。
-
-![](https://planeswalker23.github.io/images/posts/2020062201.png)
-
-而如今的大厂面试，几乎都会有笔试轮，让现场手写算法题，要是笔试都没过，那与面试官手撕HashMap、JVM、各种框架原理都没有机会上演。由此可见算法的重要性，所以后端君决定开始重学数据结构与算法，每天都会抽出一个小时时间来练习。
-
-![](https://planeswalker23.github.io/images/posts/2020062202.png)
-
-## 2. 题目
-今天练习的主题是快慢指针法，对应LeetCode上的题目是[第876题——链表的中间结点](https://leetcode-cn.com/problems/middle-of-the-linked-list/)。
-
-题目的要求是给定一个链表的头结点head，返回这个链表的中间节点。
-
-给定的链表数据结构为
-
-```java
-public class ListNode {
-     int val;
-     ListNode next;
-     ListNode(int x) { val = x; }
-}
-```
-
-例如，当链表为`[1,2,3,4,5]`时，返回的是值为3的节点；当链表为`[1,2,3,4,5,6]`时，返回的是值为4的节点。
-
-当然我们可以先遍历一遍链表，得到链表的长度，然后计算出中间节点的索引值，最终通过迭代去获得中间节点。
-
-这样虽然最终也能得到结果，但怎么说呢，不优雅。
-
-![](https://planeswalker23.github.io/images/posts/2020062203.png)
-
-而下面要将的快慢指针法，只需要通过一次遍历就能够得到答案，相对来说就比较优雅且高效。
-
-## 3. 快慢指针法
-快慢指针法在寻找链表中间节点这道题上的的思路是这样：通过两个指针遍历链表，快指针每次走2步，慢指针每次走1步，那么当快指针走到链表尾部的时候，慢指针恰好走到链表的中间节点，然后遍历结束，返回慢指针即为链表中间节点。
-
-先来看第一个示例，当链表为`[1,2,3,4,5]`时，灵魂画手上线，这时链表是这样子的（我们用白色的箭头来表示慢指针，黑色的箭头来表示快指针）：
-
-![链表初始状态](https://planeswalker23.github.io/images/posts/2020062204.png)
-
-当两个指针经过第1次移动后，快指针走到3的位置，慢指针走到2的位置，这时链表是这样子的：
-
-![第1次移动后的链表](https://planeswalker23.github.io/images/posts/2020062205.png)
-
-当两个指针经过第2次移动后，快指针走到5的位置，慢指针走到3的位置，这时链表是这样子的：
-
-![第2次移动后的链表](https://planeswalker23.github.io/images/posts/2020062206.png)
-
-当要进行第3次移动到，发现快指针已经走到了链表尾部节点，即`fast.next == null`，于是退出遍历，直接返回慢指针，也就是值为3的节点。
-
-这时当链表节点数为奇数的时候的题解步骤，若节点数为偶数，就有一些不同的，比如链表为`[1,2,3,4,5,6]`时，在第3次移动后快指针走到了NULL指针的位置，慢指针走到了4的位置，如下图所示：
-
-![第3次移动后的链表](https://planeswalker23.github.io/images/posts/2020062207.png)
-
-这时候的判断就不是快指针走到链表尾部节点了，而是快指针本身就是一个空节点。
-
-所以综合链表长度为奇数和偶数的两种情况，遍历链表结束的条件应该是：快指针为空或快指针走到链表尾部节点（即快指针的下一个阶段为空）。
-
-所以，这道题的快慢指针解法应该是下面这样子。
-
-```java
-public ListNode middleNode(ListNode head) {
-    // 初始化快慢指针，全部指向头结点
-    ListNode fast = head,slow = head;
-    // 遍历结束的条件是快指针为空或快指针走到链表尾部节点
-    while (fast !=null && fast.next!=null) {
-        // 快指针走2步，慢指针走1步
-        fast = fast.next.next;
-        slow = slow.next;
-    }
-    // 返回慢指针
-    return slow;
-}
-```
-
-## 4. 拓展
-寻找链表中间节点只是快慢指针法的一种应用，快慢指针法还能够用在很多算法题中，比如寻找[链表中倒数第k个节点](https://leetcode-cn.com/problems/lian-biao-zhong-dao-shu-di-kge-jie-dian-lcof)、判断一个链表是不是[环形链表](https://leetcode-cn.com/problems/linked-list-cycle/)等等。
-
-这两题的分别是剑指Offer第22题和Leetcode第141题，有兴趣的同学可以去做做。
-
-## 5. 小结
-本文通过LeetCode上的一道寻找链表中间节点的题目来描述了一下快慢指针法，这是一个普通缺又并不简单的算法。后端君认为，在应用快慢指针法时，我们需要注意的是遍历结束条件以及快慢指针分别如何移动，在确定了这两个步骤之后才能够真正运用这个算法来解决问题。
-
-今天的快慢指针法，你学会了吗？
-
-> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢。
+<section id="nice" data-tool="mdnice编辑器" data-website="https://www.mdnice.com" style="font-size: 16px; color: black; padding: 0 10px; line-height: 1.6; word-spacing: 0px; letter-spacing: 0px; word-break: break-word; word-wrap: break-word; text-align: left; font-family: Optima-Regular, Optima, PingFangSC-light, PingFangTC-light, 'PingFang SC', Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; margin-top: -10px;"><h2 data-tool="mdnice编辑器" style="margin-top: 30px; margin-bottom: 15px; padding: 0px; font-weight: bold; color: black; border-bottom: 2px solid rgb(239, 112, 96); font-size: 1.3em;"><span class="prefix" style="display: none;"></span><span class="content" style="display: inline-block; font-weight: bold; background: rgb(239, 112, 96); color: #ffffff; padding: 3px 10px 1px; border-top-right-radius: 3px; border-top-left-radius: 3px; margin-right: 3px;">1. 碎碎念</span><span class="suffix"></span><span style="display: inline-block; vertical-align: bottom; border-bottom: 36px solid #efebe9; border-right: 20px solid transparent;"> </span></h2>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">遥想后端君当年，曾经也是学校ACM队的一员，但参加过级别最高的比赛，同时也是ACM方面获得的最大成就，不过是天梯赛三等奖（当时天梯赛在浙江还只是省B级别的，现在已经算国赛了），犹记得当时的分数是120多分，满分是200还是160来着我忘记了，反正成绩比平均分高了大概20分。</p>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">现在回想起来，总体还是感觉自己是个打酱油的，普通的算法题做做还行，难的比如动态规划、贪心、搜索、图论啥的，就不太会了。</p>
+<figure data-tool="mdnice编辑器" style="margin: 0; margin-top: 10px; margin-bottom: 10px;"><img src="https://planeswalker23.github.io/images/posts/2020062201.png" alt style="display: block; margin: 0 auto; max-width: 100%;"></figure>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">而如今的大厂面试，几乎都会有笔试轮，让现场手写算法题，要是笔试都没过，那与面试官手撕HashMap、JVM、各种框架原理都没有机会上演。由此可见算法的重要性，所以后端君决定开始重学数据结构与算法，每天都会抽出一个小时时间来练习。</p>
+<figure data-tool="mdnice编辑器" style="margin: 0; margin-top: 10px; margin-bottom: 10px;"><img src="https://planeswalker23.github.io/images/posts/2020062202.png" alt style="display: block; margin: 0 auto; max-width: 100%;"></figure>
+<h2 data-tool="mdnice编辑器" style="margin-top: 30px; margin-bottom: 15px; padding: 0px; font-weight: bold; color: black; border-bottom: 2px solid rgb(239, 112, 96); font-size: 1.3em;"><span class="prefix" style="display: none;"></span><span class="content" style="display: inline-block; font-weight: bold; background: rgb(239, 112, 96); color: #ffffff; padding: 3px 10px 1px; border-top-right-radius: 3px; border-top-left-radius: 3px; margin-right: 3px;">2. 题目</span><span class="suffix"></span><span style="display: inline-block; vertical-align: bottom; border-bottom: 36px solid #efebe9; border-right: 20px solid transparent;"> </span></h2>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">今天练习的主题是快慢指针法，对应LeetCode上的题目是<a href="https://leetcode-cn.com/problems/middle-of-the-linked-list/" style="text-decoration: none; word-wrap: break-word; font-weight: bold; color: rgb(239, 112, 96); border-bottom: 1px solid rgb(239, 112, 96);">第876题——链表的中间结点</a>。</p>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">题目的要求是给定一个链表的头结点head，返回这个链表的中间节点。</p>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">给定的链表数据结构为</p>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px;"><code class="hljs" style="overflow-x: auto; padding: 16px; background: #272822; color: #ddd; display: block; font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; border-radius: 0px; font-size: 12px; -webkit-overflow-scrolling: touch;"><span class="hljs-keyword" style="color: #f92672; font-weight: bold; line-height: 26px;">public</span> <span class="hljs-class" style="line-height: 26px;"><span class="hljs-keyword" style="color: #f92672; font-weight: bold; line-height: 26px;">class</span> <span class="hljs-title" style="font-weight: bold; color: white; line-height: 26px;">ListNode</span> </span>{
+<span/>     <span class="hljs-keyword" style="color: #f92672; font-weight: bold; line-height: 26px;">int</span> val;
+<span/>     ListNode next;
+<span/>     ListNode(<span class="hljs-keyword" style="color: #f92672; font-weight: bold; line-height: 26px;">int</span> x) { val = x; }
+<span/>}
+<span/></code></pre>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">例如，当链表为<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all; color: rgb(239, 112, 96);">[1,2,3,4,5]</code>时，返回的是值为3的节点；当链表为<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all; color: rgb(239, 112, 96);">[1,2,3,4,5,6]</code>时，返回的是值为4的节点。</p>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">当然我们可以先遍历一遍链表，得到链表的长度，然后计算出中间节点的索引值，最终通过迭代去获得中间节点。</p>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">这样虽然最终也能得到结果，但怎么说呢，不优雅。</p>
+<figure data-tool="mdnice编辑器" style="margin: 0; margin-top: 10px; margin-bottom: 10px;"><img src="https://planeswalker23.github.io/images/posts/2020062203.png" alt style="display: block; margin: 0 auto; max-width: 100%;"></figure>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">而下面要讲的快慢指针法，只需要通过一次遍历就能够得到答案，相对来说就比较优雅且高效。</p>
+<h2 data-tool="mdnice编辑器" style="margin-top: 30px; margin-bottom: 15px; padding: 0px; font-weight: bold; color: black; border-bottom: 2px solid rgb(239, 112, 96); font-size: 1.3em;"><span class="prefix" style="display: none;"></span><span class="content" style="display: inline-block; font-weight: bold; background: rgb(239, 112, 96); color: #ffffff; padding: 3px 10px 1px; border-top-right-radius: 3px; border-top-left-radius: 3px; margin-right: 3px;">3. 快慢指针法</span><span class="suffix"></span><span style="display: inline-block; vertical-align: bottom; border-bottom: 36px solid #efebe9; border-right: 20px solid transparent;"> </span></h2>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">快慢指针法在寻找链表中间节点这道题上的的思路是这样：通过两个指针遍历链表，快指针每次走2步，慢指针每次走1步，那么当快指针走到链表尾部的时候，慢指针恰好走到链表的中间节点，然后遍历结束，返回慢指针即为链表中间节点。</p>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">先来看第一个示例，当链表为<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all; color: rgb(239, 112, 96);">[1,2,3,4,5]</code>时，灵魂画手上线，这时链表是这样子的（我们用白色的箭头来表示慢指针，黑色的箭头来表示快指针）：</p>
+<figure data-tool="mdnice编辑器" style="margin: 0; margin-top: 10px; margin-bottom: 10px;"><img src="https://planeswalker23.github.io/images/posts/2020062204.png" alt="链表初始状态" style="display: block; margin: 0 auto; max-width: 100%;"><figcaption style="margin-top: 5px; text-align: center; color: #888; font-size: 14px;">链表初始状态</figcaption></figure>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">当两个指针经过第1次移动后，快指针走到3的位置，慢指针走到2的位置，这时链表是这样子的：</p>
+<figure data-tool="mdnice编辑器" style="margin: 0; margin-top: 10px; margin-bottom: 10px;"><img src="https://planeswalker23.github.io/images/posts/2020062205.png" alt="第1次移动后的链表" style="display: block; margin: 0 auto; max-width: 100%;"><figcaption style="margin-top: 5px; text-align: center; color: #888; font-size: 14px;">第1次移动后的链表</figcaption></figure>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">当两个指针经过第2次移动后，快指针走到5的位置，慢指针走到3的位置，这时链表是这样子的：</p>
+<figure data-tool="mdnice编辑器" style="margin: 0; margin-top: 10px; margin-bottom: 10px;"><img src="https://planeswalker23.github.io/images/posts/2020062206.png" alt="第2次移动后的链表" style="display: block; margin: 0 auto; max-width: 100%;"><figcaption style="margin-top: 5px; text-align: center; color: #888; font-size: 14px;">第2次移动后的链表</figcaption></figure>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">当要进行第3次移动到，发现快指针已经走到了链表尾部节点，即<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all; color: rgb(239, 112, 96);">fast.next == null</code>，于是退出遍历，直接返回慢指针，也就是值为3的节点。</p>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">这时当链表节点数为奇数的时候的题解步骤，若节点数为偶数，就有一些不同的，比如链表为<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all; color: rgb(239, 112, 96);">[1,2,3,4,5,6]</code>时，在第3次移动后快指针走到了NULL指针的位置，慢指针走到了4的位置，如下图所示：</p>
+<figure data-tool="mdnice编辑器" style="margin: 0; margin-top: 10px; margin-bottom: 10px;"><img src="https://planeswalker23.github.io/images/posts/2020062207.png" alt="第3次移动后的链表" style="display: block; margin: 0 auto; max-width: 100%;"><figcaption style="margin-top: 5px; text-align: center; color: #888; font-size: 14px;">第3次移动后的链表</figcaption></figure>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">这时候的判断就不是快指针走到链表尾部节点了，而是快指针本身就是一个空节点。</p>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">所以综合链表长度为奇数和偶数的两种情况，遍历链表结束的条件应该是：快指针为空或快指针走到链表尾部节点（即快指针的下一个阶段为空）。</p>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">所以，这道题的快慢指针解法应该是下面这样子。</p>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px;"><code class="hljs" style="overflow-x: auto; padding: 16px; background: #272822; color: #ddd; display: block; font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; border-radius: 0px; font-size: 12px; -webkit-overflow-scrolling: touch;"><span class="hljs-function" style="line-height: 26px;"><span class="hljs-keyword" style="color: #f92672; font-weight: bold; line-height: 26px;">public</span> ListNode <span class="hljs-title" style="color: #a6e22e; font-weight: bold; line-height: 26px;">middleNode</span><span class="hljs-params" style="line-height: 26px;">(ListNode head)</span> </span>{
+<span/>    <span class="hljs-comment" style="color: #75715e; line-height: 26px;">// 初始化快慢指针，全部指向头结点</span>
+<span/>    ListNode fast = head,slow = head;
+<span/>    <span class="hljs-comment" style="color: #75715e; line-height: 26px;">// 遍历结束的条件是快指针为空或快指针走到链表尾部节点</span>
+<span/>    <span class="hljs-keyword" style="color: #f92672; font-weight: bold; line-height: 26px;">while</span> (fast !=<span class="hljs-keyword" style="color: #f92672; font-weight: bold; line-height: 26px;">null</span> &amp;&amp; fast.next!=<span class="hljs-keyword" style="color: #f92672; font-weight: bold; line-height: 26px;">null</span>) {
+<span/>        <span class="hljs-comment" style="color: #75715e; line-height: 26px;">// 快指针走2步，慢指针走1步</span>
+<span/>        fast = fast.next.next;
+<span/>        slow = slow.next;
+<span/>    }
+<span/>    <span class="hljs-comment" style="color: #75715e; line-height: 26px;">// 返回慢指针</span>
+<span/>    <span class="hljs-keyword" style="color: #f92672; font-weight: bold; line-height: 26px;">return</span> slow;
+<span/>}
+<span/></code></pre>
+<h2 data-tool="mdnice编辑器" style="margin-top: 30px; margin-bottom: 15px; padding: 0px; font-weight: bold; color: black; border-bottom: 2px solid rgb(239, 112, 96); font-size: 1.3em;"><span class="prefix" style="display: none;"></span><span class="content" style="display: inline-block; font-weight: bold; background: rgb(239, 112, 96); color: #ffffff; padding: 3px 10px 1px; border-top-right-radius: 3px; border-top-left-radius: 3px; margin-right: 3px;">4. 拓展</span><span class="suffix"></span><span style="display: inline-block; vertical-align: bottom; border-bottom: 36px solid #efebe9; border-right: 20px solid transparent;"> </span></h2>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">寻找链表中间节点只是快慢指针法的一种应用，快慢指针法还能够用在很多算法题中，比如寻找<a href="https://leetcode-cn.com/problems/lian-biao-zhong-dao-shu-di-kge-jie-dian-lcof" style="text-decoration: none; word-wrap: break-word; font-weight: bold; color: rgb(239, 112, 96); border-bottom: 1px solid rgb(239, 112, 96);">链表中倒数第k个节点</a>、判断一个链表是不是<a href="https://leetcode-cn.com/problems/linked-list-cycle/" style="text-decoration: none; word-wrap: break-word; font-weight: bold; color: rgb(239, 112, 96); border-bottom: 1px solid rgb(239, 112, 96);">环形链表</a>等等。</p>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">这两题的分别是剑指Offer第22题和Leetcode第141题，有兴趣的同学可以去做做。</p>
+<h2 data-tool="mdnice编辑器" style="margin-top: 30px; margin-bottom: 15px; padding: 0px; font-weight: bold; color: black; border-bottom: 2px solid rgb(239, 112, 96); font-size: 1.3em;"><span class="prefix" style="display: none;"></span><span class="content" style="display: inline-block; font-weight: bold; background: rgb(239, 112, 96); color: #ffffff; padding: 3px 10px 1px; border-top-right-radius: 3px; border-top-left-radius: 3px; margin-right: 3px;">5. 小结</span><span class="suffix"></span><span style="display: inline-block; vertical-align: bottom; border-bottom: 36px solid #efebe9; border-right: 20px solid transparent;"> </span></h2>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">本文通过LeetCode上的一道寻找链表中间节点的题目来描述了一下快慢指针法，这是一个普通却又并不简单的算法。后端君认为，在应用快慢指针法时，我们需要注意的是遍历结束条件以及快慢指针分别如何移动，在确定了这两个步骤之后才能够真正运用这个算法来解决问题。</p>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">今天的快慢指针法，你学会了吗？</p>
+<blockquote data-tool="mdnice编辑器" style="display: block; font-size: 0.9em; overflow: auto; overflow-scrolling: touch; border-left: 3px solid rgba(0, 0, 0, 0.4); color: #6a737d; padding-top: 10px; padding-bottom: 10px; padding-left: 20px; padding-right: 10px; margin-bottom: 20px; margin-top: 20px; border-left-color: rgb(239, 112, 96); background: #fff9f9;">
+<p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0px; color: black; line-height: 26px;">版权声明：本文为<a href="https://github.com/Planeswalker23" style="text-decoration: none; word-wrap: break-word; font-weight: bold; color: rgb(239, 112, 96); border-bottom: 1px solid rgb(239, 112, 96);">Planeswalker23</a>所创，转载请带上原文链接，感谢。</p>
+</blockquote>
+<p id="nice-suffix-juejin-container" class="nice-suffix-juejin-container" data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black; margin-top: 20px !important;">本文使用 <a href="https://mdnice.com" style="text-decoration: none; word-wrap: break-word; font-weight: bold; color: rgb(239, 112, 96); border-bottom: 1px solid rgb(239, 112, 96);">mdnice</a> 排版</p></section>
