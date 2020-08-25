@@ -10,7 +10,7 @@ keywords: MySQL, limit
 
 本文主要讨论 limit 分页大偏移量慢的原因及优化方案，为了模拟这种情况，下面首先介绍表结构和执行的 SQL。
 
-[2020081901](https://planeswalker23.github.io/images/posts/2020081901.png)
+![2020081901](https://planeswalker23.github.io/images/posts/2020081901.png)
 
 ## 场景模拟
 ### 建表语句
