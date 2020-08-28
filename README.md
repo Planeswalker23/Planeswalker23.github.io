@@ -1,4 +1,18 @@
-[博客归档地址](https://planeswalker23.github.io/archives/)
+本仓库是基于`GitHub Page`搭建的个人博客，主要记录了学习工作过程中的攒下来的文章，方便日后复习。
+
+[文章归档地址](https://planeswalker23.github.io/archives/)
+[掘金主页](https://juejin.im/user/4001878057161581/posts)
+
+## 目录
+- [Java](#Java)
+- [JVM](#JVM)
+- [数据库](#数据库)
+- [框架](#框架)
+    - [Spring](#Spring)
+    - [RocketMQ](#RocketMQ)
+    - [MyBatis](#MyBatis)
+- [设计模式](#设计模式)
+- [其他](#其他)
 
 ## Java
 - [2020-07-20 Java SPI机制实现与源码分析](https://planeswalker23.github.io/2020/07/20/spi/)
