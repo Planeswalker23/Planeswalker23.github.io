@@ -19,7 +19,7 @@ keywords: cpu, top
 
 第一步是用`top`命令查看CPU资源分配情况及进程号。
 
-![进程占用CPU情况](https://planeswalker23.github.io/images/posts/2020090101.png)
+![进程占用CPU情况](https://planeswalker23.github.io/images/posts/2020090102.png)
 
 从图中可以看到，`PID=31439`的进程的`%CPU`值为100%，说明这条进程占用CPU的时间已经到达100%，线上的警报就是由这个进程发出的。
 
@@ -28,25 +28,23 @@ keywords: cpu, top
 ### 1.2 top -Hp 进程PID
 第二步是用`top -Hp 进程PID`命令查看该进程下各线程CPU资源的使用情况。
 
-![线程占用CPU情况](https://planeswalker23.github.io/images/posts/2020090102.png)
+![线程占用CPU情况](https://planeswalker23.github.io/images/posts/2020090103.png)
 
 这条命令是为了确定是哪个线程执行的任务导致CPU警报的，从图上可以看到`线程PID=31440`，它占用了99%的CPU。
 
 ### 1.3 printf "0x%x\n" 线程PID
 第三步是用`printf "0x%x\n" 线程PID`将线程PID转化为十六进制。
 
-![线程PID十六进制](https://planeswalker23.github.io/images/posts/2020090103.png)
+![线程PID十六进制](https://planeswalker23.github.io/images/posts/2020090104.png)
 
 这一步也可以用其他方式代替，比如“在线十进制转十六进制”网站，获取线程PID的十六进制是因为在线程堆栈文件中，线程号就是用十六进制来表示的。
 
 ### 1.4 jstack 进程PID | vim +/十六进制线程PID -
 第四步是用`jstack 进程PID | vim +/十六进制线程PID -`命令输出进程堆栈信息，同时通过十六进制线程号定位到指定线程号堆栈信息。
 
-所以稳妥的方法就是把进程的堆栈信息都输出到一个文件中，然后根据十六进制的线程号定位到线程堆栈信息。
+![线程堆栈文件](https://planeswalker23.github.io/images/posts/2020090105.png)
 
-![线程堆栈文件](https://planeswalker23.github.io/images/posts/2020090104.png)
-
-从上图可以看到，这个线程执行的代码是在`Demo.java:3`。
+从上图可以看到，这个线程执行的代码是在`Demo.java:4`。
 
 最后就是打开工程，查看这个类的源码，看看为什么在这里会消耗大量CPU。
 
