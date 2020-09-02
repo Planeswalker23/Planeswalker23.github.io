@@ -1,7 +1,7 @@
 本仓库是基于`GitHub Page`搭建的个人博客，主要记录了学习工作过程中的攒下来的文章，方便日后复习。
 
-[文章归档地址](https://planeswalker23.github.io/archives/)
-[掘金主页](https://juejin.im/user/4001878057161581/posts)
+- [文章归档地址](https://planeswalker23.github.io/archives/)
+- [掘金主页](https://juejin.im/user/4001878057161581/posts)
 
 ## 目录
 - [Java](#Java)
@@ -68,6 +68,7 @@
 - [2019-08-26 单例模式](https://planeswalker23.github.io/2019/08/26/singleton/)
 
 ## 其他
+- [2020-09-01 记一次线上CPU警报排查过程&top命令](https://planeswalker23.github.io/2020/09/01/check-cpu&top/)
 - [2020-07-27 基于Jmeter测试Web接口性能](https://planeswalker23.github.io/2020/07/27/jmeter-web-api/)
 - [2020-06-22 如何找到链表的中间节点？](https://planeswalker23.github.io/2020/06/22/middle-of-the-linked-list/)
 - [2019-12-29 2019年度总结](https://planeswalker23.github.io/2019/12/29/summary-for-2019/)
