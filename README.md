@@ -15,6 +15,7 @@
 - [其他](#其他)
 
 ## Java
+- [2020-09-09 由Dubbo直连引出的new File()路径问题](https://planeswalker23.github.io/2020/09/09/newfile/)
 - [2020-07-20 Java SPI机制实现与源码分析](https://planeswalker23.github.io/2020/07/20/spi/)
 - [2020-06-17 面试官：熟悉Java集合？那来聊聊HashMap吧](https://planeswalker23.github.io/2020/06/17/hashmap2/)
 - [2020-06-14 面试官：你真的理解String吗](https://planeswalker23.github.io/2020/06/14/string/)
@@ -33,6 +34,8 @@
 - [2020-05-04 原始类型 boolean 在 JVM 中的讨论](https://planeswalker23.github.io/2020/05/04/boolean-type-in-jvm/)
 
 ## 数据库
+- [2020-10-04 我所理解的MySQL(二)索引](https://planeswalker23.github.io/2020/10/04/mysql2/)
+- [2020-09-19 我所理解的MySQL(一)基础架构](https://planeswalker23.github.io/2020/09/19/mysql1/)
 - [2020-08-19 MySQL中limit分页大偏移量的原因分析与优化方案](https://planeswalker23.github.io/2020/08/19/mysql-limit/)
 - [2020-05-28 MyBatis 查询结果与 MySQL 执行结果不一致？](https://planeswalker23.github.io/2020/05/28/mysql-transaction/)
 - [2020-05-10 MySQL 更新语句 update 踩坑日记](https://planeswalker23.github.io/2020/05/10/mysql-update/)
