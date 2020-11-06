@@ -1,82 +1,44 @@
 本仓库是基于`GitHub Page`搭建的个人博客，主要记录了学习工作过程中的攒下来的文章，方便日后复习。
 
-- [文章归档地址](https://planeswalker23.github.io/archives/)
-- [个人博客](https://javageekers.club/)
-- [掘金主页](https://juejin.im/user/4001878057161581/posts)
-- [语雀主页](https://www.yuque.com/planeswalker)
+- [Github Page 文章归档](https://planeswalker23.github.io/archives/)
+- [独立域名博客](https://javageekers.club/)
+- [掘金](https://juejin.im/user/4001878057161581/posts)
+- [语雀](https://www.yuque.com/planeswalker)
 
 ## 目录
-- [Java](#Java)
-- [JVM](#JVM)
-- [数据库](#数据库)
-- [框架](#框架)
-    - [Spring](#Spring)
-    - [RocketMQ](#RocketMQ)
-    - [MyBatis](#MyBatis)
-- [设计模式](#设计模式)
-- [其他](#其他)
+- [我所理解的后端技术](https://www.yuque.com/planeswalker/bankend)
 
-## Java
-- [2020-09-09 由Dubbo直连引出的new File()路径问题](https://planeswalker23.github.io/2020/09/09/newfile/)
-- [2020-07-20 Java SPI机制实现与源码分析](https://planeswalker23.github.io/2020/07/20/spi/)
-- [2020-06-17 面试官：熟悉Java集合？那来聊聊HashMap吧](https://planeswalker23.github.io/2020/06/17/hashmap2/)
-- [2020-06-14 面试官：你真的理解String吗](https://planeswalker23.github.io/2020/06/14/string/)
-- [2020-05-28 静态代理、动态代理及 $Proxy0 类源码分析](https://planeswalker23.github.io/2020/05/28/statical-proxy/)
-- [2020-05-25 重载(Overload)及重载方法选取规则](https://planeswalker23.github.io/2020/05/25/overload/)
-- [2020-04-12 HashMap 底层实现、加载因子、容量值及死循环](https://planeswalker23.github.io/2020/04/12/HashMap/)
-- [2020-03-22 什么情况下 finally 代码块不会执行](https://planeswalker23.github.io/2020/03/22/try-catch-finally-special/)
-- [2019-12-16 记一次使用线程池出现的问题（线程池异常）](https://planeswalker23.github.io/2019/12/16/thread-pool-debug/)
-- [2018-09-10 List 接口 remove 方法失效？](https://planeswalker23.github.io/2018/09/10/List-remove/)
-- [2018-04-06 绝对路径和相对路径](https://planeswalker23.github.io/2018/04/06/location/)
+## 🐢 Reading && undo
+- 算法面试通关40讲（极客时间）[2020.6.15-]
+- 数据结构与算法之美（极客时间）[2020.6.18-]
+- 数据结构与算法分析 [2020.6.20-]
+- 小马哥讲 Spring 核心编程思想（极客时间）[2020.6.29-]*`65,66,68,91`*
 
-## JVM
-- [2020-05-24 JVM 异常表及 try-catch-finally 字节码分析](https://planeswalker23.github.io/2020/05/24/exception-table-try-catch-finally/)
-- [2020-05-08 JVM 双亲委派模型及 SPI 实现原理分析](https://planeswalker23.github.io/2020/05/08/parent-delegate-model/)
-- [2020-05-07 JVM 类加载机制及初始化时机分析](https://planeswalker23.github.io/2020/05/07/class-loading/)
-- [2020-05-04 原始类型 boolean 在 JVM 中的讨论](https://planeswalker23.github.io/2020/05/04/boolean-type-in-jvm/)
+## 🐖 2020
+- Spring 实战（第4版）[2020.1]
+- SpringBoot 实战（第4版）[2020.1]
+- 玩转 Spring 全家桶（极客时间）[2020.2.17]
+- Netty 源码剖析与实战（极客时间）[2020.2.23]
+- Java核心技术面试精讲（极客时间）[2020.3.1-2020.4.3]
+- Java业务开发常见错误100例（极客时间）[2020.3.9-2020.5.28]
+- 深入理解 Java 虚拟机（第3版）[2020.4.7-2020.4.24]
+- 深入理解 JVM（圣思园张龙）[2020.4.5-2020.5.25]*`63,64,65,67,68,69,75-108`*
+- 消息队列高手课（极客时间）[2020.5.26-2020.5.29]*`need read one more time`*
+- RocketMQ 入门+项目实战+源码解析（黑马程序员）[2020.5.29-2020.6.3]
+- RocketMQ 实战与原理解析 [2020.5.29-2020.6.4]
+- RocketMQ 技术内幕 [2020.6.4-2020.6.20]
+- Dubbo入门教程（尚硅谷） [2020.6.6-2020.6.8]
+- 从0开始学微服务（极客时间）[2020.6.7-2020-6.12]
+- 左耳听风（极客时间）[2020.5.13-2020.6.18]*`need read one more time`*
+- 后端技术面试38讲（极客时间）[2020.6.18-2020.7.2]*`need read one more time`*
+- MySQL实战45讲（极客时间）[20200919-20201105]*`23,24,25,26,27,28,29`*
 
-## 数据库
-- [2020-10-04 我所理解的MySQL(二)索引](https://planeswalker23.github.io/2020/10/04/mysql2/)
-- [2020-09-19 我所理解的MySQL(一)基础架构](https://planeswalker23.github.io/2020/09/19/mysql1/)
-- [2020-08-19 MySQL中limit分页大偏移量的原因分析与优化方案](https://planeswalker23.github.io/2020/08/19/mysql-limit/)
-- [2020-05-28 MyBatis 查询结果与 MySQL 执行结果不一致？](https://planeswalker23.github.io/2020/05/28/mysql-transaction/)
-- [2020-05-10 MySQL 更新语句 update 踩坑日记](https://planeswalker23.github.io/2020/05/10/mysql-update/)
-- [2020-03-14 MySQL 中 count 函数的正确使用方法](https://planeswalker23.github.io/2020/03/14/mysql-count/)
-- [2020-01-27 H2 数据库使用问题小记——初始化数据库失败](https://planeswalker23.github.io/2020/01/27/h2-schema-init-failed/)
-
-## 框架
-### Spring
-- [2020-05-27 如何实现一个自定义的 SpringBoot Starter](https://planeswalker23.github.io/2020/05/27/spring-boot-starter/)
-
-### RocketMQ
-- [2020-06-20 RocketMQ.4-基于事务消息解决分布式事务](https://planeswalker23.github.io/2020/06/20/transactional-message/)
-- [2020-06-13 RocketMQ.3-NameServer如何进行路由管理](https://planeswalker23.github.io/2020/06/13/rocket-mq-3/)
-- [2020-06-10 RocketMQ.2-NameServer是如何启动的](https://planeswalker23.github.io/2020/06/10/rocket-mq-2/)
-- [2020-06-06 RocketMQ.1-快速入门](https://planeswalker23.github.io/2020/06/06/rocket-mq-quick-start/)
-- [2020-06-01 RocketMQ.0-术语、消费模式、应用场景](https://planeswalker23.github.io/2020/06/01/rocket-mq-introduce/)
-
-### MyBatis
-- [2019-11-15 基于 Mybatis 拦截器实现关键信息加密](https://planeswalker23.github.io/2019/11/15/mybatis-interceptor/)
-
-## 设计模式
-- [2019-09-20 代理模式](https://planeswalker23.github.io/2019/09/20/proxy/)
-- [2019-09-18 状态模式](https://planeswalker23.github.io/2019/09/18/state/)
-- [2019-09-16 组合模式](https://planeswalker23.github.io/2019/09/16/composite/)
-- [2019-09-12 模板模式](https://planeswalker23.github.io/2019/09/12/template/)
-- [2019-09-11 外观模式](https://planeswalker23.github.io/2019/09/11/facade/)
-- [2019-09-10 适配器模式](https://planeswalker23.github.io/2019/09/10/adaptor/)
-- [2019-09-01 命令模式](https://planeswalker23.github.io/2019/09/01/order/)
-- [2019-08-31 装饰者模式](https://planeswalker23.github.io/2019/08/31/decorator/)
-- [2019-08-29 观察者模式](https://planeswalker23.github.io/2019/08/29/observer/)
-- [2019-08-28 策略模式](https://planeswalker23.github.io/2019/08/28/strategy/)
-- [2019-08-27 工厂模式](https://planeswalker23.github.io/2019/08/27/factory/)
-- [2019-08-26 单例模式](https://planeswalker23.github.io/2019/08/26/singleton/)
-
-## 其他
-- [2020-09-01 记一次线上CPU警报排查过程&top命令](https://planeswalker23.github.io/2020/09/01/check-cpu&top/)
-- [2020-07-27 基于Jmeter测试Web接口性能](https://planeswalker23.github.io/2020/07/27/jmeter-web-api/)
-- [2020-06-22 如何找到链表的中间节点？](https://planeswalker23.github.io/2020/06/22/middle-of-the-linked-list/)
-- [2019-12-29 2019年度总结](https://planeswalker23.github.io/2019/12/29/summary-for-2019/)
-- [2018-05-01 Python 爬取新闻语料并用 bs4 库解析 DOM 树](https://planeswalker23.github.io/2018/05/01/python-bs4/)
-- [2018-04-06 MacOS 安装 homebrew 搭建 Git 环境](https://planeswalker23.github.io/2018/04/06/mac-homebrew/)
-
+## 🐶 2019
+- 图解 HTTP
+- SQL 必知必会（第四版）
+- Java 编程思想（第四版）*`8.3.2,10.6-10.12,11.13,14.1-14.3,14.6-14.9,15.4.1-15.19,17-21`*
+- Java 核心技术卷1（第10版）
+- Java 核心技术卷2（第10版）
+- Java 并发编程之美 *`3.2,4.2,6.2,7.1.2.1,7.4.3,8,9,11`*
+- HeadFirst 设计模式
+- 设计模式之禅
