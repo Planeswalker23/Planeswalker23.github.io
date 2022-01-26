@@ -1,7 +1,6 @@
 本仓库是基于`GitHub Page`搭建的个人博客，主要记录了学习工作过程中的攒下来的文章，方便日后复习。
 
 - [Github Page 文章归档](https://planeswalker23.github.io/archives/)
-- [独立域名博客](https://javageekers.club/)
 - [掘金](https://juejin.im/user/4001878057161581/posts)
 - [语雀](https://www.yuque.com/planeswalker)
 
