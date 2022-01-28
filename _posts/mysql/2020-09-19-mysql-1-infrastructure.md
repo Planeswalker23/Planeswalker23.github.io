@@ -1,55 +1,41 @@
 ---
 layout: post
-title: 我所理解的MySQL(一)基础架构
-categories: [数据库]
-description: 我所理解的MySQL(一)基础架构
+title: 我所理解的MySQL系列·第1篇·MySQL有哪些组成部分
+categories: [MySQL]
 keywords: MySQL
 ---
 
-这是 MySQL 系列的第一篇，主要介绍 MySQL 的基础架构以及各个组成部分的功能，包括 Server 层的 bin log 和 InnoDB 特有的 redo log 这两种日志模块。
 
-![](https://javageekers.club/upload/2020/09/mysql1-96cd554b2319412781ef290a8a3c7e18.png)
-
-----
-
-你好，有幸相见。
-
-从九月开始，我决定发起「每周一博」的目标：每周至少发布一篇博客，可以是各种源码分析研读，也可以是记录工作中遇到的难题。
-
-在经过了一段时间漫无目的的学习之后，我发现那样用处好像不大，看过的东西过段时间就忘了，而且也没有做什么笔记。
-
-“凡所学，必有所输出。”我认为这才是最适合我的学习方式，这也是「每周一博」活动的来由，朋友们，如果你也觉得经常会忘记以前看过的东西，一起加入这个活动吧。
-
-这是九月的第四篇博客，也是 MySQL 系列的第一篇。
-
-- 本文首发于个人博客:  [javageekers.club](https://javageekers.club)
-- 本文收录于个人语雀知识库: [我所理解的后端技术](https://www.yuque.com/planeswalker/bankend)
-
-----
 
 作为一个正经的 CRUD 工程师，与数据库的交互是日常工作中比重较大的内容，比如日常迭代的增删改查、处理历史数据、优化 SQL 性能等等。随着项目数据量的增长，从前为了赶项目进度而埋下的深坑正慢慢显露它们的威力，这也让我不得不全面且深入的学习 MySQL，而不仅仅是停留在基础的 CRUD 上。
 
 这是 MySQL 系列的第一篇，主要介绍 MySQL 的基础架构以及各个组成部分的功能，包括 Server 层的 bin log 和 InnoDB 特有的 redo log 这两种日志模块。
 
+
+
 ## 1. MySQL 架构简介
 根据 DB-Engines 发布的[最受欢迎的数据库管理系统排行榜](https://db-engines.com/en/ranking)，MySQL 稳坐第二把交椅。
 
-![2020年9月最受欢迎的DBMS排行榜](https://javageekers.club/upload/2020/09/2020091901-293f48b2d9eb41f2ad4018d67f70b99b.png)
+![2020年9月最受欢迎的DBMS排行榜](https://cdn.nlark.com/yuque/0/2020/png/2331602/1600876203565-05fb4852-f786-4a05-bbe2-f36a0b743b89.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_cGxhbmVzd2Fsa2Vy%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10%2Fresize%2Cw_1492%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_6K-t6ZuA77ya5oiR5omA55CG6Kej55qE5ZCO56uv5oqA5pyv%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10%2Fresize%2Cw_1492%2Climit_0)
 
 作为最受欢迎的关系型数据库管理系统之一，MySQL 采用的是C/S架构，即 Client & Server 架构。比如开发者使用 Navicat 连接到 MySQL，那么前者就是客户端，后者就是服务端。
 
-同时，MySQL 也是单进程多线程的数据库。这很好理解，正在运行的 MySQL 实例就是那个“单进程”，而在这个进程中会有很多个线程，比如主线程 `Master Thread`，`IO Thread` 等，这些线程被用于处理不同的任务。
+同时，MySQL 也是单进程多线程的数据库。这很好理解，正在运行的 MySQL 实例就是那个“单进程”，而在这个进程中会有很多个线程，比如主线程 Master Thread，IO Thread 等，这些线程被用于处理不同的任务。
+
+
 
 ## 2. MySQL 组成部分
 前面说到 MySQL 采用的是C/S架构，用户通过客户端连接到 MySQL 服务器，然后提交 SQL 语句到服务器，然后服务器就会把执行结果返回给客服端。
 
 在这一小节的内容中，我们主要关注 MySQL 服务端的逻辑组成，先来看一张图。
 
-![MySQL 逻辑架构图](https://javageekers.club/upload/2020/09/2020091902-3c256fd6b31d442689cdb5e5a75ac8ac.png)
+![MySQL 逻辑架构图](https://cdn.nlark.com/yuque/0/2020/png/2331602/1600876203592-d6b7b7ed-faed-4a06-a8e7-2c07f462376b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_10%2Ctext_cGxhbmVzd2Fsa2Vy%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_6K-t6ZuA77ya5oiR5omA55CG6Kej55qE5ZCO56uv5oqA5pyv%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10%2Fresize%2Cw_611%2Climit_0)
 
 从上图可以看到，与客户端的交互中，MySQL 的服务端分别经过了连接器、查询缓存、分析器、优化器、执行器和存储引擎这几部分。
 
-下面就以一条简单的查询语句来描述 MySQL 服务端的各组成部分及它们所起的作用。
+下面就以一条简单的查询语句的执行流程来描述 MySQL 服务端的各组成部分及它们所起的作用。
+
+
 
 ### 2.1 连接器
 在客户端提交查询语句之前，需要与服务端建立连接。所以最先来到的是连接器，连接器的作用就是**负责与客户端建立、管理连接，同时查询用户的权限**。
@@ -58,6 +44,8 @@ keywords: MySQL
 - 连接器只获取用户的权限，并不做校验，校验是在查询缓存或执行器才进行。
 - 一旦建立连接同时获取用户的权限之后，只有建立新的连接才会刷新用户权限。
 - 对于长时间没有发送请求的客户端，连接器会自动断开连接。这里的「长时间」是由 wait_timeout 参数来决定的，它的默认值为8小时。
+
+
 
 ### 2.2 查询缓存
 在经过连接器的建立连接、获取用户权限之后，接下来用户可以提交查询语句了。
@@ -73,7 +61,10 @@ keywords: MySQL
 - 当对数据表进行更新时，关于这张表的所有查询缓存都会失效，所以一般来说查询缓存的命中率是很低的。
 - 在 `MySQL 8.0` 的版本中，查询缓存的功能已经被删除。
 
+
+
 ### 2.3 分析器
+
 我使用的 MySQL 版本是5.7.21，所以客户端提交的查询语句会走查询缓存，如果没有命中，那么将继续往下走，来到分析器。
 
 分析器会对提交的语句进行词法分析（解析语句）和语法分析（判断语句是否符合 MySQL 的语法规则），所以分析器的作用就是**解析 SQL 语句并检查其合法性**。
@@ -100,10 +91,13 @@ select * form user_info limit 1;
 OK, Time: 0.000000s
 ```
 
+
+
 ### 2.4 优化器
+
 在校验了 SQL 语句的合法性之后，MySQL 已经知道用户提交的语句是干什么的了，但是在真正执行之前，还需要经过非常“玄学”的优化器。
 
-![你相信玄学吗](https://javageekers.club/upload/2020/09/2020091903-6f0ecaa721994a72a28ed6507d30b755.png)
+![mysql-1-3](https://cdn.nlark.com/yuque/0/2020/png/2331602/1600876203608-caf679ea-dabb-4f6a-bb63-be57a3f85127.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_10%2Ctext_cGxhbmVzd2Fsa2Vy%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_6K-t6ZuA77ya5oiR5omA55CG6Kej55qE5ZCO56uv5oqA5pyv%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10%2Fresize%2Cw_533%2Climit_0)
 
 优化器的作用是**为 SQL 语句生成最优的执行计划**。
 
@@ -117,7 +111,10 @@ OK, Time: 0.000000s
 
 MySQL 的执行计划也是一项必须要掌握的技能，这篇博客写得非常详细，值得一读：[不会看 Explain执行计划，劝你简历别写熟悉 SQL优化](https://juejin.im/post/6844904163969630221)
 
+
+
 ### 2.5 执行器
+
 在优化器生成了 MySQL 认为最优的执行计划之后，最后来到了执行器，执行器的作用当然就是**执行SQL语句**了。
 
 但是在执行之前，先要做权限验证，验证用户对表是否有查询权限。然后再根据表定义的引擎类型，去使用相对应引擎提供的接口来对该表进行条件查询，最后将该表所有满足条件的数据行作为结果集返回客户端，这样整个 SQL 的执行就结束了。
@@ -125,7 +122,10 @@ MySQL 的执行计划也是一项必须要掌握的技能，这篇博客写得�
 需要注意的是：
 - 在执行器执行 SQL 语句前会做校验：判断用户对表是否具有操作权限。
 
+
+
 ### 2.6 存储引擎
+
 MySQL 支持的存储引擎有很多种，比如：InnoDB、MyISAM、Memory 等等。
 
 #### 2.6.1 InnoDB
@@ -147,14 +147,20 @@ Memory 支持 Hash 索引，但由于它使用表级锁，因此并发写入的�
 
 > 关于存储引擎，由于本人接触的比较少，等看完《MySQL技术内幕：InnoDB存储引擎》之后再整理，这里只是简单地提一下。
 
+
+
 ## 3. 日志模块
+
 前面所说的执行流程主要是描述查询语句，如果是更新语句还涉及到 MySQL 的日志模块。
 
 从客户端到执行器的之间的逻辑查询语句和更新语句是相同的，只是在到执行器这一层的时候，更新语句会和 MySQL 的日志模块产生交互，这是查询语句和更新语句不一样的地方。
 
+
+
 ### 3.1 物理日志 redo log
+
 #### 3.1.1 redo log 中记录的内容
-对于 InnoDB 存储引擎来说，它有一个特有的日志模块——物理日志（重做日志）`redo log`，它是 InnoDB 存储引擎的日志，它所记录的是**数据页的物理修改**。
+对于 InnoDB 存储引擎来说，它有一个特有的日志模块——物理日志（重做日志）**redo log**，它是 InnoDB 存储引擎的日志，它所记录的是**数据页的物理修改**。
 
 举个例子，现在有一张 user 表，有一条主键 id=1，age=18 的数据，然后用户提交了下面这条 SQL，执行器准备执行。
 
@@ -174,7 +180,7 @@ MySQL 的更新持久化逻辑运用到了 **WAL**(Write-Ahead Logging，写前�
 #### 3.1.3 redo log 日志文件
 redo log 日志文件大小是固定的，我把它理解为一个循环链表，链表的每个节点都可以存放日志，在这个链表中有两个指针：write（黑） 和 read（白）。
 
-![循环链表](https://javageekers.club/upload/2020/09/2020062204-280007c922f9453bbb3ce53a2cdbaa48.png)
+![循环链表](https://cdn.nlark.com/yuque/0/2020/png/2331602/1600876203590-575be4c6-3cc5-4262-a6fe-1aacfbfbdf1c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_6K-t6ZuA77ya5oiR5omA55CG6Kej55qE5ZCO56uv5oqA5pyv%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10%2Fresize%2Cw_498%2Climit_0)
 
 最开始这两个指针都指向同一个节点，且节点日志元素都为空，表示此时 redo log 为空。当用户开始提交更新语句，write 节点开始往前移动，假设移动到3的位置。而此时的情况就是 redo log 中有1-3这三个日志元素需要被持久化到磁盘中，当 InnoDB 空闲时，read 指针往前移动，就代表着将 redo log 持久化到磁盘。
 
@@ -187,7 +193,10 @@ redo log 日志文件大小是固定的，我把它理解为一个循环链表�
 
 这一能力也被称作 **crash-safe**。
 
+
+
 ### 3.2 归档日志 bin log
+
 前面说到 redo log 是 InnoDB 特有的日志，而 bin log 则是属于 MySQL Server 层的日志，在默认的 Statement Level 下它记录的是更新语句的原始逻辑，即 SQL 本身。
 
 另外需要注意的是：
@@ -195,10 +204,12 @@ redo log 日志文件大小是固定的，我把它理解为一个循环链表�
 - bin log 没有 crash-safe 的能力。
 - bin log 是在事务最终提交前写入的，而 redo log 是在事务执行中不断写入的。
 
-#### 3.2.1 bin log 的作用
-与 redo log 不同的是，bin log 常用于恢复数据，比如说主从复制，从节点根据父节点的 bin log 来进行数据同步，实现主从同步。
+最后，bin log 常用于恢复数据，比如说主从复制，从节点根据父节点的 bin log 来进行数据同步，实现主从同步。
+
+
 
 ### 3.3 两阶段提交
+
 为了让 redo log 和 bin log 的状态保持一致，MySQL 使用**两阶段提交**的方式来写入 redo log 日志。
 
 在执行器调用 InnoDB 引擎的接口将写入更新数据时，InnoDB 引擎会将本次更新记录到 redo log 中，同时将 redo log 的状态标记为 prepare，表示可以提交事务。
@@ -216,10 +227,16 @@ redo log 日志文件大小是固定的，我把它理解为一个循环链表�
 
 如果在第三个步骤前，也就是提交之前系统崩溃或重启，即便没有 commit 但是满足 redo log 中记录为 prepare 状态并且 bin log 中也有完整记录，在重启后会自动 commit，并不会回滚。
 
+
+
 ## 4. 小结
+
 本文主要介绍 MySQL 的基础架构以及各个组成部分的功能，最后介绍了 MySQL Server 层的 bin log 和 InnoDB 特有的 redo log 这两种日志模块。
 
+
+
 ## 5. 温故知新
+
 以下的几个问题是对本文所描述内容的提问，巩固知识，正所谓“温故而知新，可以为师矣”。
 
 1. 如果查询语句中字段不存在、字段有歧义、关键字拼写错误，是由哪个部分报错？
@@ -232,7 +249,12 @@ redo log 日志文件大小是固定的，我把它理解为一个循环链表�
 8. 如何理解 redo log 的两阶段提交？
 9. redo log 和 bin log 的区别？
 
+
+
 ## 6. 参考资料
-- [《MySQL实战45讲》01 基础架构：一条SQL查询语句是如何执行的？](https://time.geekbang.org/column/article/a57ae0dd0daac940338e9c1b084b0b7d/share?code=cbHwlgRYeERonSROIcKJXe0PPC4kk7tccvKC0sfh3Rc%3D&oss_token=2046f4a7a951dd81)（此链接有20个免费阅读该文章的名额）
-- [《MySQL实战45讲》02 日志系统：一条SQL更新语句是如何执行的？](https://time.geekbang.org/column/article/ef8825593d260c8a45ede7f9c211f1a0/share?code=cbHwlgRYeERonSROIcKJXe0PPC4kk7tccvKC0sfh3Rc%3D)（此链接有20个免费阅读该文章的名额）
+
+- [《MySQL实战45讲》01 | 基础架构：一条SQL查询语句是如何执行的？](https://time.geekbang.org/column/article/a57ae0dd0daac940338e9c1b084b0b7d/share?code=cbHwlgRYeERonSROIcKJXe0PPC4kk7tccvKC0sfh3Rc%3D&oss_token=2046f4a7a951dd81)（此链接有20个免费阅读该文章的名额）
+- [《MySQL实战45讲》02 | 日志系统：一条SQL更新语句是如何执行的？](https://time.geekbang.org/column/article/ef8825593d260c8a45ede7f9c211f1a0/share?code=cbHwlgRYeERonSROIcKJXe0PPC4kk7tccvKC0sfh3Rc%3D)（此链接有20个免费阅读该文章的名额）
 - [MySQL存储引擎的区别与比较](https://blog.csdn.net/keil_wang/article/details/88392433)
+
+最后，本文收录于个人语雀知识库: [我所理解的后端技术](https://www.yuque.com/planeswalker/bankend)，欢迎来访。

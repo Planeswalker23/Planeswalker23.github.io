@@ -1,37 +1,19 @@
 ---
 layout: post
-title: 我所理解的MySQL(二)索引
-categories: [数据库]
-description: 我所理解的MySQL(二)索引
+title: 我所理解的MySQL系列·第2篇·关于索引的那些事儿
+categories: [MySQL]
 keywords: MySQL
 ---
 
-MySQL 系列的第二篇，主要讨论 MySQL 中关于索引的一些问题，包括索引种类、数据模型、索引执行流程、最左前缀原则、索引失效情况以及索引下推等内容。
 
-![](https://javageekers.club/upload/2020/10/mysql2-index-1e932ec962b34185b75932271daf6601.png)
-
-----
-
-你好，有幸相见。
-
-从九月开始，我决定发起「每周一博」的目标：每周至少发布一篇博客，可以是各种源码分析研读，也可以是记录工作中遇到的难题。
-
-在经过了一段时间漫无目的的学习之后，我发现那样用处好像不大，看过的东西过段时间就忘了，而且也没有做什么笔记。
-
-“凡所学，必有所输出。”我认为这才是最适合我的学习方式，这也是「每周一博」活动的来由，朋友们，如果你也觉得经常会忘记以前看过的东西，一起加入这个活动吧。
-
-原本应该是九月的第五篇博客，最终完成于十月的第一周，同时这也是 MySQL 系列的第二篇。
-
-- 本文首发于个人博客:  [javageekers.club](https://javageekers.club)
-- 本文收录于个人语雀知识库: [我所理解的后端技术](https://www.yuque.com/planeswalker/bankend)
-
-----
 
 MySQL 系列的第二篇，主要讨论 MySQL 中关于索引的一些问题，包括索引种类、数据模型、索引执行流程、最左前缀原则、索引失效情况以及索引下推等内容。
 
 最早知道索引应该是在大二的数据库原理这门课中，当一个查询语句非常慢时，可以通过为某些字段添加索引来**提高查询效率**。
 
 还有一个非常经典的例子：我们可以把数据库想象成字典，把索引想象成目录，当我们借助字典的目录来查询一个字的时候，就能体现出索引的作用了。
+
+
 
 ## 1. 索引种类
 在 MySQL 中，从索引的逻辑或者说字段特性来区分，索引大致分为以下几个种类：普通索引、唯一索引、主键索引、联合索引和前缀索引。
@@ -49,8 +31,12 @@ MySQL 系列的第二篇，主要讨论 MySQL 中关于索引的一些问题，�
 
 简单来说，所谓的聚簇索引就是索引 key 与数据行在一起，而非聚簇索引的索引 key 对应的值是聚簇索引的值。
 
+
+
 ## 2. 索引的数据结构
 常见的用于实现索引的数据结构有哈希表、有序数组和搜索树。
+
+
 
 ### 2.1 哈希索引
 哈希表是一个以 key-value 形式来存储数据的容器，和 HashMap 一样，哈希索引也会将 key 通过特定的哈希函数计算得到索引值，然后在数组的相应位置存放 key 对应的 value，如果有两个 key 通过哈希函数计算得到的索引值相同（发生哈希冲突），那么数组的这个位置就会变成一个链表，存放所有哈希值相同的 value。
@@ -60,6 +46,8 @@ MySQL 系列的第二篇，主要讨论 MySQL 中关于索引的一些问题，�
 另外，考虑到经过哈希函数计算得到的索引是不规律的——哈希表希望所有的 key 能够得到充分散列，这样才能让 key 均匀分布，不浪费空间——即哈希表的 key 是非顺序的，所以使用哈希表来进行区间查询时很慢的，排序也是同样的道理。
 
 所以，哈希表仅适用于等值查询。
+
+
 
 ### 2.2 有序数组
 有序数组顾名思义是一个按照 key 的顺序进行排列的数组，它进行等值查询的时间复杂度使用二分查询可以达到O(logN)，这与哈希表相比逊色不少。
@@ -72,10 +60,14 @@ MySQL 系列的第二篇，主要讨论 MySQL 中关于索引的一些问题，�
 
 所以，有序数组适合存储衣服初始化过后就不再更新的数据。
 
+
+
 ### 2.3 搜索树
 了解过数据结构的人应该会知道，搜索树是一个查询时间复杂度为O(logN)，更新的时间复杂度也是O(logN)的数据结构。所以搜索树相较于哈希表和有序数组来说兼顾查询与更新两方面。也正是由于这个原因，在 MySQL 中最常用的数据模型就是搜索树。
 
 而考虑到索引是存放在磁盘中的，如果搜索树是一棵二叉树，那么它的子节点只能有左右两个，在数据比价多的情况下，这棵二叉树的树高可能会非常高，当 MySQL 进行查询的时候，可能由于树高导致磁盘I/O次数过多，查询效率变慢。
+
+
 
 ### 2.4 全文索引
 除此之外，还有一种全文索引，它通过建立**倒排索引**，解决了判断字段是否包含的问题。
@@ -84,15 +76,17 @@ MySQL 系列的第二篇，主要讨论 MySQL 中关于索引的一些问题，�
 
 当通过关键词进行检索的时候，全文索引就会派上用场。
 
+
+
 ## 3. InnoDB 中的 BTree 索引
 ### 3.1 B+树
 这是一棵比较简单的B+树。
 
-![B+树示例](https://javageekers.club/upload/2020/10/B+%E6%A0%91%E7%A4%BA%E4%BE%8B-e99d98c8f36b4e2aa7f46d5d958e0a8e.png)
+![B+树示例](https://cdn.nlark.com/yuque/0/2020/png/2331602/1601741591164-9d6b26c3-d4a2-40bf-90d4-f57dd0c5a4dc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_10%2Ctext_6K-t6ZuA77ya5oiR5omA55CG6Kej55qE5ZCO56uv5oqA5pyv%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10%2Fresize%2Cw_360%2Climit_0)
 
-> 图片来源: [Data Structure Visualizations](https://www.cs.usfca.edu/~galles/visualization/Algorithms.html)
+从上面这张示例图也可以看到，这棵B+树最下面的叶子节点存储了完整的 KEY，并且是按顺序存储的。
 
-从上面这张示例图也可以看到，这棵B+树最下面的叶子节点存储了所有的元素，并且是按顺序存储的，而非叶子节点仅存储索引列的值。
+
 
 ### 3.2 图解 BTree 索引
 在 InnoDB 中，基于 BTree 的索引模型的最为常用的，下面以一个实际的例子来图解 InnoDB 中 BTree 索引的结构。
@@ -114,15 +108,18 @@ insert into user1(id,name,age) values (1,'one',21),(2,'two',22),(3,'three',23),(
 
 以主键 id 字段的为索引的索引，又叫主键索引，它的索引树结构是：索引树的非叶子阶段存放的都是主键 id 的值，叶子节点存放的值是**该主键 id 对应的整个数据行**，如下图所示：
 
-![id主键索引树](https://javageekers.club/upload/2020/10/id%E4%B8%BB%E9%94%AE%E7%B4%A2%E5%BC%95%E6%A0%91-c11e8a785dec497f96c6a30d31b30fcc.png)
+![id主键索引树](https://cdn.nlark.com/yuque/0/2020/png/2331602/1601741591170-366c1820-d6b6-40f0-8537-23be2bdcae79.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_6K-t6ZuA77ya5oiR5omA55CG6Kej55qE5ZCO56uv5oqA5pyv%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10%2Fresize%2Cw_473%2Climit_0)
 
 也正因为主键索引的叶子节点存储的是该主键 id 对应的整个数据行，主键索引又被称为聚簇索引。
 
 而以 name 字段为列的索引树，非叶子节点存放的同样是索引列的值，而其叶子阶段存放的值是**主键 id 的值**，如下图所示。
 
-![name字段索引树](https://javageekers.club/upload/2020/10/name%E5%AD%97%E6%AE%B5%E7%B4%A2%E5%BC%95%E6%A0%91-3ef3ee25ed8b4a3780889fed4f37f351.png)
+![name字段索引树](https://cdn.nlark.com/yuque/0/2020/png/2331602/1601741591169-90f5c2ff-673a-4a46-9b9b-3766f8e29786.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_6K-t6ZuA77ya5oiR5omA55CG6Kej55qE5ZCO56uv5oqA5pyv%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10%2Fresize%2Cw_474%2Climit_0)
+
+
 
 ### 3.3 索引的执行流程
+
 首先来看下面这句 SQL，查询 user 表中 id=1 的数据行。
 
 ```sql
@@ -130,6 +127,8 @@ select * from user where id=1;
 ```
 
 这句 SQL 的执行流程很简单，存储引擎会走主键 id 的索引树，当找到 id=1 时，就会把索引树上 id=1 的数据行返回（由于主键值是唯一的，所以找到命中目标就会停止搜索，直接返回结果集）。
+
+
 
 #### 3.3.1 回表
 接下来再看使用普通索引进行查询的情况，它的情况与主键索引略有不同。
@@ -144,9 +143,11 @@ select * from user where name='one';
 
 随后存储引擎会继续搜索索引树，直到遇到第一个不满足 `name='one'` 的记录才会停止搜索，最后将所有命中的记录返回客户端。
 
-我们把**根据从普通索引查询到的主键 id 值，再在主键索引中查询整个数据行的过程**称之为回表。
+我们把**根据从普通索引查询到的主键 id 值，再在主键索引中查询整个数据行的过程**称之为**回表**。
 
-当数据量十分庞大时，回表是一个十分耗时的过程，所以我们应该尽量避免回表发生，这就引出了下一个问题：使用覆盖索引避免回表。
+当数据量十分庞大时，回表是一个十分耗时的过程，所以我们应该尽量避免回表发生，那么问题来了：MySQL 有没有提供什么机制可以避免回表呢？答案就是：使用覆盖索引。
+
+
 
 #### 3.3.2 覆盖索引
 不知道你有没有注意到，在上一个回表的问题中有这样一句描述：“当查询语句需要查询除主键 id 及索引列之外的其他字段时...”，在这种场景下需要通过回表来获取其他的查询字段。也就是说，如果查询语句需要查询的字段仅有主键 id 和索引列的字段时，是不是就不需要回表了？
@@ -159,7 +160,7 @@ alter table user add index name_age ('name','age');
 
 那么这棵索引树的结构图应该是下面这样：
 
-![name_age联合索引树](https://javageekers.club/upload/2020/10/name_age%E8%81%94%E5%90%88%E7%B4%A2%E5%BC%95%E6%A0%91-945378d7f391448daa1273ca6185eae1.png)
+![name_age联合索引树](https://cdn.nlark.com/yuque/0/2020/png/2331602/1601741591178-8025ba0d-37ee-4435-a11e-13107949c0e5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_6K-t6ZuA77ya5oiR5omA55CG6Kej55qE5ZCO56uv5oqA5pyv%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10%2Fresize%2Cw_634%2Climit_0)
 
 联合索引索引树的子节点顺序是按照声明索引时的字段来排序的，类似于 `order by name, age` ，而它索引对应的值与普通索引一样是主键值。
 
@@ -175,14 +176,20 @@ select name,age from user where name='one';
 
 我们把**只需要在一棵索引树上就可以得到查询语句所需要的所有字段**的索引成为覆盖索引，覆盖索引无须进行回表操作，速度会更快一些，所以我们在进行 SQL 优化时可以考虑使用覆盖索引来优化。
 
+
+
 ## 4. 最左前缀原则
+
 上面所举的例子都是使用索引的情况，事实上在项目中复杂的查询语句中，也可能存在不使用索引的情况。首先我们要知道，MySQL 在执行 SQL 语句的时候一张表只会选择一棵索引树进行搜索，所以一般在建立索引时需要尽可能覆盖所有的查询条件，建立联合索引。
 
 而对于联合索引，MySQL 会遵循**最左前缀原则**：查询条件与联合索引的最左列或最左连续多列一致，那么就可以使用该索引。
 
 为了详细说明最左前缀原则，同时说明最左前缀原则的一些特殊情况。
 
+
+
 ## 5. 索引失效场景
+
 即便我们根据最左前缀的原则创建了联合索引，还是会有一些特殊的场景会导致索引失效，下面举例说明。
 
 假设有一张 table 表，它有一个联合索引，索引列为 a,b,c 这三个字段，这三个字段的长度均为10。
@@ -196,7 +203,10 @@ CREATE TABLE `demo`  (
 ) ENGINE = InnoDB;
 ```
 
+
+
 ### 5.1 全字段匹配
+
 第一种情况是查询条件与索引字段全部一致，并且用的是等值查询，如：
 
 ```sql
@@ -232,7 +242,10 @@ mysql> explain select * from demo where c='1' and a='1' and b='1';
 
 综上所述，全字段匹配且为等值查询的情况下，**查询条件的顺序不一致也能使用到联合索引**。
 
+
+
 ### 5.2 部分字段匹配
+
 第二种情况是查询条件与索引字段部分保持一致，这里就需要遵循最左前缀的原则，如：
 
 ```sql
@@ -276,7 +289,9 @@ mysql> explain select * from demo where a='1' and c='1';
 由此可见：**最左前缀原则要求，查询条件必须是从索引最左列开始的连续几列**。
 
 
+
 ### 5.3 范围查询
+
 第三种情况是查询条件用的是范围查询（<,>,!=,<=,>=,between,like）时，如：
 
 ```sql
@@ -303,7 +318,10 @@ mysql> EXPLAIN select * from demo where a='1' and b!='1' and c='1';
 - like 必须要求是左模糊匹配才能用到索引，因为字符类型字段的索引树也是有序的。
 - between 并不一定是范围查询，它相当于使用 in 多值精确匹配，所以 between 并不会因为是范围查询就让联合索引后面的索引列失效。
 
+
+
 ### 5.4 查询条件为函数或表达式
+
 第四种情况是查询条件中带有函数或特殊表达式的，比如：
 
 ```sql
@@ -315,12 +333,18 @@ select * from demo where concat(a, '1') = '11';
 
 至于原因，是因为使用函数或表达式的情况下，索引字段本身的值已不具备有序性。
 
+
+
 ### 5.5 其他索引失效的场景
+
 - 查询影响行数大于全表的25%
 - 查询条件使用 <>(!=), not in, is not null
 - in 查询条件中值数据类型不一致，MySQL 会将所有值转化为与索引列一致的数据类型，从而无法使用索引
 
+
+
 ## 6. 索引下推
+
 上文中已经罗列了联合索引的实际结构、最左前缀原则以及索引失效的场景，这里再说一下索引下推这个重要的优化规则。
 
 ```sql
@@ -349,7 +373,10 @@ mysql> explain select * from demo where a > '1' and b='1';
 
 Ps: 执行计划中 Extra 字段的值包含 **Using index condition** 就代表使用到了索引下推。
 
+
+
 ## 7. 温故知新
+
 1. 索引分类？聚簇索引结构？非聚簇索引结构？
 2. 常用的实现索引的数据模型？
 3. B+树索引的执行流程？
@@ -359,10 +386,15 @@ Ps: 执行计划中 Extra 字段的值包含 **Using index condition** 就代表
 7. 索引在哪些情况下可能会失效？
 8. 什么是索引下推？
 
+
+
 ## 8. 参考资料
+
 - [MySQL索引-B+树](http://www.liuzk.com/410.html)
 - [MySQL实战45讲-深入浅出索引](https://time.geekbang.org/column/article/8b4ff27539cd443318031e9d299acb7d/share?code=cbHwlgRYeERonSROIcKJXe0PPC4kk7tccvKC0sfh3Rc%3D)
 - [MySQL索引原理及BTree（B-/+Tree）结构详解](https://blog.csdn.net/u013967628/article/details/84305511)
 - [MySQL key_len 大小的计算](https://www.cnblogs.com/zhoujinyi/p/3784450.html)
 - [mysql数据库中无法使用索引的情况总结](https://www.cnblogs.com/wuxiaomiao333/p/13431950.html)
 - [Mysql性能优化：什么是索引下推？](https://www.cnblogs.com/Chenjiabing/p/12600926.html)
+
+最后，本文收录于个人语雀知识库: [我所理解的后端技术](https://www.yuque.com/planeswalker/bankend)，欢迎来访。

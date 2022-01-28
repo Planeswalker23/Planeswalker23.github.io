@@ -1,37 +1,19 @@
 ---
 layout: post
-title: 我所理解的MySQL(三)执行计划
-categories: [数据库]
-description: 我所理解的MySQL(三)执行计划
+title: 我所理解的MySQL系列·第3篇·SQL调优必备知识点
+categories: [MySQL]
 keywords: MySQL
 ---
 
-MySQL 系列的第三篇博客，主要内容是 MySQL 中关于 Explain 执行计划的分析，假如你已经知道如何分析执行计划，那么对于 SQL 调优也就信手拈来了。
 
-![](https://javageekers.club/upload/2020/10/mysql-explain-9da343384c984a9e9adef47858870551.png)
-
-----
-
-你好，有幸相见。
-
-从九月开始，我决定发起「每周一博」的目标：每周至少发布一篇博客，可以是各种源码分析研读，也可以是记录工作中遇到的难题。
-
-在经过了一段时间漫无目的的学习之后，我发现那样用处好像不大，看过的东西过段时间就忘了，而且也没有做什么笔记。
-
-“凡所学，必有所输出。”我认为这才是最适合我的学习方式，这也是「每周一博」活动的来由，朋友们，如果你也觉得经常会忘记以前看过的东西，一起加入这个活动吧。
-
-这是十月的第二篇博客，同时这也是 MySQL 系列的第三篇。
-
-- 本文首发于个人博客:  [javageekers.club](https://javageekers.club)
-- 本文收录于个人语雀知识库: [我所理解的后端技术](https://www.yuque.com/planeswalker/bankend)
-
-----
 
 MySQL 系列的第三篇博客，主要内容是 MySQL 中关于 Explain 执行计划的分析，假如你已经知道如何分析执行计划，那么对于 SQL 调优也就信手拈来了。
 
 纵观众多一二线大厂招聘时的岗位要求，但凡设计数据库的必定会要求有 SQL 调优的经验，这几乎已经成为与 Spring 不相上下的“八股文”类面试题。
 
 要想进行 SQL 调优，首先需要知道 SQL 的执行情况，最直观的感觉当然是 SQL 语句执行的时间，然而除此之外，我们还可以通过执行计划来分析 SQL 语句的执行情况，从而进行调优。
+
+
 
 ## 1. Explain 简述
 Explain 语句可以查看 MySQL 是如何执行这条 SQL 语句的，包括使用索引情况、扫描行数等，这些信息对于 SQL 调优来说十分重要，所以首先得看懂执行计划。
@@ -63,6 +45,8 @@ mysql> explain select * from user where name='one';
 
 以上只是对执行计划表各个字段的名词解释，接下来我会通过实际的例子来帮助大家（我自己）更好地理解其中 `select_type`, `type`, `key_len`, `rows`, `Extra` 这些重要的字段。
 
+
+
 ## 2. Explain 详述
 ### 2.1 示例表结构
 首先介绍本文中将用到的示例表表结构以及数据行：
@@ -91,7 +75,10 @@ begin
 end
 ```
 
+
+
 ### 2.2 select_type in Explain
+
 执行计划中 `select_type` 字段表示 select 查询语句的类型，常见类型有：
 - `SIMPLE`: 简单的查询语句，不包括子查询和关联，如：
 
@@ -105,7 +92,10 @@ mysql> explain select * from user where id=1;
 1 row in set, 1 warning (0.00 sec)
 ```
 
+
+
 #### 2.2.1 PRIMARY
+
 若查询语句中包含任何复杂的子部分，那么最外层部分会被标记为 `PRIMARY`，如：
 
 ```sql
@@ -121,10 +111,16 @@ mysql> explain select * from user where id=(select id from user where id=1);
 
 在这条 SQL 语句的执行计划中，第一条执行的 SQL，即 `select * from yser where id = (...)` 就被标记为 `PRIMARY`
 
+
+
 #### 2.2.2 SUBQUERY
+
 包含在 select 或 where 内容中的子查询会被标记为 `SUBQUERY`，如上一条示例 SQL 的执行计划中第二条语句，即 `select id from user where id=1` 的 `select_type` 就被标记为了`SUBQUERY`。
 
+
+
 #### 2.2.3 DERIVED
+
 包含在 FROM 关键字后的子查询（即将子查询的结果视为「表」），被视为「表」的子查询会被标记为 `DERIVED`，其结果将被存放在临时表中，如：
 
 ```sql
@@ -139,10 +135,13 @@ mysql> explain select * from (select id,name,count(*) from user where id=1) as u
 ```
 
 从执行计划中可以看到，第二条执行的 SQL，即 `select id,name,count(*) from user where id=1` 的查询类型是 `DERIVED`。
- 
+
 > `select_type` 一共有12中查询类型，具体释义可以看[官方文档-explain_select_type](https://dev.mysql.com/doc/refman/8.0/en/explain-output.html#explain_select_type)
 
+
+
 ### 2.3 type in Explain
+
 `type` 字段是执行计划中衡量 SQL 非常重要的依据，它展示了 SQL 语句的关联类型（访问类型），决定了 MySQL 是如何查找表中行的。
 
 `type` 字段的值性能从最差到最优依次是 `ALL, index, range, index_merge, ref, eq_ref, const, system`。
@@ -151,7 +150,10 @@ mysql> explain select * from (select id,name,count(*) from user where id=1) as u
 
 > 并未全部列出，完整的解释可以看[官方文档-EXPLAIN Join Types](https://dev.mysql.com/doc/refman/8.0/en/explain-output.html#explain-join-types)
 
+
+
 #### 2.3.1 ALL
+
 `ALL` 表示全表扫描，意味着存储引擎查找记录时未走索引，所以它是性能最差的一种访问类型，如
 
 ```sql
@@ -180,7 +182,10 @@ mysql> explain select * from user where age=18;
 1 row in set, 1 warning (0.00 sec)
 ```
 
+
+
 #### 2.3.2 index
+
 `index` 表示全索引树扫描，由于扫描的是索引树，所以比 `ALL` 形式的全表扫描性能要好。
 
 同时，由于索引树本身就是有序的，可以避免排序。
@@ -197,7 +202,10 @@ mysql> explain select id,age from user where name='name1';
 
 示例查询语句如上所述，当查询条件存在于联合索引 `idx_age_name` 中，但又无法直接使用该索引（由于**最左前缀原则**），同时查询列 `id,age` 也存在于联合索引中，无须通过回表来获取时，执行计划中的访问类型 `type` 列就会是 `index`。
 
+
+
 #### 2.3.3 range
+
 `range` 表示范围扫描，准确的说是基于索引树的范围扫描，扫描的是部分索引树，所以性能比 `index` 稍好。
 
 需要注意的是，若使用 `in` 或者 `or` 时，也可以使用范围扫描。
@@ -220,7 +228,10 @@ mysql> explain select * from user where age=18 or age=20;
 1 row in set, 1 warning (0.00 sec)
 ```
 
+
+
 #### 2.3.4 index_merge
+
 `index_merge` 即索引合并，它表示在查询时 MySQL 会使用多个索引。
 
 MySQL 在 where 语句中存在多个查询条件，并且其中存在多个字段可以分别使用到多个不同的索引，在这种情况下 MySQL 可以**对多个索引树同时进行扫描，最后将它们的结果进行合并**，如：
@@ -237,13 +248,18 @@ mysql> explain select * from user where id=1 or age=18;
 
 上面这条查询语句中的 id=1 和 age=18 分别使用到了 `PRIMARY` 主键索引和 `idx_age_name` 联合索引，最后再将满足这两个条件的记录进行合并。
 
+
+
 #### 2.3.5 ref
+
 `ref` 表示索引访问（索引查找），这种访问类型会出现在**查询条件中以非聚簇索引列的常量值进行查询的情况**。
 
 比如在介绍全表扫描中优化后 SQL 的访问类型就是 `ref`。
 
 
+
 #### 2.3.6 eq_ref
+
 `eq_ref` 这种访问类型会出现在连接查询时，通过聚簇索引进行连接的情况，此类型最多只返回一条符合条件的记录。若表的聚簇索引为联合索引，所有的索引列必须是等值查询，如：
 
 ```sql
@@ -257,7 +273,10 @@ mysql> explain select * from user user1 inner join user user2 where user1.id=use
 2 rows in set, 1 warning (0.00 sec)
 ```
 
+
+
 #### 2.3.7 const
+
 `const` 这种访问类型会出现在通过聚簇索引进行常量等值查询的情况，如：
 
 ```sql
@@ -270,10 +289,16 @@ mysql> explain select * from user where id=1;
 1 row in set, 1 warning (0.00 sec)
 ```
 
+
+
 ### 2.4 key_len in Explain
+
 在上一篇博客 —— [我所理解的MySQL(二)索引](https://www.yuque.com/planeswalker/bankend/index) 中 `5.2 部分字段匹配` 中已经提到过关于索引长度的计算方式，这里再来总结一下。
 
+
+
 #### 2.4.1 字符类型
+
 字符类型的字段若作为索引列，它的***索引长度 = 字段定义长度 * 字符长度 + 是否默认NULL + 是否是变长字段***，其中：
 - `字段定义长度` 就是定义表结构时跟在字段类型后括号中的数字
 - `字符长度` 是常数，`utf8=3, gbk=2, latin1=1`
@@ -281,6 +306,8 @@ mysql> explain select * from user where id=1;
 - `是否是变长字段` 也是常数，若该字段为变长字段，该值为2；否则该值为0
 
 > 所谓的变长字段就是 varchar，它所占用的就是字段实际内容的长度而非定义字段时的长度。而定长字段，也就是 char 类型，它所占用的空间就是自定字段时的长度，若超过会被截取。
+
+
 
 举个例子，为上述实例表中添加一个字符类型字段的索引。
 
@@ -306,18 +333,21 @@ mysql> explain select * from user where name='name1';
 
 所以 `idx_name` 索引的索引长度=36*3+1+2=111，恰如执行计划中显示的值。
 
+
+
 #### 2.4.2 其他定长类型
+
 对于定长类型的字段，其索引长度与它的数据类型长度是一致的。
 
-数据类型|长度
----|---
-int|4
-bigint|8
-date|3
-datetime|8
-timestamp|4
-float|4
-double|8
+| 数据类型  | 长度 |
+| --------- | ---- |
+| int       | 4    |
+| bigint    | 8    |
+| date      | 3    |
+| datetime  | 8    |
+| timestamp | 4    |
+| float     | 4    |
+| double    | 8    |
 
 需要注意的是，**若该字段允许默认值为 NULL，与字符类型一样，其索引长度也需要加上1**。
 
@@ -333,12 +363,18 @@ mysql> explain select * from user where age=1;
 
 如上面这个示例（本示例中索引只用到了 age 字段），age 字段为 int 类型，其索引长度本应为 4，但由于 age 字段默认允许为 NULL，所以它的索引长度就变成了5。
 
+
+
 ### 2.5 rows in Explain
+
 扫描行数在执行计划中其实是一个估值，MySQL 会选择 N 个不同的索引数据页，计算平均值得到单页索引基数，然后再乘以索引页面数，就得到了扫描行数的估值。
 
 扫描行数就是优化器考量索引执行效率的因素之一，一般而言扫描行数越少，执行效率越高。
 
+
+
 ### 2.6 Extra in Explain
+
 执行计划中 `Extra` 字段的常见类型有：
 - `Using index`: 使用了**覆盖索引**，以避免回表
 - `Using index condition`: 使用了**索引下推**，具体可以看我的上一篇博客 —— [我所理解的MySQL(二)索引](https://www.yuque.com/planeswalker/bankend/index)
@@ -350,9 +386,14 @@ mysql> explain select * from user where age=1;
     - 数据较少时在内存中排序，数据较多时在磁盘中排序
     - 尽量避免该信息出现在执行计划中
 
+
+
 ## 3. 参考资料
+
 - 高性能MySQL第3版
 - [官方文档 8.2.2 EXPLAIN Output Format](https://dev.mysql.com/doc/refman/8.0/en/explain-output.html#explain-output-column-table)
 - [不会看 Explain执行计划，劝你简历别写熟悉 SQL优化](https://juejin.im/post/6844904163969630221)
 - [MySQL 是怎样运行的：从根儿上理解 MySQL](https://juejin.im/book/6844733769996304392)
 - [[MySQL] mysql索引的长度计算和联合索引](https://www.cnblogs.com/taoshihan/p/12298037.html)
+
+最后，本文收录于个人语雀知识库: [我所理解的后端技术](https://www.yuque.com/planeswalker/bankend)，欢迎来访。
