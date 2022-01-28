@@ -8,7 +8,8 @@ menu: 维基
 permalink: /wiki/
 ---
 
-> 记录一下命令与其他诸如此类的东西
+记录一下命令与其他诸如此类的东西
+
 
 <ul class="listing">
 {% for wiki in site.wiki %}
