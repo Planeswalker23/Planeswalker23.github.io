@@ -1,9 +1,8 @@
 ---
 layout: post
-title: 基于Jmeter测试Web接口性能
+title: 我所理解的其他问题·第7篇·基于Jmeter测试Web接口性能
 categories: [Others]
-description: 基于Jmeter测试Web接口性能
-keywords: jmeter, api
+keywords: Jmeter
 ---
 
 最近接到一个需求，产品说要对一个接口做负载均衡。当时我听到这个需求的时候，我的内心是奔溃的——这接口只有一个，怎么做负载均衡，负载均衡起码得有两个才能做啊！
@@ -25,7 +24,7 @@ keywords: jmeter, api
 ## Jmeter配置
 对于此次接口性能测试，我在`Jmeter`中添加的所有元件及处理器如下
 
-![所有元件及处理器](https://planeswalker23.github.io/images/posts/2020072701.png)
+![所有元件及处理器](https://cdn.nlark.com/yuque/0/2022/png/2331602/1642851371243-6291bf5a-90fc-42e4-885f-d272fac7af19.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_6K-t6ZuA77ya5oiR5omA55CG6Kej55qE5ZCO56uv5oqA5pyv%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
 
 - 线程组：发起请求的线程数，循环次数等参数
 - HTTP请求：请求的协议、服务器、端口、请求地址、请求参数等
@@ -37,23 +36,23 @@ keywords: jmeter, api
 ## 单线程请求的性能测试
 首先测试的是接口的平均响应时间，我在线程组中配置了一个线程，循环100次。`ramp-up period`参数的作用是在此时间内建立全部的线程，这里不需要改动。
 
-![线程组配置](https://planeswalker23.github.io/images/posts/2020072702.png)
+![线程组配置](https://cdn.nlark.com/yuque/0/2022/png/2331602/1642851377123-185049ef-5a68-4edb-9ce9-0651d74b651d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_6K-t6ZuA77ya5oiR5omA55CG6Kej55qE5ZCO56uv5oqA5pyv%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
 
 关于响应时间图的配置，首先需要设置一个输出文件路径，然后配置合适的时间间隔（不同的时间间隔显示的图表会不一致），我这里配置的是10毫秒。
 
-![响应时间图配置](https://planeswalker23.github.io/images/posts/2020072703.png)
+![响应时间图配置](https://cdn.nlark.com/yuque/0/2022/png/2331602/1642851382609-d68c5b00-d9cb-4317-a974-5a7de4e30a57.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_6K-t6ZuA77ya5oiR5omA55CG6Kej55qE5ZCO56uv5oqA5pyv%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
 
 结果树在响应时间的测试中并不重要，汇总报告和概要结果不需要配置。
 
 在完成了上述的配置之后，点击启动按钮，在等待一段时间后，整个测试流程结束，首先打开响应时间图中的**显示图表**。
 
-![响应时间图](https://planeswalker23.github.io/images/posts/2020072704.png)
+![响应时间图](https://cdn.nlark.com/yuque/0/2022/png/2331602/1642851387789-078b8a3f-abe9-4e67-a955-0adc62a48cd2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_6K-t6ZuA77ya5oiR5omA55CG6Kej55qE5ZCO56uv5oqA5pyv%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
 
 从上面的图形中可以粗略看到，每次请求的平均响应时间大概在40ms左右。
 
 同时，可以在**汇总报告**界面看到本次测试的数据结果。
 
-![汇总报告](https://planeswalker23.github.io/images/posts/2020072705.png)
+![汇总报告](https://cdn.nlark.com/yuque/0/2022/png/2331602/1642851393581-1f965a61-e77c-4014-8794-f2530a72e25d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_6K-t6ZuA77ya5oiR5omA55CG6Kej55qE5ZCO56uv5oqA5pyv%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
 
 从表格中可以看到，总共的样本数是100，平均响应时间为41ms，最小响应时间为28ms，最大响应时间为135毫秒，请求出错的概率是0.00%，吞吐量是每秒23.7次，数据包的统计值暂且不论。
 

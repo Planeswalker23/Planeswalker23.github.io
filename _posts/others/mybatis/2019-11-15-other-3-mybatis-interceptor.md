@@ -1,10 +1,13 @@
 ---
 layout: post
-title: 基于 Mybatis 拦截器实现关键信息加密
+title: 我所理解的其他问题·第2篇·基于Mybatis拦截器实现关键信息加密
 categories: [MyBatis]
-description: 基于 Mybatis 拦截器实现关键信息加密
 keywords: MyBatis, 拦截器
 ---
+
+
+
+## 1. 开篇词
 
 先来看一条sql
 ```mysql
@@ -17,6 +20,10 @@ select * from user where mobile='10086';
 很简单，我们只要在数据被写入数据库的时候将用户的隐私信息进行加密，这样就算数据库整个都泄露了，只要加密方式没有泄露，那么用户的隐私就是安全的。
 
 对用户隐私信息的加密，应该是属于每步写入数据库操作都需要做的，同样对于查询结果的解密及修饰，也是必须的。那么在这里就遇到一个问题：在日常开发时，我们如何避开这种公共的操作，提高开发效率？
+
+
+
+## 2. 解决方案
 
 想要解决这个问题，就必须知道在项目中与数据库的交互过程。由于项目是使用mybatis来维护持久层的，我们就先来看一个基于mybatis的查询方法是如何执行的，在整个查询方法执行的过程中，我们或许能得到一些启示。
 
@@ -49,6 +56,10 @@ public void parameterize(Statement statement) throws SQLException {
 在`PreparedStatementHandler`类的`parameterize`方法中，执行将参数设置入sql的逻辑，此方法执行了持有的`ParameterHandler`对象的`setParameters`方法，而这个方法的参数类型是`PreparedStatement`类。
 
 分析到这里，本文最初的那个问题就可以得到解决了：如何在日常开发时，避开这种公共的操作，提高开发效率？
+
+
+
+## 3. 源码分析
 
 如果`setParameters`方法前，执行数据库实体类属性的加密逻辑，那么在业务中就不需要额外去加密了。那么这个功能如何实现呢？
 
@@ -86,6 +97,10 @@ public Object pluginAll(Object target) {
   }
 ```
 找出所有使用到这个方法的地方，发现只有在`Configuration`类的四个地方用到：即生成上述四个类的方法中。
+
+
+
+## 4. 实现自定义拦截器
 
 下面我们来实现一个自定义的加密拦截器：
 ```java
@@ -140,4 +155,4 @@ public class EncryptInterceptor implements Interceptor {
 
 mybatis拦截器除了拦截设置参数和拦截返回查询结果实现加密、解密或者公共字段的自动填充之外，还有许多用处，比如说可以用它实现分页、慢sql熔断等等。拦截器是一个强大的工具，但是要注意如果在拦截器中添加太多逻辑，可能会影响业务效率，拦截器的效率问题也是一个要注意的点。
 
-> 版权声明：本文为[Planeswalker23](https://github.com/Planeswalker23)所创，转载请带上原文链接，感谢。
+最后，本文收录于个人语雀知识库: [我所理解的后端技术](https://www.yuque.com/planeswalker/bankend)，欢迎来访。

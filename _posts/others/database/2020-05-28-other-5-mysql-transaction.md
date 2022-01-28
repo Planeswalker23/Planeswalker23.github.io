@@ -1,8 +1,7 @@
 ---
 layout: post
-title: MyBatis 查询结果与 MySQL 执行结果不一致？
-categories: [数据库]
-description: MyBatis 查询结果与 MySQL 执行结果不一致？
+title: 我所理解的其他问题·第5篇·数据库事务踩坑——Debug查询结果与数据库不一致
+categories: [MyBatis]
 keywords: MySQL, MyBatis, 事务
 ---
 
@@ -13,7 +12,7 @@ keywords: MySQL, MyBatis, 事务
 
 难道是因为 MyBatis 和数据库执行的结果不一样？
 
-![2020052801](https://planeswalker23.github.io/images/posts/2020052801.png)
+![2020052801](https://www.yuque.com/api/filetransfer/images?url=https%3A%2F%2Fplaneswalker23.github.io%2Fimages%2Fposts%2F2020052801.png%3Fx-oss-process%3Dimage%252Fwatermark%252Ctype_d3F5LW1pY3JvaGVp%252Csize_12%252Ctext_6K-t6ZuA77ya5oiR5omA55CG6Kej55qE5ZCO56uv5oqA5pyv%252Ccolor_FFFFFF%252Cshadow_50%252Ct_80%252Cg_se%252Cx_10%252Cy_10&sign=b42e8e74b82b300e0880a7a82c6eaadb46069e60715b9acc9aa98308c7be4e59)
 
 后来我才明白不一致的原因。
 
@@ -151,7 +150,7 @@ java.lang.RuntimeException: 插入失败，user_name 重复
 
 不信邪的我又在第二个校验方法上打了端点，当程序执行到此处时，它的执行结果是：
 
-![2020052802.png](https://planeswalker23.github.io/images/posts/2020052802.png)
+![2020052802.png](https://www.yuque.com/api/filetransfer/images?url=https%3A%2F%2Fplaneswalker23.github.io%2Fimages%2Fposts%2F2020052802.png%3Fx-oss-process%3Dimage%252Fwatermark%252Ctype_d3F5LW1pY3JvaGVp%252Csize_22%252Ctext_6K-t6ZuA77ya5oiR5omA55CG6Kej55qE5ZCO56uv5oqA5pyv%252Ccolor_FFFFFF%252Cshadow_50%252Ct_80%252Cg_se%252Cx_10%252Cy_10&sign=15e023197801c7a89a4a89cfaaef1f63ab1ab43876d6da8b71b309316536813e)
 
 也就是说确实这时候存在这样的数据！
 
