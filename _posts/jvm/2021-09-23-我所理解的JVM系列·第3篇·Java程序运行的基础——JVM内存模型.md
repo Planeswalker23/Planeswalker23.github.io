@@ -11,7 +11,7 @@ JVM 系列的第三篇，主题是内存模型，内容包括 JVM 内存区域�
 
 
 
-![cover](https://cdn.nlark.com/yuque/0/2022/png/2331602/1643355823069-bc8013bd-c1f7-4f21-ab99-367d87e98359.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_6K-t6ZuA77ya5oiR5omA55CG6Kej55qE5ZCO56uv5oqA5pyv%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10%2Fresize%2Cw_900%2Climit_0)
+![JVM-封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jvm/3/JVM-封面.4ym0ebfxwhk0.jpg)
 
 
 
@@ -53,7 +53,7 @@ JVM 系列的第三篇，主题是内存模型，内容包括 JVM 内存区域�
 根据《Java 虚拟机规范》，Java 虚拟机所管理的内存被划分为下面几个区域：
 
 
-![](https://cdn.nlark.com/yuque/0/2021/png/2331602/1612592165764-d6711961-56a7-4990-acc6-f48921bb3fd6.png#align=left&display=inline&height=438&margin=%5Bobject%20Object%5D&originHeight=438&originWidth=906&status=done&style=none&width=906)
+![jvm-3-1-jvm内存模型](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jvm/3/jvm-3-1-jvm内存模型.66m7552t7c40.jpg)
 
 - 堆
 - 方法区
@@ -85,7 +85,7 @@ JVM 系列的第三篇，主题是内存模型，内容包括 JVM 内存区域�
 现代垃圾收集器大部分都是基于分代收集理论设计的，在分代收集理论中，堆空间又可以分为**新生代**（Young Generation）、**老年代**（Old Generation），新生代又可以细分为 **Eden 区和 Survivor 区**，Survivor 区又分为 **From Survivor 区和 To Survivor 区**。
 
 
-![](https://cdn.nlark.com/yuque/0/2021/png/2331602/1612354409800-cdb6e0b9-a7cc-44c8-8c26-51d4fab9ea97.png#align=left&display=inline&height=169&margin=%5Bobject%20Object%5D&originHeight=169&originWidth=723&status=done&style=none&width=723)
+![jvm-3-2-jdk1](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jvm/3/jvm-3-2-jdk1.2rm2ph7bidy0.jpg)
 
 
 
@@ -152,19 +152,19 @@ Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
 下图就是 JDK 1.6 方法区的结构：
 
 
-![](https://cdn.nlark.com/yuque/0/2021/png/2331602/1612592487006-16636dd3-e9a9-4bb2-af65-ab34419fbc59.png#align=left&display=inline&height=283&margin=%5Bobject%20Object%5D&originHeight=283&originWidth=441&status=done&style=none&width=441)
+![jvm-3-3-方法区1](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jvm/3/jvm-3-3-方法区1.35z3y66nhjw0.jpg)
 
 
 而在 JDK1.7 的 HotSpot 虚拟机中，开发人员已经将运行时常量池和字符串常量池从方法区移到了堆中，其余部分（类信息）则存储在非堆内存中（方法区又被称为非堆 Non-Heap），如下图所示：
 
 
-![](https://cdn.nlark.com/yuque/0/2021/png/2331602/1612593137831-1f4a0511-2d6a-4200-bb5c-ccd3d9b29586.png#align=left&display=inline&height=283&margin=%5Bobject%20Object%5D&originHeight=283&originWidth=471&status=done&style=none&width=471)
+![jvm-3-4-方法区1](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jvm/3/jvm-3-4-方法区1.1mtoj8zi09i8.jpg)
 
 
 到了 JDK1.8 已经完全废弃了永久代的概念，并使用**存储在本地内存**中的**元空间**（Meta-space）来代替，将原来方法区中剩余的部分（类信息）存储在元空间中。而运行时常量池和字符串常量池与 JDK1.7 一样还是存在堆中，JDK1.8 方法区的结果如下图所示：
 
 
-![](https://cdn.nlark.com/yuque/0/2021/png/2331602/1612676353051-344d538d-ac21-495c-a475-57810efd27eb.png#align=left&display=inline&height=223&margin=%5Bobject%20Object%5D&originHeight=223&originWidth=531&status=done&style=none&width=531)
+![jvm-3-5-方法区1](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jvm/3/jvm-3-5-方法区1.1yif1zzq3n6o.jpg)
 
 
 需要注意的是：方法区是 JVM 规范中的一个逻辑区域，在 JDK1.7 以前，HotSpot 虚拟机使用永久代来实现方法区，而在 JDK1.8 中，方法区包括存放在堆中的字符串常量池和运行时常量池，以及存放在本地内存中的元空间。

@@ -1,8 +1,8 @@
 ---
 layout: post
-title: 我所理解的JVM系列·第b篇·Java异常处理机制在JVM中是如何工作的
+title: 我所理解的JVM系列·第a篇·你知道布尔类型在JVM中是如何表示的吗
 categories: [JVM]
-keywords: JVM, 异常表, try-catch-finally
+keywords: JVM, 字节码，boolean
 ---
 
 
@@ -11,7 +11,7 @@ keywords: JVM, 异常表, try-catch-finally
 
 
 
-![cover](https://cdn.nlark.com/yuque/0/2022/png/2331602/1643356091382-c14747da-02d8-4e7a-882a-72994b964517.png?x-oss-process=image%2Fresize%2Cw_900%2Climit_0)
+![JVM-封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jvm/b/JVM-封面.37r0gn0wtfc0.jpg)
 
 
 
@@ -56,14 +56,14 @@ keywords: JVM, 异常表, try-catch-finally
 我选择了第二个方法，主方法的字节码如下图：
 
 
-![](https://cdn.nlark.com/yuque/0/2020/png/2331602/1600876693995-8bcbc2e1-fe1f-463f-9e62-ce9d818bfa64.png#align=left&display=inline&height=386&margin=%5Bobject%20Object%5D&originHeight=386&originWidth=800&size=0&status=done&style=none&width=800)
+![jvm-b-1](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jvm/b/jvm-b-1.1xe1q5zt4m8w.jpg)
 
 可以看到0~3行是 try 代码块中的输出语句，12~17行是 catch 代码块中的输出语句。
 
 然后重点来了。
 
 
-![](https://cdn.nlark.com/yuque/0/2020/png/2331602/1600876694022-52f382c6-ee1a-418f-97b8-f7356d625554.png#align=left&display=inline&height=282&margin=%5Bobject%20Object%5D&originHeight=282&originWidth=464&size=0&status=done&style=none&width=464)
+![jvm-b-2](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jvm/b/jvm-b-2.jllxkhqn7a0.jpg)
 
 
 第8行的字节码是 **8 goto 20**，这是什么意思呢？没错，盲猜就能猜到，这个字节码指令代表了指令将跳转到第20行开始执行。这一行是说，如果 try 代码块中没有出现异常，那么就跳转到第20行，也就是整个方法行完成后 return 了。
@@ -82,7 +82,7 @@ keywords: JVM, 异常表, try-catch-finally
 在一个类被编译成字节码之后，它的每个方法中都会有一张异常表。异常表中包含了“监控”的范围，“监控”何种异常以及抛出异常后去哪里处理。比如上述的示例代码，在 jclasslib 中它的异常表如下图。
 
 
-![](https://cdn.nlark.com/yuque/0/2020/png/2331602/1600876694010-4b6f6414-88de-47c1-b035-036a56de1a62.png#align=left&display=inline&height=176&margin=%5Bobject%20Object%5D&originHeight=176&originWidth=800&size=0&status=done&style=none&width=800)
+![jvm-b-3](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jvm/b/jvm-b-3.2bdhsrq7ndgk.jpg)
 
 
 或者在 **javap -c** 命令下异常表是这样的：
