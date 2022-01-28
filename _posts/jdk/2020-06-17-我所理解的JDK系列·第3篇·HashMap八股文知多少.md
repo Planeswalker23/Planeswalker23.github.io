@@ -5,9 +5,13 @@ categories: [JDK]
 keywords: Java, JDK, HashMap
 ---
 
+
+
 今天来聊聊 Java 集合框架中最常用也是面试中最常见的 HashMap，我们一起来看看关于 HashMap 的八股文到底能整出些什么花头来。
 
-![cover](https://cdn.nlark.com/yuque/0/2022/png/2331602/1643205139550-bccb4976-b39d-4446-82fc-ecb7af824e9c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_6K-t6ZuA77ya5oiR5omA55CG6Kej55qE5ZCO56uv5oqA5pyv%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+
+
+![JDK封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/3/JDK封面.42x0d6cpygc0.jpg)
 
 
 
@@ -57,7 +61,7 @@ hash 属性是键的哈希值，key 属性存放的是键，value 属性存放�
 如果使用图片的形式来描述 HashMap 的内部结构，一个包含四个键值对的 HashMap 可能是像下图这样的：
 
 
-![1](https://cdn.nlark.com/yuque/0/2020/png/2331602/1600875957211-bb7a78a3-0bd1-475f-b3b9-9a614ae67f68.png#align=left&display=inline&height=179&margin=%5Bobject%20Object%5D&originHeight=179&originWidth=755&size=0&status=done&style=none&width=755)
+![jdk-3-1](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/3/jdk-3-1.3qd269g8u5m0.jpg)
 
 
 
@@ -89,7 +93,7 @@ static final int hash(Object key) {
 先把15转化为二进制，也就是 0000 1111。然后对哈希值进行无符号右移16位的运算，其实就是在15的32位二进制中取高半区，也就是 0000 0000 0000 0000，最后对这两者做异或运算。
 
 
-![2](https://cdn.nlark.com/yuque/0/2020/png/2331602/1600875957275-a32620cb-3b11-4a23-b0f5-105dd1549dfa.png#align=left&display=inline&height=315&margin=%5Bobject%20Object%5D&originHeight=315&originWidth=649&size=0&status=done&style=none&width=649)
+![jdk-3-2](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/3/jdk-3-2.5kbipq2scj40.jpg)
 
 
 
@@ -126,7 +130,7 @@ HashMap 的底层数据结构首先是一个 Node 类型的数组，一个 Node 
 举个例子，当我在 Map 中添加一个键为 Java 值为 No1 的元素时，Java 字符串会通过 hash 方法来计算哈希值。假设 Java 字符串的哈希值为1，那么此时 HashMap 的结构就是下面这样。
 
 
-![3](https://cdn.nlark.com/yuque/0/2020/png/2331602/1600875957228-10912b6e-7785-4635-8f18-a56b462ebc68.png#align=left&display=inline&height=179&margin=%5Bobject%20Object%5D&originHeight=179&originWidth=755&size=0&status=done&style=none&width=755)
+![jdk-3-3](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/3/jdk-3-3.3c4jzljw0gm0.jpg)
 
 
 
@@ -137,7 +141,7 @@ HashMap 的底层数据结构首先是一个 Node 类型的数组，一个 Node 
 
 
 
-![4](https://cdn.nlark.com/yuque/0/2020/png/2331602/1600875957251-bfe01502-15c4-4a18-a304-545db293cad3.png#align=left&display=inline&height=267&margin=%5Bobject%20Object%5D&originHeight=267&originWidth=755&size=0&status=done&style=none&width=755)
+![jdk-3-4](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/3/jdk-3-4.xz8fx3cf580.jpg)
 
 
 
@@ -275,7 +279,7 @@ if ((p = tab[i = (n - 1) & hash]) == null)
 基于红黑树这样的结构特性，它的时间复杂度是O(logn)，所以会比链表的O(N)快，这也就是JDK1.8引入红黑树的原因。
 
 
-![5](https://cdn.nlark.com/yuque/0/2020/png/2331602/1600875957276-7821d08b-2e44-4801-aaad-7f421adba7b3.png#align=left&display=inline&height=371&margin=%5Bobject%20Object%5D&originHeight=371&originWidth=480&size=0&status=done&style=none&width=480)
+![jdk-3-5](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/3/jdk-3-5.kt15aiursp8.jpg)
 
 
 

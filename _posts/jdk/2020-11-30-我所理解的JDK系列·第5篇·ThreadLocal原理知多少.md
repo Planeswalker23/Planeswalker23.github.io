@@ -6,11 +6,12 @@ keywords: Java, JDK, ThreadLocal
 ---
 
 
+
 最早听说 ThreadLocal 是18年还在实习的时候，那时候有一个要用到线程池的任务，有人说并发的问题也可以通过 ThreadLocal 来解决。但当时没有用到这玩意，只留下了个“可以用它来解决并发问题”的模糊印象。
 
 
 
-![cover](https://cdn.nlark.com/yuque/0/2021/png/2331602/1630608650562-c325589d-52d2-443a-be5e-bf22d8f5301a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_6K-t6ZuA77ya5oiR5omA55CG6Kej55qE5ZCO56uv5oqA5pyv%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![JDK封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/5/JDK封面.3p96kh4wxj60.jpg)
 
 
 
@@ -89,7 +90,7 @@ ThreadLocal value of pool-1-thread-2 = 任务2: pool-1-thread-2
 
 除此之外，ThreadLocalMap 也是 Thread 类一个属性。
 
-![ThreadLocal 底层数据结构](https://cdn.nlark.com/yuque/0/2020/png/2331602/1606744207960-d3b0ab14-cdc8-42ff-9eec-0cbcaf59060d.png#align=left&display=inline&height=327&margin=%5Bobject%20Object%5D&originHeight=327&originWidth=561&size=0&status=done&style=none&width=561)
+![jdk-5-1](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/5/jdk-5-1.5tsp44bs1vw0.jpg)
 
 如何证明上面给出的 ThreadLocal 类底层数据结构的正确性？我们可以从 `ThreadLocal#get()` 方法开始追踪代码，看看线程局部变量到底是从哪里被取出来的。
 
@@ -722,8 +723,8 @@ ThreadLocalMap#expungeStaleEntry 的具体清理逻辑是：
 
 - 首先将当前无效的 Entry 对象 value 置位 null，然后将无效 Entry 对象置位 null
 - 随后进行一次 for 循环，for 循环的结束条件是 Entry 对象为 null
-    - 执行 rehash 逻辑，在 rehash 过程中，如果碰到 key 为 null 的 Entry 对象，同样会将当前无效的 Entry 对象 value 置位 null，然后将无效 Entry 对象置位 null
-    - 若是正常的 Entry 对象，进行 rehash，调整其索引值
+  - 执行 rehash 逻辑，在 rehash 过程中，如果碰到 key 为 null 的 Entry 对象，同样会将当前无效的 Entry 对象 value 置位 null，然后将无效 Entry 对象置位 null
+  - 若是正常的 Entry 对象，进行 rehash，调整其索引值
 
 
 

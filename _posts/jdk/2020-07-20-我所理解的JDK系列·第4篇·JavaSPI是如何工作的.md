@@ -5,11 +5,13 @@ categories: [JDK]
 keywords: Java, JDK, SPI
 ---
 
+
+
 本文实现了一个基于 Java SPI 机制的的简单 demo，然后分析了 ServiceLoader 类基于线程上下文类加载器实现 Java SPI 的源码。
 
 
 
-![cover](https://cdn.nlark.com/yuque/0/2021/png/2331602/1631434912667-ed819026-9153-40f1-a218-d57a28cd275a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_6K-t6ZuA77ya5oiR5omA55CG6Kej55qE5ZCO56uv5oqA5pyv%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![JDK封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/4/JDK封面.77nzpdzmv4k0.jpg)
 
 
 
@@ -208,7 +210,7 @@ public static <S> ServiceLoader<S> load(Class<S> service, ClassLoader loader) {
 在 ServiceLoader#load(Class) 方法中，首先获取了当前线程的线程上下文类加载器，在示例代码中，执行此方法的线程是 main 线程，加载 main 线程的类加载器是应用类加载器。
 
 
-![1](https://cdn.nlark.com/yuque/0/2020/png/2331602/1600876048602-780b6da9-d248-4154-aba7-5cf67c6dfeda.png#align=left&display=inline&height=120&margin=%5Bobject%20Object%5D&originHeight=120&originWidth=1274&size=0&status=done&style=none&width=1274)
+![jdk-4-1](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/4/jdk-4-1.w906t6a3mls.jpg)
 
 
 应用类加载器负责加载 classpath 上所指定的类库，当前工程当然属于 classpath 路径，所以使用应用类加载器加载 SPI 接口的实现类是可以加载成功的。
@@ -224,7 +226,7 @@ public static <S> ServiceLoader<S> load(Class<S> service, ClassLoader loader) {
 在 load 的重载方法中，其实是创建了一个 ServiceLoader 类实例，传入的参数是目标接口 HelloSpi.class 和类加载器 AppClassLoader。
 
 
-![2](https://cdn.nlark.com/yuque/0/2020/png/2331602/1600876048605-95c8b136-1763-488b-a054-660e5f0d2996.png#align=left&display=inline&height=138&margin=%5Bobject%20Object%5D&originHeight=138&originWidth=1255&size=0&status=done&style=none&width=1255)
+![jdk-4-2](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/4/jdk-4-2.3iv651aa6iw0.jpg)
 
 
 而在这个 ServiceLoader 类的构造方法中，也进行了一些操作，具体见下面代码的注释。
