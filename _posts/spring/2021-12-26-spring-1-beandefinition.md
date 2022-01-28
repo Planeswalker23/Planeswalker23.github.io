@@ -5,6 +5,7 @@ categories: [Spring]
 keywords: Spring, BeanDefinition
 ---
 
+本文介绍了 BeanDefinition 的定义，BeanDefinition 提供的核心方法以及两个示例：基于 BeanDefinition 手动注册 Bean、基于 BeanFactoryPostProcessor 修改 BeanDefinition 元信息。
 
 
 ## 1. 开篇词

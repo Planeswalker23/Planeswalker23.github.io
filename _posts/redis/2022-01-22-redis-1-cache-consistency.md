@@ -5,6 +5,7 @@ categories: [Reids]
 keywords: Reids, cache consistency
 ---
 
+本文的主要议题是缓存一致性问题，包括 Redis 常用读写策略、为什么会存在缓存不一致的场景、如何保证数据库与缓存的一致性。
 
 
 ## 1. 开篇词
