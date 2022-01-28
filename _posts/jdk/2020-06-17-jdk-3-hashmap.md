@@ -2,7 +2,6 @@
 layout: post
 title: 我所理解的JDK系列·第3篇·HashMap八股文知多少
 categories: [JDK]
-description: 今天来聊聊 Java 集合框架中最常用也是面试中最常见的 HashMap，我们一起来看看关于 HashMap 的八股文到底能整出些什么花头来。
 keywords: Java, JDK, HashMap
 ---
 

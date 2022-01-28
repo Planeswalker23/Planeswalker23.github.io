@@ -2,7 +2,6 @@
 layout: post
 title: 我所理解的JDK系列·第1篇·编译器是如何选择重载方法的
 categories: [JDK]
-description: 本文介绍了重载、方法签名的概念，由几个示例入手介绍了编译器选择重载方法的规则与优先级，其中还向大家介绍了对象的声明类型与实际类型的概念，希望能够帮助到大家。
 keywords: Java, JDK, 重载
 ---
 
@@ -18,17 +17,17 @@ keywords: Java, JDK, 重载
 
 今天鄙人在日常搬砖时进行了一次很普通的操作：方法调用。这时候我利用强大的 IDEA 编译器看到了所有可供选择的同名方法（重载方法），如下：
 
-![1](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ed80eaa63b1c410bb88acd29de9f2d7b~tplv-k3u1fbpfcp-watermark.image)
+![1](https://cdn.nlark.com/yuque/0/2022/png/2331602/1643204039599-f1462d1c-cfc4-4807-bf64-6d629e9de16a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_6K-t6ZuA77ya5oiR5omA55CG6Kej55qE5ZCO56uv5oqA5pyv%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
 
 看上去好像很简单的样子，当参数传入 Father 类型时调用第一个重载方法、当参数传入 Grandpa 时调第二个重载方法、当参数传入 Son 时调第三个重载方法。
 
 但是如果我告诉你 Father、Grandpa、Son 这三个类是有继承关系的，同时我在声明入参的时候声明类型都是父类，在这种情况下，会调用哪个重载方法呢？比如：
 
-![2](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c7d059b0d0e34e1fa33294ff70a93687~tplv-k3u1fbpfcp-watermark.image)
+![2](https://cdn.nlark.com/yuque/0/2022/png/2331602/1643204045972-9ba0ac2a-0040-44ff-a710-20bd9cfa53f2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_6K-t6ZuA77ya5oiR5omA55CG6Kej55qE5ZCO56uv5oqA5pyv%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
 
 又比如，当重载方法为可变长参数（不要告诉我你不知道啥是可变长参数）及 Object 时，会选择哪一个呢？
 
-![3](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e5d6326dee7a4ceaa0a2ff7ff4ce0c10~tplv-k3u1fbpfcp-watermark.image)
+![3](https://cdn.nlark.com/yuque/0/2022/png/2331602/1643204054635-9d23f557-4714-44ea-891d-5d3b00752d9e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_6K-t6ZuA77ya5oiR5omA55CG6Kej55qE5ZCO56uv5oqA5pyv%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
 
 还有另外几种情况，本文也会逐一介绍，下面就一起徜徉在知识的深渊中吧！
 
@@ -95,7 +94,7 @@ public class Test {
 
 我在 OverloadDemo2 这个类中声明了两个重载方法 test，它们分别接收 Object 类和 String 类的参数。在 main 方法中，我又声明一个 Object 对象，并创建一个 String 对象赋值给它。
 
-![4](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/01cbd3bf1a474431972c77b14433af14~tplv-k3u1fbpfcp-watermark.image)
+![4](https://cdn.nlark.com/yuque/0/2022/png/2331602/1643204061411-71d68422-319d-4326-b910-8c7bbd71814d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_6K-t6ZuA77ya5oiR5omA55CG6Kej55qE5ZCO56uv5oqA5pyv%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
 
 
 执行这个程序，结果输出了：`Object`。也就是说，对于一个声明为 Object 类但被赋予 String 类的对象，编译器在选择重载方法时会将它视为 Object 类。

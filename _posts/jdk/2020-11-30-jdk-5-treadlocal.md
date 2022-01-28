@@ -2,7 +2,6 @@
 layout: post
 title: 我所理解的JDK系列·第5篇·ThreadLocal原理知多少
 categories: [JDK]
-description: 最早听说 ThreadLocal 是18年还在实习的时候，那时候有一个要用到线程池的任务，有人说并发的问题也可以通过 ThreadLocal 来解决。但当时没有用到这玩意，只留下了个“可以用它来解决并发问题”的模糊印象。
 keywords: Java, JDK, ThreadLocal
 ---
 
