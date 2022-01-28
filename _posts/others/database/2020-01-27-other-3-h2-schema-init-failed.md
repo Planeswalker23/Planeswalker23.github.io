@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 我所理解的其他问题·第3篇·H2数据库踩坑——初始化数据库失败
-categories: [Others]
+categories: [数据库]
 keywords: 数据库, H2
 ---
 

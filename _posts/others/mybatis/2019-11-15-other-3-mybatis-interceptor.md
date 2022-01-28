@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 我所理解的其他问题·第2篇·基于Mybatis拦截器实现关键信息加密
-categories: [Others]
+categories: [MyBatis]
 keywords: MyBatis, 拦截器
 ---
 
