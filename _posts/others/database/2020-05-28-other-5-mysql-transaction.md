@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 我所理解的其他问题·第5篇·数据库事务踩坑——Debug查询结果与数据库不一致
-categories: [MyBatis]
+categories: [Others]
 keywords: MySQL, MyBatis, 事务
 ---
 

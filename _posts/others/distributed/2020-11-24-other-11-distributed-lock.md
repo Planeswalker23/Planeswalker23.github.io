@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 我所理解的其他问题·第4篇·分布式锁需要解决哪些问题
-categories: [分布式]
+categories: [Others]
 keywords: 分布式, 分布式锁, Redis
 ---
 

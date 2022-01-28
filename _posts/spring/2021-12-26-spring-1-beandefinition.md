@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 第1篇·Spring 核心元信息——BeanDefinition
+title: 我所理解的Spring系列·第1篇·Spring 核心元信息——BeanDefinition
 categories: [Spring]
 keywords: Spring, BeanDefinition
 ---
