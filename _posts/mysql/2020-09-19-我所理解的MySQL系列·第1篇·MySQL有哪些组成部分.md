@@ -7,6 +7,15 @@ keywords: MySQL
 
 
 
+这是 MySQL 系列的第一篇，主要介绍 MySQL 的基础架构以及各个组成部分的功能，包括 Server 层的 bin log 和 InnoDB 特有的 redo log 这两种日志模块。
+
+
+
+![MySQL封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/1/MySQL封面.4khjjmxzq1k0.jpg)
+
+
+
+
 作为一个正经的 CRUD 工程师，与数据库的交互是日常工作中比重较大的内容，比如日常迭代的增删改查、处理历史数据、优化 SQL 性能等等。随着项目数据量的增长，从前为了赶项目进度而埋下的深坑正慢慢显露它们的威力，这也让我不得不全面且深入的学习 MySQL，而不仅仅是停留在基础的 CRUD 上。
 
 这是 MySQL 系列的第一篇，主要介绍 MySQL 的基础架构以及各个组成部分的功能，包括 Server 层的 bin log 和 InnoDB 特有的 redo log 这两种日志模块。
@@ -16,7 +25,7 @@ keywords: MySQL
 ## 1. MySQL 架构简介
 根据 DB-Engines 发布的[最受欢迎的数据库管理系统排行榜](https://db-engines.com/en/ranking)，MySQL 稳坐第二把交椅。
 
-![2020年9月最受欢迎的DBMS排行榜](https://cdn.nlark.com/yuque/0/2020/png/2331602/1600876203565-05fb4852-f786-4a05-bbe2-f36a0b743b89.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_cGxhbmVzd2Fsa2Vy%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10%2Fresize%2Cw_1492%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_6K-t6ZuA77ya5oiR5omA55CG6Kej55qE5ZCO56uv5oqA5pyv%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10%2Fresize%2Cw_1492%2Climit_0)
+![mysql-1-1](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/1/mysql-1-1.3mtxylbskom0.jpg)
 
 作为最受欢迎的关系型数据库管理系统之一，MySQL 采用的是C/S架构，即 Client & Server 架构。比如开发者使用 Navicat 连接到 MySQL，那么前者就是客户端，后者就是服务端。
 
@@ -29,7 +38,7 @@ keywords: MySQL
 
 在这一小节的内容中，我们主要关注 MySQL 服务端的逻辑组成，先来看一张图。
 
-![MySQL 逻辑架构图](https://cdn.nlark.com/yuque/0/2020/png/2331602/1600876203592-d6b7b7ed-faed-4a06-a8e7-2c07f462376b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_10%2Ctext_cGxhbmVzd2Fsa2Vy%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_6K-t6ZuA77ya5oiR5omA55CG6Kej55qE5ZCO56uv5oqA5pyv%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10%2Fresize%2Cw_611%2Climit_0)
+![mysql-1-2](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/1/mysql-1-2.15abw3mvvnsw.jpg)
 
 从上图可以看到，与客户端的交互中，MySQL 的服务端分别经过了连接器、查询缓存、分析器、优化器、执行器和存储引擎这几部分。
 
@@ -97,7 +106,7 @@ OK, Time: 0.000000s
 
 在校验了 SQL 语句的合法性之后，MySQL 已经知道用户提交的语句是干什么的了，但是在真正执行之前，还需要经过非常“玄学”的优化器。
 
-![mysql-1-3](https://cdn.nlark.com/yuque/0/2020/png/2331602/1600876203608-caf679ea-dabb-4f6a-bb63-be57a3f85127.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_10%2Ctext_cGxhbmVzd2Fsa2Vy%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_6K-t6ZuA77ya5oiR5omA55CG6Kej55qE5ZCO56uv5oqA5pyv%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10%2Fresize%2Cw_533%2Climit_0)
+![mysql-1-3](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/1/mysql-1-3.6gvtymzznps0.jpg)
 
 优化器的作用是**为 SQL 语句生成最优的执行计划**。
 
@@ -180,7 +189,7 @@ MySQL 的更新持久化逻辑运用到了 **WAL**(Write-Ahead Logging，写前�
 #### 3.1.3 redo log 日志文件
 redo log 日志文件大小是固定的，我把它理解为一个循环链表，链表的每个节点都可以存放日志，在这个链表中有两个指针：write（黑） 和 read（白）。
 
-![循环链表](https://cdn.nlark.com/yuque/0/2020/png/2331602/1600876203590-575be4c6-3cc5-4262-a6fe-1aacfbfbdf1c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_6K-t6ZuA77ya5oiR5omA55CG6Kej55qE5ZCO56uv5oqA5pyv%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10%2Fresize%2Cw_498%2Climit_0)
+![mysql-1-4](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/1/mysql-1-4.6c7y8p4pm300.jpg)
 
 最开始这两个指针都指向同一个节点，且节点日志元素都为空，表示此时 redo log 为空。当用户开始提交更新语句，write 节点开始往前移动，假设移动到3的位置。而此时的情况就是 redo log 中有1-3这三个日志元素需要被持久化到磁盘中，当 InnoDB 空闲时，read 指针往前移动，就代表着将 redo log 持久化到磁盘。
 

@@ -7,6 +7,7 @@ keywords: MySQL
 
 
 
+
 我所理解的 MySQL 系列最终篇，主要内容是前七篇文章中关于 MySQL 各种知识点的进阶面试题，请君采撷。
 
 首先回顾一下前六篇：
@@ -18,6 +19,8 @@ keywords: MySQL
 - [我所理解的MySQL系列·第5篇·多版本并发控制是如何实现的？](https://www.yuque.com/planeswalker/bankend/byuh29)
 - [我所理解的MySQL系列·第6篇·关于MySQL锁的原理你清楚吗？](https://www.yuque.com/planeswalker/bankend/lock)
 - [我所理解的MySQL系列·第7篇·分库分表与主从同步](https://www.yuque.com/planeswalker/bankend/sharingsync)
+
+![MySQL封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/N/MySQL封面.65s2goi1m1k0.jpg)
 
 
 

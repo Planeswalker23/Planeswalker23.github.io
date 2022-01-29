@@ -2,8 +2,16 @@
 layout: post
 title: 我所理解的MySQL系列·第a篇·你知道COUNT什么最快吗
 categories: [MySQL]
-keywords: MySQL
+keywords: MySQL, count
 ---
+
+
+
+最近在学习极客时间丁奇的专栏《MySQL实战45讲》中第14讲有关 count 函数的时候觉得这一讲很有意思，遂决定加以实操并且记录，以加深印象。
+
+
+
+![MySQL封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/a/MySQL封面.3rp7j8fu3gc0.jpg)
 
 
 

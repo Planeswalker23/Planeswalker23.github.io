@@ -7,6 +7,14 @@ keywords: MySQL, limit
 
 
 
+在 MySQL 中通常我们使用 limit 来完成页面上的分页功能，但是当数据量达到一个很大的值之后，越往后翻页，接口的响应速度就越慢。本文主要讨论 limit 分页大偏移量执行速度慢的原因及优化方案，为了模拟这种情况，下面首先介绍表结构和执行的 SQL。
+
+
+
+![MySQL封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/a/MySQL封面.4tcykd7jjyi0.jpg)
+
+
+
 ## 1. 开篇词
 
 在 MySQL 中通常我们使用 limit 来完成页面上的分页功能，但是当数据量达到一个很大的值之后，越往后翻页，接口的响应速度就越慢。
@@ -168,5 +176,4 @@ select * from user where sex = 1 and id > (select id from user where sex = 1 lim
 
 
 最后，本文收录于个人语雀知识库: [我所理解的后端技术](https://www.yuque.com/planeswalker/bankend)，欢迎来访。
-
 

@@ -7,6 +7,14 @@ keywords: MySQL, update
 
 
 
+最近在一次线上作业过程中执行了一个 UPDATE 语句，本以为万无一失，结果应用反馈说没有更新，数据还是没有变，最后经过排查才发现是我语句写错了，导致 UPDATE 语句执行的结果与预期不符。
+
+
+
+![MySQL封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/a/MySQL封面.9nsh6ylywow.jpg)
+
+
+
 ## 1. 背景
 
 最近在一次线上作业过程中执行了一个 UPDATE 语句，本以为万无一失，结果应用反馈说没有更新，数据还是没有变，最后经过排查才发现是我语句写错了，导致 UPDATE 语句执行的结果与预期不符。
