@@ -7,10 +7,14 @@ keywords: Reids
 
 
 
+在客户性能压测现场支持时，遇到一个问题：用户订单状态统计接口响应时间（RT, Response Time）较长，成为项目整体性能的瓶颈，亟需优化。
+
+![redis-2-封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/redis/redis-2-封面.jpg)
+
 # 1. 场景描述
 在客户性能压测现场支持时，遇到一个问题：用户订单状态统计接口响应时间（RT, Response Time）较长，成为项目整体性能的瓶颈，亟需优化。
 
-![image.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/958e690c45584c15b62d330ee4f04975~tplv-k3u1fbpfcp-zoom-1.image)
+![redis-a-1](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/redis/redis-a-1.jpg)
 
 用户订单状态统计接口是标品提供的能力，由于其业务复杂性及数据存储结构的特殊性（具体内容下文描述)，进行了多次 ES 的查询，导致 RT 较长，影响整体性能。
 
@@ -303,7 +307,7 @@ sequenceDiagram
 
 确实，是存在这种可能的，所以当触点端查询指定状态所有订单时（如下图的查询所有代付款订单），我们追加了一种**主动补偿机制。**
 
-![image.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/369e4eae9e85405f97aec621e1033b2b~tplv-k3u1fbpfcp-zoom-1.image)
+![redis-a-2](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/redis/redis-a-2.jpg)
 
 
 

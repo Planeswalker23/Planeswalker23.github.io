@@ -7,6 +7,12 @@ keywords: Reids
 
 
 
+新鲜出炉的 Redis 原味面试题，备战路上的一道好菜。
+
+![redis-N-封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/redis/redis-N-封面.jpg)
+
+
+
 ## 1. 为什么要用缓存
 
 在使用传统的关系型数据库时，会存在下面两个问题：
