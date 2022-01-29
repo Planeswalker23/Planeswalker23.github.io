@@ -1,9 +1,15 @@
 ---
 layout: post
-title: 我所理解的其他问题·第1篇·List#remove方法失效
+title: 我所理解的其他问题·第0篇·记一次使用线程池出现的问题
 categories: [Java]
-keywords: Java, List
+keywords: ThreadPool, Java
 ---
+
+
+
+最近在写增删改查的时候遇到一个问题，苦思冥想了很久，最后旁边的小哥哥一句“看源码就知道了”，遂恍然大悟，翻阅源码才终于搞清楚这个问题。晚上趁着还早，花点时间记录下来。
+
+![other-1-封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/others/other-1-封面.jpg)
 
 
 
@@ -128,3 +134,5 @@ for (int i = 0; i < userList.size(); i++)
 以后如果想要实现的效果与预期不符，可以尝试开始看源码了，毕竟那么多方法，记不全的。搞不好一个参数类型不对，全满皆输。
 
 最后，本文收录于个人语雀知识库: [我所理解的后端技术](https://www.yuque.com/planeswalker/bankend)，欢迎来访。
+
+> 本文写于 2018-09-10

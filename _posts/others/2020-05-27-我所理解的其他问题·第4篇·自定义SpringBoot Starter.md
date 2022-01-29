@@ -7,6 +7,12 @@ keywords: Spring, SpringBoot
 
 
 
+如何自定义一个 SpringBoot Starter？
+
+![others-4-封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/others/others-4-封面.jpg)
+
+
+
 ## 1. 前言
 从前从前，有个面试官问我一个 `SpringBoot Starter` 的开发流程，我说我没有写过 starter，然后就没有然后了，面试官说我技术深度不够。
 
@@ -41,7 +47,7 @@ starter 是 SpringBoot 的一个重要的组成部分，它相当于一个集成
 
 在 IDEA 中新建一个 maven 工程，如下图所示。
 
-![2020052701](https://cdn.nlark.com/yuque/0/2022/png/2331602/1643367559930-5564aebb-2e6a-4b3e-965a-c0e7bfdd9ee3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_6K-t6ZuA77ya5oiR5omA55CG6Kej55qE5ZCO56uv5oqA5pyv%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![others-4-1](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/others/others-4-1.jpg)
 
 > Spring 官方建议自定义的 starter 使用 `xxx-spring-boot-starter` 命名规则，以区分 SpringBoot 生态提供的 starter。
 
@@ -238,3 +244,5 @@ start to initialize SimpleDateFormat with pattern: yyyy-MM-dd
 5. 在 maven 仓库发布 starter
 
 最后，本文收录于个人语雀知识库: [我所理解的后端技术](https://www.yuque.com/planeswalker/bankend)，欢迎来访。
+
+> 本文写于2020-5-27
