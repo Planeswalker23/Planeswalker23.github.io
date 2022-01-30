@@ -11,7 +11,7 @@ keywords: MySQL
 
 
 
-![MySQL封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/1/MySQL封面.4khjjmxzq1k0.jpg)
+![mysql-1-封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/mysql-1-封面.4khjjmxzq1k0.jpg)
 
 
 
@@ -25,7 +25,7 @@ keywords: MySQL
 ## 1. MySQL 架构简介
 根据 DB-Engines 发布的[最受欢迎的数据库管理系统排行榜](https://db-engines.com/en/ranking)，MySQL 稳坐第二把交椅。
 
-![mysql-1-1](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/1/mysql-1-1.3mtxylbskom0.jpg)
+![mysql-1-1](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/mysql-1-1.3mtxylbskom0.jpg)
 
 作为最受欢迎的关系型数据库管理系统之一，MySQL 采用的是C/S架构，即 Client & Server 架构。比如开发者使用 Navicat 连接到 MySQL，那么前者就是客户端，后者就是服务端。
 
@@ -38,7 +38,7 @@ keywords: MySQL
 
 在这一小节的内容中，我们主要关注 MySQL 服务端的逻辑组成，先来看一张图。
 
-![mysql-1-2](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/1/mysql-1-2.15abw3mvvnsw.jpg)
+![mysql-1-2](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/mysql-1-2.15abw3mvvnsw.jpg)
 
 从上图可以看到，与客户端的交互中，MySQL 的服务端分别经过了连接器、查询缓存、分析器、优化器、执行器和存储引擎这几部分。
 
@@ -106,7 +106,7 @@ OK, Time: 0.000000s
 
 在校验了 SQL 语句的合法性之后，MySQL 已经知道用户提交的语句是干什么的了，但是在真正执行之前，还需要经过非常“玄学”的优化器。
 
-![mysql-1-3](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/1/mysql-1-3.6gvtymzznps0.jpg)
+![mysql-1-3](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/mysql-1-3.6gvtymzznps0.jpg)
 
 优化器的作用是**为 SQL 语句生成最优的执行计划**。
 
@@ -189,7 +189,7 @@ MySQL 的更新持久化逻辑运用到了 **WAL**(Write-Ahead Logging，写前�
 #### 3.1.3 redo log 日志文件
 redo log 日志文件大小是固定的，我把它理解为一个循环链表，链表的每个节点都可以存放日志，在这个链表中有两个指针：write（黑） 和 read（白）。
 
-![mysql-1-4](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/1/mysql-1-4.6c7y8p4pm300.jpg)
+![mysql-1-4](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/mysql-1-4.6c7y8p4pm300.jpg)
 
 最开始这两个指针都指向同一个节点，且节点日志元素都为空，表示此时 redo log 为空。当用户开始提交更新语句，write 节点开始往前移动，假设移动到3的位置。而此时的情况就是 redo log 中有1-3这三个日志元素需要被持久化到磁盘中，当 InnoDB 空闲时，read 指针往前移动，就代表着将 redo log 持久化到磁盘。
 

@@ -11,7 +11,7 @@ keywords: JVM, 字节码，boolean
 
 
 
-![JVM-封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jvm/b/JVM-封面.37r0gn0wtfc0.jpg)
+![jvm-a-封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jvm/jvm-a-封面.22tw55uoihsw.jpg)
 
 
 
@@ -56,14 +56,14 @@ keywords: JVM, 字节码，boolean
 我选择了第二个方法，主方法的字节码如下图：
 
 
-![jvm-b-1](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jvm/b/jvm-b-1.1xe1q5zt4m8w.jpg)
+![jvm-b-1](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jvm/jvm-b-1.1xe1q5zt4m8w.jpg)
 
 可以看到0~3行是 try 代码块中的输出语句，12~17行是 catch 代码块中的输出语句。
 
 然后重点来了。
 
 
-![jvm-b-2](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jvm/b/jvm-b-2.jllxkhqn7a0.jpg)
+![jvm-b-2](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jvm/jvm-b-2.jllxkhqn7a0.jpg)
 
 
 第8行的字节码是 **8 goto 20**，这是什么意思呢？没错，盲猜就能猜到，这个字节码指令代表了指令将跳转到第20行开始执行。这一行是说，如果 try 代码块中没有出现异常，那么就跳转到第20行，也就是整个方法行完成后 return 了。
@@ -82,7 +82,7 @@ keywords: JVM, 字节码，boolean
 在一个类被编译成字节码之后，它的每个方法中都会有一张异常表。异常表中包含了“监控”的范围，“监控”何种异常以及抛出异常后去哪里处理。比如上述的示例代码，在 jclasslib 中它的异常表如下图。
 
 
-![jvm-b-3](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jvm/b/jvm-b-3.2bdhsrq7ndgk.jpg)
+![jvm-b-3](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jvm/jvm-b-3.2bdhsrq7ndgk.jpg)
 
 
 或者在 **javap -c** 命令下异常表是这样的：

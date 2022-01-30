@@ -9,7 +9,7 @@ keywords: MySQL
 
 MySQL 系列的第六篇，主要内容是锁（Lock），包括锁的粒度分类、行锁、间隙锁以及加锁规则等。
 
-![MySQL封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/6/MySQL封面.dwwhqcxkwoo.jpg)
+![mysql-6-封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/mysql-6-封面.dwwhqcxkwoo.jpg)
 
 
 
@@ -161,7 +161,7 @@ update user set name='大波浪' where id=5;
 
 这时候，这条更新语句将被阻塞，直到事务A提交以后，事务B才能继续执行。
 
-![mysql-6-lock1-记录锁示意图](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/6/mysql-6-lock1-记录锁示意图.400mz9lg12m0.png)
+![mysql-6-lock1-记录锁示意图](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/mysql-6-lock1-记录锁示意图.400mz9lg12m0.png)
 
 
 
@@ -189,7 +189,7 @@ sessionA 中有两处查询N1和N2，它们的查询条件都是 age=5，唯一�
 
 也就是说，当N2处的查询执行时，sessionB 依旧是被阻塞的状态，所以N1和N2的查询结果是一样的，都是(5,重塑,5)，也就解决了幻读的问题。
 
-![mysql-6-lock2-间隙锁示意图](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/6/mysql-6-lock2-间隙锁示意图.5s9mqudc1h8.png)
+![mysql-6-lock2-间隙锁示意图](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/mysql-6-lock2-间隙锁示意图.5s9mqudc1h8.png)
 
 
 
@@ -197,7 +197,7 @@ sessionA 中有两处查询N1和N2，它们的查询条件都是 age=5，唯一�
 
 Next-key Lock 其实就是**记录锁与记录锁前面间隙的间隙锁**组合的产物，它既阻止了其他事务在间隙的插入操作，也阻止了其他事务对记录的修改操作。
 
-![mysql-6-lock3-Next-key-mysql-6-lock锁示意图](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/6/mysql-6-lock3-Next-key-mysql-6-lock锁示意图.2s0nbnu0cdk0.png)
+![mysql-6-lock3-Next-key-mysql-6-lock锁示意图](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/mysql-6-lock3-Next-key-mysql-6-lock锁示意图.2s0nbnu0cdk0.png)
 
 
 
@@ -250,7 +250,7 @@ mysql> select * from user;
 
 sessionB 中的 insert 语句是为了检查间隙锁，update 语句是为了检查记录锁（行锁）。执行结果表明 user 表的所有间隙都没有被上锁，记录锁中只有 id=5 这一行被上锁了。
 
-![mysql-6-lock4-select-*-from-user-where-id=5-for-update-加锁区域示意图](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/6/mysql-6-lock4-select-*-from-user-where-id=5-for-update-加锁区域示意图.765ce77dp9w0.png)
+![mysql-6-lock4-select-*-from-user-where-id=5-for-update-加锁区域示意图](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/mysql-6-lock4-select-*-from-user-where-id=5-for-update-加锁区域示意图.765ce77dp9w0.png)
 
 所以，当唯一索引列的等值查询命中时，**只会给命中的记录加锁**。
 
@@ -276,7 +276,7 @@ sessionB 中的 insert 语句是为了检查间隙锁，update 语句是为了�
 
 根据执行结果可以知道 sessionA 给 user 表加的锁是间隙锁(5, 10)。
 
-![mysql-6-lock5-select-*-from-user-where-id=3-for-update-加锁区域示意图](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/6/mysql-6-lock5-select-*-from-user-where-id=3-for-update-加锁区域示意图.1bl6w1j5h5ls.png)
+![mysql-6-lock5-select-*-from-user-where-id=3-for-update-加锁区域示意图](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/mysql-6-lock5-select-*-from-user-where-id=3-for-update-加锁区域示意图.1bl6w1j5h5ls.png)
 
 所以，当唯一索引列的等值查询未命中时，**会给id值所在的间隙加上间隙锁**。
 
@@ -306,7 +306,7 @@ sessionB 中的 insert 语句是为了检查间隙锁，update 语句是为了�
 
 我们知道记录锁+间隙锁就是 **Next-key Lock**，所以上述的加锁情况可以看作是两条 Next-key Lock：(minIndex, 5],(5,10]，而加锁情况连起来就是 (minIndex,10]。
 
-![mysql-6-lock6-select-*-from-user-where-id<10-for-update-加锁区域示意图](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/6/mysql-6-lock6-select-*-from-user-where-id<10-for-update-加锁区域示意图.61n6vce47000.png)
+![mysql-6-lock6-select-*-from-user-where-id<10-for-update-加锁区域示意图](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/mysql-6-lock6-select-*-from-user-where-id<10-for-update-加锁区域示意图.61n6vce47000.png)
 
 
 
@@ -328,7 +328,7 @@ sessionB 中的 insert 语句是为了检查间隙锁，update 语句是为了�
 
 此时 sessionA 给 user 表加上的锁是三个 Next-key Lock，加起来就是 (minIndex,15]。
 
-![mysql-6-lock7-select-*-from-user-where-id<=10-for-update-加锁区域示意图](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/6/mysql-6-lock7-select-*-from-user-where-id<=10-for-update-加锁区域示意图.1kuscinxsrkw.png)
+![mysql-6-lock7-select-*-from-user-where-id<=10-for-update-加锁区域示意图](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/mysql-6-lock7-select-*-from-user-where-id<=10-for-update-加锁区域示意图.1kuscinxsrkw.png)
 
 #### 3.2.3 边界值不存在
 
@@ -348,7 +348,7 @@ sessionB 中的 insert 语句是为了检查间隙锁，update 语句是为了�
 
 此时 sessionA 给 user 表加上锁的范围是 (minIndex,10]，与第一种情况一样。
 
-![mysql-6-lock8-select-*-from-user-where-id<=9-for-update-加锁区域示意图](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/6/mysql-6-lock8-select-*-from-user-where-id<=9-for-update-加锁区域示意图.7besel6nmfk0.png)
+![mysql-6-lock8-select-*-from-user-where-id<=9-for-update-加锁区域示意图](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/mysql-6-lock8-select-*-from-user-where-id<=9-for-update-加锁区域示意图.7besel6nmfk0.png)
 
 综上所述，在对唯一索引进行范围查询时：
 1. **会给范围中的记录加上记录锁，间隙加上间隙锁**
@@ -376,7 +376,7 @@ INSERT INTO user VALUES (11, '达达2.0', 10);
 
 这时 user 表的索引 age 结构如下图所示：
 
-![mysql-6-lock9-索引-age-结构](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/6/mysql-6-lock9-索引-age-结构.6c02ny7xrpo0.png)
+![mysql-6-lock9-索引-age-结构](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/mysql-6-lock9-索引-age-结构.6c02ny7xrpo0.png)
 
 在索引 age 中可能存在的行锁是4个记录锁以及5个间隙锁。
 
@@ -396,7 +396,7 @@ INSERT INTO user VALUES (11, '达达2.0', 10);
 
 由上表的语句及执行结果来看，索引 age 上的加锁情况是：
 
-![mysql-6-lock10-select-*-from-user-where-age=10-for-update-索引age上的加锁情况](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/6/mysql-6-lock10-select-*-from-user-where-age=10-for-update-索引age上的加锁情况.2q33vt6km9e.png)
+![mysql-6-lock10-select-*-from-user-where-age=10-for-update-索引age上的加锁情况](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/mysql-6-lock10-select-*-from-user-where-age=10-for-update-索引age上的加锁情况.2q33vt6km9e.png)
 
 即索引 age 上的加锁区域为(5, 15)。
 
@@ -434,7 +434,7 @@ select id from user where age=10 lock in share mode;
 
 由上表的语句及执行结果来看，索引 age 上的加锁情况是：
 
-![mysql-6-lock11-select-*-from-user-where-age=10-limit-1-for-update加锁区域示意图](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/6/mysql-6-lock11-select-*-from-user-where-age=10-limit-1-for-update加锁区域示意图.6pqd2vuo6g80.png)
+![mysql-6-lock11-select-*-from-user-where-age=10-limit-1-for-update加锁区域示意图](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/mysql-6-lock11-select-*-from-user-where-age=10-limit-1-for-update加锁区域示意图.6pqd2vuo6g80.png)
 
 由此可见：**LIMIT 语法只会将锁加到满足条件的记录**，能够减小加锁范围。
 
@@ -458,7 +458,7 @@ select id from user where age=10 lock in share mode;
 
 与普通索引列等值查询不同的是，范围查询比等值查询多了一个 age=15 的记录锁。
 
-![mysql-6-lock12-select-*-from-user-where-age>8-and-age<=12-for-update-索引age上的加锁情况示意图](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/6/mysql-6-lock12-select-*-from-user-where-age>8-and-age<=12-for-update-索引age上的加锁情况示意图.6tomaqs8pmo.png)
+![mysql-6-lock12-select-*-from-user-where-age>8-and-age<=12-for-update-索引age上的加锁情况示意图](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/mysql-6-lock12-select-*-from-user-where-age>8-and-age<=12-for-update-索引age上的加锁情况示意图.6tomaqs8pmo.png)
 
 这个边界值与唯一索引列范围查询的原理是一样的，可以参照上文所述来理解，这里不多加赘述了。
 

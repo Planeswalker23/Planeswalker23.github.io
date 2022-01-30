@@ -11,7 +11,7 @@ keywords: MySQL, limit
 
 
 
-![MySQL封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/a/MySQL封面.4tcykd7jjyi0.jpg)
+![mysql-b-封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/mysql-b-封面.4tcykd7jjyi0.jpg)
 
 
 

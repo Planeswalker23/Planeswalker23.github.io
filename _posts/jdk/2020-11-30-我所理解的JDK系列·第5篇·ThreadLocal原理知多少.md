@@ -11,7 +11,7 @@ keywords: Java, JDK, ThreadLocal
 
 
 
-![JDK封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/5/JDK封面.3p96kh4wxj60.jpg)
+![jdk-5-封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/jdk-5-封面.3p96kh4wxj60.jpg)
 
 
 
@@ -90,7 +90,7 @@ ThreadLocal value of pool-1-thread-2 = 任务2: pool-1-thread-2
 
 除此之外，ThreadLocalMap 也是 Thread 类一个属性。
 
-![jdk-5-1](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/5/jdk-5-1.5tsp44bs1vw0.jpg)
+![jdk-5-1](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/jdk-5-1.5tsp44bs1vw0.jpg)
 
 如何证明上面给出的 ThreadLocal 类底层数据结构的正确性？我们可以从 `ThreadLocal#get()` 方法开始追踪代码，看看线程局部变量到底是从哪里被取出来的。
 

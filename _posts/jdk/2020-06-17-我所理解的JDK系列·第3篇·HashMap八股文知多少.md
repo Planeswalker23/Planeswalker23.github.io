@@ -11,7 +11,7 @@ keywords: Java, JDK, HashMap
 
 
 
-![JDK封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/3/JDK封面.42x0d6cpygc0.jpg)
+![jdk-3-封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/jdk-3-封面.42x0d6cpygc0.jpg)
 
 
 
@@ -61,7 +61,7 @@ hash 属性是键的哈希值，key 属性存放的是键，value 属性存放�
 如果使用图片的形式来描述 HashMap 的内部结构，一个包含四个键值对的 HashMap 可能是像下图这样的：
 
 
-![jdk-3-1](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/3/jdk-3-1.3qd269g8u5m0.jpg)
+![jdk-3-1](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/jdk-3-1.3qd269g8u5m0.jpg)
 
 
 
@@ -93,7 +93,7 @@ static final int hash(Object key) {
 先把15转化为二进制，也就是 0000 1111。然后对哈希值进行无符号右移16位的运算，其实就是在15的32位二进制中取高半区，也就是 0000 0000 0000 0000，最后对这两者做异或运算。
 
 
-![jdk-3-2](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/3/jdk-3-2.5kbipq2scj40.jpg)
+![jdk-3-2](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/jdk-3-2.5kbipq2scj40.jpg)
 
 
 
@@ -130,7 +130,7 @@ HashMap 的底层数据结构首先是一个 Node 类型的数组，一个 Node 
 举个例子，当我在 Map 中添加一个键为 Java 值为 No1 的元素时，Java 字符串会通过 hash 方法来计算哈希值。假设 Java 字符串的哈希值为1，那么此时 HashMap 的结构就是下面这样。
 
 
-![jdk-3-3](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/3/jdk-3-3.3c4jzljw0gm0.jpg)
+![jdk-3-3](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/jdk-3-3.3c4jzljw0gm0.jpg)
 
 
 
@@ -141,7 +141,7 @@ HashMap 的底层数据结构首先是一个 Node 类型的数组，一个 Node 
 
 
 
-![jdk-3-4](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/3/jdk-3-4.xz8fx3cf580.jpg)
+![jdk-3-4](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/jdk-3-4.xz8fx3cf580.jpg)
 
 
 
@@ -279,7 +279,7 @@ if ((p = tab[i = (n - 1) & hash]) == null)
 基于红黑树这样的结构特性，它的时间复杂度是O(logn)，所以会比链表的O(N)快，这也就是JDK1.8引入红黑树的原因。
 
 
-![jdk-3-5](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/3/jdk-3-5.kt15aiursp8.jpg)
+![jdk-3-5](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/jdk-3-5.kt15aiursp8.jpg)
 
 
 

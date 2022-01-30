@@ -20,7 +20,7 @@ keywords: MySQL
 - [我所理解的MySQL系列·第6篇·关于MySQL锁的原理你清楚吗？](https://www.yuque.com/planeswalker/bankend/lock)
 - [我所理解的MySQL系列·第7篇·分库分表与主从同步](https://www.yuque.com/planeswalker/bankend/sharingsync)
 
-![MySQL封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/N/MySQL封面.65s2goi1m1k0.jpg)
+![mysql-N-封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/mysql-N-封面.65s2goi1m1k0.jpg)
 
 
 

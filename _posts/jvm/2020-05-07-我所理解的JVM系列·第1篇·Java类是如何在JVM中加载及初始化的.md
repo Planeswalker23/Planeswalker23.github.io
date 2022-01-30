@@ -11,7 +11,7 @@ JVM 系列的第一篇，主题是类加载机制，内容包括 JVM 类加载�
 
 
 
-![JVM-封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jvm/1/JVM-封面.3gqgtcoukqk0.jpg))
+![jvm-1-封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jvm/jvm-1-封面.3gqgtcoukqk0.jpg)
 
 
 
@@ -46,7 +46,7 @@ Java 虚拟机把描述类的数据从 Class 文件加载到内存，并对数�
 Java 虚拟机的类加载过程分为：加载、验证、准备、解析、初始化五个步骤，其中验证、准备、解析被统称为链接阶段。
 
 
-![jvm-1-1](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jvm/1/jvm-1-1.h3t5ubxov54.jpg)
+![jvm-1-1](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jvm/jvm-1-1.h3t5ubxov54.jpg)
 
 
 

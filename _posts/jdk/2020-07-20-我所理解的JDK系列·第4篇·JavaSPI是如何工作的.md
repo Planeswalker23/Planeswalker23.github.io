@@ -11,7 +11,7 @@ keywords: Java, JDK, SPI
 
 
 
-![JDK封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/4/JDK封面.77nzpdzmv4k0.jpg)
+![jdk-4-封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/jdk-4-封面.77nzpdzmv4k0.jpg)
 
 
 
@@ -210,7 +210,7 @@ public static <S> ServiceLoader<S> load(Class<S> service, ClassLoader loader) {
 在 ServiceLoader#load(Class) 方法中，首先获取了当前线程的线程上下文类加载器，在示例代码中，执行此方法的线程是 main 线程，加载 main 线程的类加载器是应用类加载器。
 
 
-![jdk-4-1](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/4/jdk-4-1.w906t6a3mls.jpg)
+![jdk-4-1](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/jdk-4-1.w906t6a3mls.jpg)
 
 
 应用类加载器负责加载 classpath 上所指定的类库，当前工程当然属于 classpath 路径，所以使用应用类加载器加载 SPI 接口的实现类是可以加载成功的。
@@ -226,7 +226,7 @@ public static <S> ServiceLoader<S> load(Class<S> service, ClassLoader loader) {
 在 load 的重载方法中，其实是创建了一个 ServiceLoader 类实例，传入的参数是目标接口 HelloSpi.class 和类加载器 AppClassLoader。
 
 
-![jdk-4-2](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/4/jdk-4-2.3iv651aa6iw0.jpg)
+![jdk-4-2](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/jdk/jdk-4-2.3iv651aa6iw0.jpg)
 
 
 而在这个 ServiceLoader 类的构造方法中，也进行了一些操作，具体见下面代码的注释。

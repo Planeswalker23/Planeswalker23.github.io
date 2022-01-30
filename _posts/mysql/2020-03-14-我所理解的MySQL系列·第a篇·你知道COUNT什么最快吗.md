@@ -11,7 +11,7 @@ keywords: MySQL, count
 
 
 
-![MySQL封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/a/MySQL封面.3rp7j8fu3gc0.jpg)
+![mysql-a-封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/mysql-a-封面.3rp7j8fu3gc0.jpg)
 
 
 

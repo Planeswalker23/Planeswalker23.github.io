@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 我所理解的其他问题·第0篇·记一次使用线程池出现的问题
+title: 我所理解的其他问题·第1篇·List#remove方法失效
 categories: [Java]
 keywords: ThreadPool, Java
 ---

@@ -11,7 +11,7 @@ keywords: MySQL, update
 
 
 
-![MySQL封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/a/MySQL封面.9nsh6ylywow.jpg)
+![mysql-c-封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/mysql/mysql-c-封面.png)
 
 
 
