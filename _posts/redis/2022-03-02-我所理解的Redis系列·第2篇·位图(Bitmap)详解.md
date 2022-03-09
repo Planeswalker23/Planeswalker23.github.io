@@ -1,15 +1,15 @@
 ---
 layout: post
-title: 我所理解的Redis系列·第2篇·位图（Bitmap）详解
+title: 我所理解的Redis系列·第2篇·位图(Bitmap)详解
 categories: [Reids]
 keywords: Reids, 位图
 ---
 
 
 
-在前几天想要写个基于位图（Bitmap）实现的签到系统时，忽然发现自己不太清楚位图的具体操作命令，之前也从来没有有过相关的实操经验，于是才有了本文。本文记录了位图的实现原理、原生命令、应用场景以及包装后的位图工具类等。
+在前几天想要写个基于位图(Bitmap)实现的签到系统时，忽然发现自己不太清楚位图的具体操作命令，之前也从来没有有过相关的实操经验，于是才有了本文。本文记录了位图的实现原理、原生命令、应用场景以及包装后的位图工具类等。
 
-我们知道 Redis 的常用数据结构有五种基础数据结构：字符串（string）、哈希（hash）、列表（list）、集合（set）、有序集合（zset）；以及三种高阶数据结构：位图（Bitmap）、基数估算（HyperLogLog）、地理位置（GEO）。
+我们知道 Redis 的常用数据结构有五种基础数据结构：字符串(string)、哈希(hash)、列表(list)、集合(set)、有序集合(zset)；以及三种高阶数据结构：位图(Bitmap)、基数估算(HyperLogLog)、地理位置(GEO)。
 
 实际上位图并不是一种单独实现的数据结构，下面就让我们一起来揭晓位图的神秘面纱吧。
 
@@ -29,7 +29,7 @@ keywords: Reids, 位图
 
 ## 2. 实现原理
 
-位图实际上并不是一种单独的数据结构，它底层其实是用 **Redis 字符串**通过**面向位操作**实现的，而 Redis 字符串则是使用动态字符串（SDS）来存储的。
+位图实际上并不是一种单独的数据结构，它底层其实是用 **Redis 字符串**通过**面向位操作**实现的，而 Redis 字符串则是使用动态字符串(SDS)来存储的。
 
 SDS 的底层是用一个字节数组来存储的，下面就是它的底层代码：
 
@@ -50,7 +50,7 @@ struct sdshdr {
 
 ![redis-2-2](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/redis/redis-2-2.7n4hj1s2s8s.png)
 
-这就是 Redis 二进制安全所带来的效果。事实上，Redis 二进制安全是因为 **SDS 使用 len 属性的值而不是空字符（'\0'）来判断字符串是否结束**。
+这就是 Redis 二进制安全所带来的效果。事实上，Redis 二进制安全是因为 **SDS 使用 len 属性的值而不是空字符('\0')来判断字符串是否结束**。
 
 
 
@@ -93,7 +93,7 @@ struct sdshdr {
 - 将字符数组的第100位由0改为1
 - 将用户的签到记录更新位365个1字符
 
-而如果使用位图来实现该功能，只需要一条命令：`setbit 键 99 1` 就实现了上述的过程（99是因为位图是从第0位开始计数的）。
+而如果使用位图来实现该功能，只需要一条命令：`setbit 键 99 1` 就实现了上述的过程(99是因为位图是从第0位开始计数的)。
 
 
 
@@ -299,11 +299,11 @@ public class BitmapUtil {
     }
 
     /**
-     * 统计位图值指定范围（范围为字节范围）对应位为1的数量
+     * 统计位图值指定范围(范围为字节范围)对应位为1的数量
      *
      * @param key   键
-     * @param start 开始字节位置（包含）
-     * @param end   结束字节位置（包含）
+     * @param start 开始字节位置(包含)
+     * @param end   结束字节位置(包含)
      * @return Long
      */
     public Long bitCountTrue(String key, long start, long end) {
@@ -328,12 +328,12 @@ public class BitmapUtil {
 
 
     /**
-     * 统计位图值指定范围（范围为字节范围）指定二进制值的数量
+     * 统计位图值指定范围(范围为字节范围)指定二进制值的数量
      *
      * @param key   键
      * @param value 指定二进制值
-     * @param start 开始字节位置（包含）
-     * @param end   结束字节位置（包含）
+     * @param start 开始字节位置(包含)
+     * @param end   结束字节位置(包含)
      * @return Long
      */
     public Long bitPos(String key, boolean value, long start, long end) {
@@ -363,6 +363,6 @@ public class BitmapUtil {
 
 ## 7. 参考资料
 
-- [Redis bitmap位图操作（图解）](http://c.biancheng.net/redis/bitmap.html)
+- [Redis bitmap位图操作(图解)](http://c.biancheng.net/redis/bitmap.html)
 - [Redis修行 — 位图实战](https://juejin.cn/post/6844904049909694477)
 - [汉字二进制转换器](https://www.qqxiuzi.cn/bianma/erjinzhi.php)

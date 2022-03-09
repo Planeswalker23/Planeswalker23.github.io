@@ -7,7 +7,7 @@ keywords: Reids, 位图
 
 
 
-上一篇 [第2篇·位图（Bitmap）详解 ](https://www.yuque.com/planeswalker/bankend/lamqao)中介绍了 Redis 位图的基本命令以及基于 Spring 的 RedisTemplate 实现的 Bitmap 工具类。但是在基于 Redis 位图设计通用的签到系统过程中，还发现了另一个问题：怎么才能让前端展示一周/一个月中用户的签到记录？
+上一篇 [我所理解的Redis系列·第2篇·位图(Bitmap)详解 ](https://www.yuque.com/planeswalker/bankend/lamqao)中介绍了 Redis 位图的基本命令以及基于 Spring 的 RedisTemplate 实现的 Bitmap 工具类。但是在基于 Redis 位图设计通用的签到系统过程中，还发现了另一个问题：怎么才能让前端展示一周/一个月中用户的签到记录？
 
 ![redis-b-封面](https://cdn.jsdelivr.net/gh/Planeswalker23/image-storage@master/redis/redis-b-封面.png)
 
